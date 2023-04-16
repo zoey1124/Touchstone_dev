@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import edu.ecnu.touchstone.constraintchain.*;
 import edu.ecnu.touchstone.extractor.Query;
@@ -23,6 +24,8 @@ import net.sf.jsqlparser.expression.operators.relational.MinorThan;
 import net.sf.jsqlparser.expression.operators.relational.MinorThanEquals;
 import net.sf.jsqlparser.expression.operators.relational.NotEqualsTo;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.schema.Column;
+import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.*;
 import net.sf.jsqlparser.util.deparser.ExpressionDeParser;
@@ -118,75 +121,110 @@ public class Rule {
      * @Description: parse all conditions in where
      * @Return: e.g., "a.c1 >= 3", "a.c2 like '%pattern'", "a.c3 in (1, 2, 3)"
      */
-    public List<Expression> parseWhere(Expression where) {
-        List<Expression> ret = new ArrayList<>();
+    public List<Object> parseWhere(Expression where) {
+        List<Object> filterOperations = new ArrayList<>();
         where.accept(new ExpressionVisitorAdapter() {
-            @Override
-            public void visit(NotExpression notExpression) {
-                ret.add(notExpression);
-            }
 
             @Override 
             public void visit(InExpression inExpression) {
-                ret.add(inExpression);
+                String operator = (inExpression.isNot()) ? "not in" : "in";
             }
 
             @Override 
             public void visit(LikeExpression likeExpression) {
-                ret.add(likeExpression);
+                String operator = (likeExpression.isNot()) ? "not like" : "like";
+                FilterOperation filterOp = new FilterOperation(likeExpression, operator);
+                filterOperations.add(filterOp);
             }
 
             @Override 
             public void visit(NotEqualsTo notEqualsTo) {
-                ret.add(notEqualsTo);
+                FilterOperation filterOp = new FilterOperation(notEqualsTo, "<>");
+                filterOperations.add(filterOp);
             }
 
             @Override
             public void visit(EqualsTo equalsTo) {
-                ret.add(equalsTo);
+                FilterOperation filterOp = new FilterOperation(equalsTo, "=");
+                filterOperations.add(filterOp);
             }
 
             @Override 
             public void visit(GreaterThan greaterThan) {
-                ret.add(greaterThan);
+                FilterOperation filterOp = new FilterOperation(greaterThan, ">");
+                filterOperations.add(filterOp);
             }
 
             @Override 
             public void visit(GreaterThanEquals greaterThanEquals) {
-                ret.add(greaterThanEquals);
+                FilterOperation filterOp = new FilterOperation(greaterThanEquals, ">=");
+                filterOperations.add(filterOp);
             }
 
             @Override
             public void visit(MinorThan minorThan) {
-                ret.add(minorThan);
+                FilterOperation filterOp = new FilterOperation(minorThan, "<");
+                filterOperations.add(filterOp);
             }
 
             @Override 
             public void visit(MinorThanEquals minorThanEquals) {
-                ret.add(minorThanEquals);
+                FilterOperation filterOp = new FilterOperation(minorThanEquals, "<=");
+                filterOperations.add(filterOp);
             }
         });
-        return ret;
+        logger.info("\n Query Filter Operations are: [\n" + filterOperations + "\n]");
+        return null;
     }
 
     public static void main(String[] args) {
-        String sql = "select * from t where (type <> 1) or (b = 2 and c <> 'hehe');";
+        String sql = "select attachments.* from attachments where (attachments.filename like '%' or filename <> '$1');";
+        PropertyConfigurator.configure(".//test//lib//log4j.properties");
         try {
             PlainSelect selectSql = ((PlainSelect) ((Select) CCJSqlParserUtil.parse(sql)).getSelectBody());
             Expression e = selectSql.getWhere();
-            System.out.println("\n" + e);
-            List<Expression> out = new ArrayList<>();
             e.accept(new ExpressionVisitorAdapter() {
-                
-                @Override 
-                public void visit(NotEqualsTo expr) {
-                    System.out.println("\n" + expr);
-                    System.out.println("\n" + expr.getLeftExpression());
-                }
+            @Override 
+            public void visit(Column expr) {
+                System.out.println(expr.getTable());
+                System.out.println(expr.getColumnName());
+            }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+}
+
+class FilterOperation {
+    String expression = null;
+    String operator = null;
+    String table = null;
+
+    FilterOperation(BinaryExpression expr, String operator) {
+        Expression left = expr.getLeftExpression();
+        Expression right = expr.getRightExpression();
+        Column leftColumn = (Column) left;
+        String table = leftColumn.getTable().getName();
+        String columnName = leftColumn.getColumnName();
+        if (!right.toString().contains("$")) {
+            operator += right.toString();
+        }
+        this.operator = operator;
+        this.expression = columnName;
+        this.table = table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
+    }
+    public String getTable() {
+        return this.table;
+    }
+
+    @Override
+    public String toString() {
+        return this.expression + "@" + this.operator;
     }
 }

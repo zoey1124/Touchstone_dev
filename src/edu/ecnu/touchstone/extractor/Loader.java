@@ -62,6 +62,8 @@ public class Loader {
         return queryOut;
     }
     
+    
+
     // test 
     public static void main(String[] args) {
         PropertyConfigurator.configure(".//test//lib//log4j.properties");

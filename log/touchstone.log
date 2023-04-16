@@ -1,0 +1,620 @@
+[2023-04-16 14:21:12,530] DEBUG edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:119) main - 
+The cardinality constraint chains: [
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=0, expression=l_shipdate, operator=<=, probability=0.985899]], 
+		logicalRelation=-1, probability=0.985899]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=1, expression=r_name, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2], 
+	PKJoin [primakryKeys=[region.r_regionkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[region.r_regionkey]]]], 
+ConstraintChain [tableName=nation, nodes=[
+	FKJoin [foreignKeys=[n_regionkey], probability=0.2, primakryKeys=[region.r_regionkey], canJoinNum=1, cantJoinNum=2, fkStr=[n_regionkey], rpkStr=[region.r_regionkey]], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=supplier, nodes=[
+	FKJoin [foreignKeys=[s_nationkey], probability=0.1987, primakryKeys=[nation.n_nationkey], canJoinNum=1, cantJoinNum=2, fkStr=[s_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[supplier.s_suppkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=2, expression=p_size, operator==, probability=0.061114646], 
+		FilterOperation [id=3, expression=p_type, operator=like, probability=0.061114646]], 
+		logicalRelation=0, probability=0.003735], 
+	PKJoin [primakryKeys=[part.p_partkey], canJoinNum=[1, 4], cantJoinNum=[2, 8], pkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_suppkey], probability=0.1987, primakryKeys=[supplier.s_suppkey], canJoinNum=1, cantJoinNum=2, fkStr=[ps_suppkey], rpkStr=[supplier.s_suppkey]], 
+	FKJoin [foreignKeys=[ps_partkey], probability=0.00403875, primakryKeys=[part.p_partkey], canJoinNum=1, cantJoinNum=2, fkStr=[ps_partkey], rpkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_partkey], probability=0.003735, primakryKeys=[part.p_partkey], canJoinNum=4, cantJoinNum=8, fkStr=[ps_partkey], rpkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=4, expression=r_name, operator==, probability=0.4]], 
+		logicalRelation=-1, probability=0.4]]], 
+ConstraintChain [tableName=customer, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=5, expression=c_mktsegment, operator==, probability=0.20095]], 
+		logicalRelation=-1, probability=0.20095], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.20264, primakryKeys=[customer.c_custkey], canJoinNum=1, cantJoinNum=2, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=6, expression=o_orderdate, operator=<, probability=0.48403]], 
+		logicalRelation=-1, probability=0.48403], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.09806464, primakryKeys=[orders.o_orderkey], canJoinNum=1, cantJoinNum=2, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=7, expression=l_shipdate, operator=>, probability=0.05185835]], 
+		logicalRelation=-1, probability=0.05185835]]], 
+ConstraintChain [tableName=orders, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=8, expression=o_orderdate, operator=bet, probability=0.038145]], 
+		logicalRelation=-1, probability=0.038145], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.038274, primakryKeys=[orders.o_orderkey], canJoinNum=4, cantJoinNum=8, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=9, expression=l_commitdate, operator=<, probability=0.63071]], 
+		logicalRelation=-1, probability=0.63071]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=10, expression=r_name, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2], 
+	PKJoin [primakryKeys=[region.r_regionkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[region.r_regionkey]]]], 
+ConstraintChain [tableName=nation, nodes=[
+	FKJoin [foreignKeys=[n_regionkey], probability=0.2, primakryKeys=[region.r_regionkey], canJoinNum=4, cantJoinNum=8, fkStr=[n_regionkey], rpkStr=[region.r_regionkey]], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.20122, primakryKeys=[nation.n_nationkey], canJoinNum=4, cantJoinNum=8, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.20098, primakryKeys=[customer.c_custkey], canJoinNum=4, cantJoinNum=8, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=11, expression=o_orderdate, operator=bet, probability=0.15261]], 
+		logicalRelation=-1, probability=0.15261], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.030674, primakryKeys=[orders.o_orderkey], canJoinNum=16, cantJoinNum=32, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=12, expression=l_shipdate, operator=bet, probability=0.26694685], 
+		FilterOperation [id=13, expression=l_discount, operator=bet, probability=0.26694685], 
+		FilterOperation [id=14, expression=l_quantity, operator=<, probability=0.26694685]], 
+		logicalRelation=0, probability=0.0190228]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=15, expression=n_name, operator==, probability=0.04]], 
+		logicalRelation=-1, probability=0.04], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.039387, primakryKeys=[nation.n_nationkey], canJoinNum=16, cantJoinNum=32, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.039816, primakryKeys=[customer.c_custkey], canJoinNum=16, cantJoinNum=32, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.039836, primakryKeys=[orders.o_orderkey], canJoinNum=64, cantJoinNum=128, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=16, expression=l_shipdate, operator=bet, probability=0.30509]], 
+		logicalRelation=-1, probability=0.30509]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=17, expression=n_name, operator==, probability=0.041324]], 
+		logicalRelation=-1, probability=0.041324]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=18, expression=n_name, operator==, probability=0.04]], 
+		logicalRelation=-1, probability=0.04], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.040667, primakryKeys=[nation.n_nationkey], canJoinNum=64, cantJoinNum=128, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.040667, primakryKeys=[customer.c_custkey], canJoinNum=64, cantJoinNum=128, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[256], cantJoinNum=[512], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.041061, primakryKeys=[orders.o_orderkey], canJoinNum=256, cantJoinNum=512, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=19, expression=l_shipdate, operator=bet, probability=0.306126]], 
+		logicalRelation=-1, probability=0.306126]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=20, expression=n_name, operator==, probability=0.038577]], 
+		logicalRelation=-1, probability=0.038577]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=21, expression=r_name, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2], 
+	PKJoin [primakryKeys=[region.r_regionkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[region.r_regionkey]]]], 
+ConstraintChain [tableName=nation, nodes=[
+	FKJoin [foreignKeys=[n_regionkey], probability=0.2, primakryKeys=[region.r_regionkey], canJoinNum=16, cantJoinNum=32, fkStr=[n_regionkey], rpkStr=[region.r_regionkey]], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[256], cantJoinNum=[512], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.19968, primakryKeys=[nation.n_nationkey], canJoinNum=256, cantJoinNum=512, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[256], cantJoinNum=[512], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.199402, primakryKeys=[customer.c_custkey], canJoinNum=256, cantJoinNum=512, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=22, expression=o_orderdate, operator=bet, probability=0.30484]], 
+		logicalRelation=-1, probability=0.30484], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[1024], cantJoinNum=[2048], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.060836, primakryKeys=[orders.o_orderkey], canJoinNum=1024, cantJoinNum=2048, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=23, expression=p_type, operator==, probability=0.0071297]], 
+		logicalRelation=-1, probability=0.0071297]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=24, expression=p_name, operator=like, probability=0.05332]], 
+		logicalRelation=-1, probability=0.05332], 
+	PKJoin [primakryKeys=[part.p_partkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_partkey], probability=0.05332, primakryKeys=[part.p_partkey], canJoinNum=16, cantJoinNum=32, fkStr=[ps_partkey], rpkStr=[part.p_partkey]], 
+	PKJoin [primakryKeys=[partsupp.ps_partkey, partsupp.ps_suppkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[partsupp.ps_partkey, partsupp.ps_suppkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_partkey, l_suppkey], probability=0.053223, primakryKeys=[partsupp.ps_partkey, partsupp.ps_suppkey], canJoinNum=1, cantJoinNum=2, fkStr=[l_partkey, l_suppkey], rpkStr=[partsupp.ps_partkey, partsupp.ps_suppkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=25, expression=o_orderdate, operator=bet, probability=0.038046]], 
+		logicalRelation=-1, probability=0.038046], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[4096], cantJoinNum=[8192], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.038121, primakryKeys=[orders.o_orderkey], canJoinNum=4096, cantJoinNum=8192, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=26, expression=l_returnflag, operator==, probability=0.5013944]], 
+		logicalRelation=-1, probability=0.5013944]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=27, expression=n_name, operator==, probability=0.04]], 
+		logicalRelation=-1, probability=0.04], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[1024], cantJoinNum=[2048], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=supplier, nodes=[
+	FKJoin [foreignKeys=[s_nationkey], probability=0.0396, primakryKeys=[nation.n_nationkey], canJoinNum=1024, cantJoinNum=2048, fkStr=[s_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[supplier.s_suppkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_suppkey], probability=0.0396, primakryKeys=[supplier.s_suppkey], canJoinNum=4, cantJoinNum=8, fkStr=[ps_suppkey], rpkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=28, expression=l_shipmode, operator=in(2), probability=0.26806405], 
+		FilterOperation [id=29, expression=l_commitdate, operator=<, probability=0.26806405], 
+		FilterOperation [id=30, expression=l_shipdate, operator=<, probability=0.26806405], 
+		FilterOperation [id=31, expression=l_receiptdate, operator=bet, probability=0.26806405]], 
+		logicalRelation=0, probability=0.00516362]]], 
+ConstraintChain [tableName=orders, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=32, expression=o_comment, operator=like, probability=0.0107213]], 
+		logicalRelation=-1, probability=0.0107213]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=33, expression=l_shipdate, operator=bet, probability=0.012661]], 
+		logicalRelation=-1, probability=0.012661]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=34, expression=l_shipdate, operator=bet, probability=0.0376514]], 
+		logicalRelation=-1, probability=0.0376514]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=35, expression=p_brand, operator==, probability=0.47115594], 
+		FilterOperation [id=36, expression=p_type, operator=like, probability=0.47115594], 
+		FilterOperation [id=37, expression=p_size, operator=in(8), probability=0.52884406]], 
+		logicalRelation=0, probability=0.147905], 
+	PKJoin [primakryKeys=[part.p_partkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=supplier, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=38, expression=s_comment, operator=like, probability=4.0E-4]], 
+		logicalRelation=-1, probability=4.0E-4], 
+	PKJoin [primakryKeys=[supplier.s_suppkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_partkey], probability=0.147905, primakryKeys=[part.p_partkey], canJoinNum=64, cantJoinNum=128, fkStr=[ps_partkey], rpkStr=[part.p_partkey]], 
+	FKJoin [foreignKeys=[ps_suppkey], probability=0.99989, primakryKeys=[supplier.s_suppkey], canJoinNum=32, cantJoinNum=16, fkStr=[ps_suppkey], rpkStr=[supplier.s_suppkey]]]]]
+[2023-04-16 14:21:12,538] DEBUG edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:119) main - 
+The cardinality constraint chains: [
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=0, expression=2*r_c1+r_c1-r_c3, operator=<=, probability=0.3]], 
+		logicalRelation=-1, probability=0.3]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=1, expression=r_c1, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=2, expression=r_c1, operator==, probability=0.1]], 
+		logicalRelation=-1, probability=0.1]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=3, expression=5*r_c1-rc4, operator=bet, probability=0.4]], 
+		logicalRelation=-1, probability=0.4]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=4, expression=c7, operator=in(3), probability=0.4472136], 
+		FilterOperation [id=5, expression=rc4, operator=<, probability=0.4472136]], 
+		logicalRelation=0, probability=0.2], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[1], cantJoinNum=[2], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=6, expression=s_c1, operator=bet, probability=0.16333999], 
+		FilterOperation [id=7, expression=s__c5, operator=in(5), probability=0.16333999]], 
+		logicalRelation=1, probability=0.3], 
+	FKJoin [foreignKeys=[fk], probability=0.2, primakryKeys=[r.r_key], canJoinNum=1, cantJoinNum=2, fkStr=[fk], rpkStr=[r.r_key]]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=8, expression=r_c2-r_c3, operator=>=, probability=0.29]], 
+		logicalRelation=-1, probability=0.29], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[4], cantJoinNum=[8], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=9, expression=s__c5, operator=in(4), probability=0.32999998]], 
+		logicalRelation=-1, probability=0.67], 
+	FKJoin [foreignKeys=[fk], probability=0.1, primakryKeys=[r.r_key], canJoinNum=4, cantJoinNum=8, fkStr=[fk], rpkStr=[r.r_key]]]]]
+[2023-04-16 15:31:02,600]  INFO edu.ecnu.touchstone.rule.Rule.parseWhere(Rule.java:180) main - 
+ Query Filter Operations are: [
+[filename@like '%']
+]
+[2023-04-16 15:35:14,937] DEBUG edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:119) main - 
+The cardinality constraint chains: [
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=0, expression=l_shipdate, operator=<=, probability=0.985899]], 
+		logicalRelation=-1, probability=0.985899]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=1, expression=r_name, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2], 
+	PKJoin [primakryKeys=[region.r_regionkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[region.r_regionkey]]]], 
+ConstraintChain [tableName=nation, nodes=[
+	FKJoin [foreignKeys=[n_regionkey], probability=0.2, primakryKeys=[region.r_regionkey], canJoinNum=1, cantJoinNum=2, fkStr=[n_regionkey], rpkStr=[region.r_regionkey]], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=supplier, nodes=[
+	FKJoin [foreignKeys=[s_nationkey], probability=0.1987, primakryKeys=[nation.n_nationkey], canJoinNum=1, cantJoinNum=2, fkStr=[s_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[supplier.s_suppkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=2, expression=p_size, operator==, probability=0.061114646], 
+		FilterOperation [id=3, expression=p_type, operator=like, probability=0.061114646]], 
+		logicalRelation=0, probability=0.003735], 
+	PKJoin [primakryKeys=[part.p_partkey], canJoinNum=[1, 4], cantJoinNum=[2, 8], pkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_suppkey], probability=0.1987, primakryKeys=[supplier.s_suppkey], canJoinNum=1, cantJoinNum=2, fkStr=[ps_suppkey], rpkStr=[supplier.s_suppkey]], 
+	FKJoin [foreignKeys=[ps_partkey], probability=0.00403875, primakryKeys=[part.p_partkey], canJoinNum=1, cantJoinNum=2, fkStr=[ps_partkey], rpkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_partkey], probability=0.003735, primakryKeys=[part.p_partkey], canJoinNum=4, cantJoinNum=8, fkStr=[ps_partkey], rpkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=4, expression=r_name, operator==, probability=0.4]], 
+		logicalRelation=-1, probability=0.4]]], 
+ConstraintChain [tableName=customer, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=5, expression=c_mktsegment, operator==, probability=0.20095]], 
+		logicalRelation=-1, probability=0.20095], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.20264, primakryKeys=[customer.c_custkey], canJoinNum=1, cantJoinNum=2, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=6, expression=o_orderdate, operator=<, probability=0.48403]], 
+		logicalRelation=-1, probability=0.48403], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.09806464, primakryKeys=[orders.o_orderkey], canJoinNum=1, cantJoinNum=2, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=7, expression=l_shipdate, operator=>, probability=0.05185835]], 
+		logicalRelation=-1, probability=0.05185835]]], 
+ConstraintChain [tableName=orders, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=8, expression=o_orderdate, operator=bet, probability=0.038145]], 
+		logicalRelation=-1, probability=0.038145], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.038274, primakryKeys=[orders.o_orderkey], canJoinNum=4, cantJoinNum=8, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=9, expression=l_commitdate, operator=<, probability=0.63071]], 
+		logicalRelation=-1, probability=0.63071]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=10, expression=r_name, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2], 
+	PKJoin [primakryKeys=[region.r_regionkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[region.r_regionkey]]]], 
+ConstraintChain [tableName=nation, nodes=[
+	FKJoin [foreignKeys=[n_regionkey], probability=0.2, primakryKeys=[region.r_regionkey], canJoinNum=4, cantJoinNum=8, fkStr=[n_regionkey], rpkStr=[region.r_regionkey]], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.20122, primakryKeys=[nation.n_nationkey], canJoinNum=4, cantJoinNum=8, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.20098, primakryKeys=[customer.c_custkey], canJoinNum=4, cantJoinNum=8, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=11, expression=o_orderdate, operator=bet, probability=0.15261]], 
+		logicalRelation=-1, probability=0.15261], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.030674, primakryKeys=[orders.o_orderkey], canJoinNum=16, cantJoinNum=32, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=12, expression=l_shipdate, operator=bet, probability=0.26694685], 
+		FilterOperation [id=13, expression=l_discount, operator=bet, probability=0.26694685], 
+		FilterOperation [id=14, expression=l_quantity, operator=<, probability=0.26694685]], 
+		logicalRelation=0, probability=0.0190228]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=15, expression=n_name, operator==, probability=0.04]], 
+		logicalRelation=-1, probability=0.04], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.039387, primakryKeys=[nation.n_nationkey], canJoinNum=16, cantJoinNum=32, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.039816, primakryKeys=[customer.c_custkey], canJoinNum=16, cantJoinNum=32, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.039836, primakryKeys=[orders.o_orderkey], canJoinNum=64, cantJoinNum=128, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=16, expression=l_shipdate, operator=bet, probability=0.30509]], 
+		logicalRelation=-1, probability=0.30509]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=17, expression=n_name, operator==, probability=0.041324]], 
+		logicalRelation=-1, probability=0.041324]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=18, expression=n_name, operator==, probability=0.04]], 
+		logicalRelation=-1, probability=0.04], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.040667, primakryKeys=[nation.n_nationkey], canJoinNum=64, cantJoinNum=128, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.040667, primakryKeys=[customer.c_custkey], canJoinNum=64, cantJoinNum=128, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[256], cantJoinNum=[512], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.041061, primakryKeys=[orders.o_orderkey], canJoinNum=256, cantJoinNum=512, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=19, expression=l_shipdate, operator=bet, probability=0.306126]], 
+		logicalRelation=-1, probability=0.306126]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=20, expression=n_name, operator==, probability=0.038577]], 
+		logicalRelation=-1, probability=0.038577]]], 
+ConstraintChain [tableName=region, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=21, expression=r_name, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2], 
+	PKJoin [primakryKeys=[region.r_regionkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[region.r_regionkey]]]], 
+ConstraintChain [tableName=nation, nodes=[
+	FKJoin [foreignKeys=[n_regionkey], probability=0.2, primakryKeys=[region.r_regionkey], canJoinNum=16, cantJoinNum=32, fkStr=[n_regionkey], rpkStr=[region.r_regionkey]], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[256], cantJoinNum=[512], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=customer, nodes=[
+	FKJoin [foreignKeys=[c_nationkey], probability=0.19968, primakryKeys=[nation.n_nationkey], canJoinNum=256, cantJoinNum=512, fkStr=[c_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[customer.c_custkey], canJoinNum=[256], cantJoinNum=[512], pkStr=[customer.c_custkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	FKJoin [foreignKeys=[o_custkey], probability=0.199402, primakryKeys=[customer.c_custkey], canJoinNum=256, cantJoinNum=512, fkStr=[o_custkey], rpkStr=[customer.c_custkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=22, expression=o_orderdate, operator=bet, probability=0.30484]], 
+		logicalRelation=-1, probability=0.30484], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[1024], cantJoinNum=[2048], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.060836, primakryKeys=[orders.o_orderkey], canJoinNum=1024, cantJoinNum=2048, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=23, expression=p_type, operator==, probability=0.0071297]], 
+		logicalRelation=-1, probability=0.0071297]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=24, expression=p_name, operator=like, probability=0.05332]], 
+		logicalRelation=-1, probability=0.05332], 
+	PKJoin [primakryKeys=[part.p_partkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_partkey], probability=0.05332, primakryKeys=[part.p_partkey], canJoinNum=16, cantJoinNum=32, fkStr=[ps_partkey], rpkStr=[part.p_partkey]], 
+	PKJoin [primakryKeys=[partsupp.ps_partkey, partsupp.ps_suppkey], canJoinNum=[1], cantJoinNum=[2], pkStr=[partsupp.ps_partkey, partsupp.ps_suppkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_partkey, l_suppkey], probability=0.053223, primakryKeys=[partsupp.ps_partkey, partsupp.ps_suppkey], canJoinNum=1, cantJoinNum=2, fkStr=[l_partkey, l_suppkey], rpkStr=[partsupp.ps_partkey, partsupp.ps_suppkey]]]], 
+ConstraintChain [tableName=orders, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=25, expression=o_orderdate, operator=bet, probability=0.038046]], 
+		logicalRelation=-1, probability=0.038046], 
+	PKJoin [primakryKeys=[orders.o_orderkey], canJoinNum=[4096], cantJoinNum=[8192], pkStr=[orders.o_orderkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	FKJoin [foreignKeys=[l_orderkey], probability=0.038121, primakryKeys=[orders.o_orderkey], canJoinNum=4096, cantJoinNum=8192, fkStr=[l_orderkey], rpkStr=[orders.o_orderkey]], 
+	Filter [filterOperations=[
+		FilterOperation [id=26, expression=l_returnflag, operator==, probability=0.5013944]], 
+		logicalRelation=-1, probability=0.5013944]]], 
+ConstraintChain [tableName=nation, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=27, expression=n_name, operator==, probability=0.04]], 
+		logicalRelation=-1, probability=0.04], 
+	PKJoin [primakryKeys=[nation.n_nationkey], canJoinNum=[1024], cantJoinNum=[2048], pkStr=[nation.n_nationkey]]]], 
+ConstraintChain [tableName=supplier, nodes=[
+	FKJoin [foreignKeys=[s_nationkey], probability=0.0396, primakryKeys=[nation.n_nationkey], canJoinNum=1024, cantJoinNum=2048, fkStr=[s_nationkey], rpkStr=[nation.n_nationkey]], 
+	PKJoin [primakryKeys=[supplier.s_suppkey], canJoinNum=[4], cantJoinNum=[8], pkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_suppkey], probability=0.0396, primakryKeys=[supplier.s_suppkey], canJoinNum=4, cantJoinNum=8, fkStr=[ps_suppkey], rpkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=28, expression=l_shipmode, operator=in(2), probability=0.26806405], 
+		FilterOperation [id=29, expression=l_commitdate, operator=<, probability=0.26806405], 
+		FilterOperation [id=30, expression=l_shipdate, operator=<, probability=0.26806405], 
+		FilterOperation [id=31, expression=l_receiptdate, operator=bet, probability=0.26806405]], 
+		logicalRelation=0, probability=0.00516362]]], 
+ConstraintChain [tableName=orders, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=32, expression=o_comment, operator=like, probability=0.0107213]], 
+		logicalRelation=-1, probability=0.0107213]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=33, expression=l_shipdate, operator=bet, probability=0.012661]], 
+		logicalRelation=-1, probability=0.012661]]], 
+ConstraintChain [tableName=lineitem, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=34, expression=l_shipdate, operator=bet, probability=0.0376514]], 
+		logicalRelation=-1, probability=0.0376514]]], 
+ConstraintChain [tableName=part, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=35, expression=p_brand, operator==, probability=0.47115594], 
+		FilterOperation [id=36, expression=p_type, operator=like, probability=0.47115594], 
+		FilterOperation [id=37, expression=p_size, operator=in(8), probability=0.52884406]], 
+		logicalRelation=0, probability=0.147905], 
+	PKJoin [primakryKeys=[part.p_partkey], canJoinNum=[64], cantJoinNum=[128], pkStr=[part.p_partkey]]]], 
+ConstraintChain [tableName=supplier, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=38, expression=s_comment, operator=like, probability=4.0E-4]], 
+		logicalRelation=-1, probability=4.0E-4], 
+	PKJoin [primakryKeys=[supplier.s_suppkey], canJoinNum=[16], cantJoinNum=[32], pkStr=[supplier.s_suppkey]]]], 
+ConstraintChain [tableName=partsupp, nodes=[
+	FKJoin [foreignKeys=[ps_partkey], probability=0.147905, primakryKeys=[part.p_partkey], canJoinNum=64, cantJoinNum=128, fkStr=[ps_partkey], rpkStr=[part.p_partkey]], 
+	FKJoin [foreignKeys=[ps_suppkey], probability=0.99989, primakryKeys=[supplier.s_suppkey], canJoinNum=32, cantJoinNum=16, fkStr=[ps_suppkey], rpkStr=[supplier.s_suppkey]]]]]
+[2023-04-16 15:37:09,283] ERROR edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:108) main - 
+	Unable to parse the constraint chain information: 0,c@like'hehe'
+[2023-04-16 15:37:21,604] ERROR edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:108) main - 
+	Unable to parse the constraint chain information: 0,c@like'hehe'
+[2023-04-16 15:37:26,837] ERROR edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:108) main - 
+	Unable to parse the constraint chain information: 0,c@like'hehe'
+[2023-04-16 15:37:37,782] ERROR edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:108) main - 
+	Unable to parse the constraint chain information: 0,c@likehehe
+[2023-04-16 15:38:06,906] DEBUG edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:119) main - 
+The cardinality constraint chains: [
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=0, expression=2*r_c1+r_c1-r_c3, operator=<=, probability=0.3]], 
+		logicalRelation=-1, probability=0.3]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=1, expression=r_c1, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=2, expression=r_c1, operator==, probability=0.1]], 
+		logicalRelation=-1, probability=0.1]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=3, expression=5*r_c1-rc4, operator=bet, probability=0.4]], 
+		logicalRelation=-1, probability=0.4]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=4, expression=c7, operator=in(3), probability=0.4472136], 
+		FilterOperation [id=5, expression=rc4, operator=<, probability=0.4472136]], 
+		logicalRelation=0, probability=0.2], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[1], cantJoinNum=[2], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=6, expression=s_c1, operator=bet, probability=0.16333999], 
+		FilterOperation [id=7, expression=s__c5, operator=in(5), probability=0.16333999]], 
+		logicalRelation=1, probability=0.3], 
+	FKJoin [foreignKeys=[fk], probability=0.2, primakryKeys=[r.r_key], canJoinNum=1, cantJoinNum=2, fkStr=[fk], rpkStr=[r.r_key]]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=8, expression=r_c2-r_c3, operator=>=, probability=0.29]], 
+		logicalRelation=-1, probability=0.29], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[4], cantJoinNum=[8], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=9, expression=s__c5, operator=in(4), probability=0.32999998]], 
+		logicalRelation=-1, probability=0.67], 
+	FKJoin [foreignKeys=[fk], probability=0.1, primakryKeys=[r.r_key], canJoinNum=4, cantJoinNum=8, fkStr=[fk], rpkStr=[r.r_key]]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=10, expression=c, operator=likehehe, probability=0.5]], 
+		logicalRelation=-1, probability=0.5]]]]
+[2023-04-16 15:38:14,247] DEBUG edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:119) main - 
+The cardinality constraint chains: [
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=0, expression=2*r_c1+r_c1-r_c3, operator=<=, probability=0.3]], 
+		logicalRelation=-1, probability=0.3]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=1, expression=r_c1, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=2, expression=r_c1, operator==, probability=0.1]], 
+		logicalRelation=-1, probability=0.1]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=3, expression=5*r_c1-rc4, operator=bet, probability=0.4]], 
+		logicalRelation=-1, probability=0.4]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=4, expression=c7, operator=in(3), probability=0.4472136], 
+		FilterOperation [id=5, expression=rc4, operator=<, probability=0.4472136]], 
+		logicalRelation=0, probability=0.2], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[1], cantJoinNum=[2], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=6, expression=s_c1, operator=bet, probability=0.16333999], 
+		FilterOperation [id=7, expression=s__c5, operator=in(5), probability=0.16333999]], 
+		logicalRelation=1, probability=0.3], 
+	FKJoin [foreignKeys=[fk], probability=0.2, primakryKeys=[r.r_key], canJoinNum=1, cantJoinNum=2, fkStr=[fk], rpkStr=[r.r_key]]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=8, expression=r_c2-r_c3, operator=>=, probability=0.29]], 
+		logicalRelation=-1, probability=0.29], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[4], cantJoinNum=[8], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=9, expression=s__c5, operator=in(4), probability=0.32999998]], 
+		logicalRelation=-1, probability=0.67], 
+	FKJoin [foreignKeys=[fk], probability=0.1, primakryKeys=[r.r_key], canJoinNum=4, cantJoinNum=8, fkStr=[fk], rpkStr=[r.r_key]]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=10, expression=c, operator=likehehe, probability=0.5]], 
+		logicalRelation=-1, probability=0.5]]]]
+[2023-04-16 15:38:34,403] DEBUG edu.ecnu.touchstone.constraintchain.ConstraintChainsReader.read(ConstraintChainsReader.java:119) main - 
+The cardinality constraint chains: [
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=0, expression=2*r_c1+r_c1-r_c3, operator=<=, probability=0.3]], 
+		logicalRelation=-1, probability=0.3]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=1, expression=r_c1, operator==, probability=0.2]], 
+		logicalRelation=-1, probability=0.2]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=2, expression=r_c1, operator==, probability=0.1]], 
+		logicalRelation=-1, probability=0.1]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=3, expression=5*r_c1-rc4, operator=bet, probability=0.4]], 
+		logicalRelation=-1, probability=0.4]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=4, expression=c7, operator=in(3), probability=0.4472136], 
+		FilterOperation [id=5, expression=rc4, operator=<, probability=0.4472136]], 
+		logicalRelation=0, probability=0.2], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[1], cantJoinNum=[2], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=6, expression=s_c1, operator=bet, probability=0.16333999], 
+		FilterOperation [id=7, expression=s__c5, operator=in(5), probability=0.16333999]], 
+		logicalRelation=1, probability=0.3], 
+	FKJoin [foreignKeys=[fk], probability=0.2, primakryKeys=[r.r_key], canJoinNum=1, cantJoinNum=2, fkStr=[fk], rpkStr=[r.r_key]]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=8, expression=r_c2-r_c3, operator=>=, probability=0.29]], 
+		logicalRelation=-1, probability=0.29], 
+	PKJoin [primakryKeys=[r.r_key], canJoinNum=[4], cantJoinNum=[8], pkStr=[r.r_key]]]], 
+ConstraintChain [tableName=s, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=9, expression=s__c5, operator=in(4), probability=0.32999998]], 
+		logicalRelation=-1, probability=0.67], 
+	FKJoin [foreignKeys=[fk], probability=0.1, primakryKeys=[r.r_key], canJoinNum=4, cantJoinNum=8, fkStr=[fk], rpkStr=[r.r_key]]]], 
+ConstraintChain [tableName=r, nodes=[
+	Filter [filterOperations=[
+		FilterOperation [id=10, expression=c, operator=like'hehe', probability=0.5]], 
+		logicalRelation=-1, probability=0.5]]]]
+[2023-04-16 15:47:38,915]  INFO edu.ecnu.touchstone.rule.Rule.parseWhere(Rule.java:177) main - 
+ Query Filter Operations are: [
+[filename@like'%']
+]
+[2023-04-16 15:49:08,759]  INFO edu.ecnu.touchstone.rule.Rule.parseWhere(Rule.java:177) main - 
+ Query Filter Operations are: [
+[filename@like'%']
+]
+[2023-04-16 15:49:19,421]  INFO edu.ecnu.touchstone.rule.Rule.parseWhere(Rule.java:177) main - 
+ Query Filter Operations are: [
+[filename@like'%', filename@<>'name.txt']
+]
+[2023-04-16 15:49:34,250]  INFO edu.ecnu.touchstone.rule.Rule.parseWhere(Rule.java:177) main - 
+ Query Filter Operations are: [
+[filename@like'%', filename@<>]
+]
