@@ -1,0 +1,251 @@
+## Filter node: [0, exp1@op1#exp2@op2 ... #and|or, probability]
+## FKJoin node: [2, fk1#fk2 ..., probability, pk1#pk2 ..., num1, num2]
+## PKJoin node: [1, pk1#pk2 ..., num1, num2, ...]
+## num1 is the identifier that can join, num2 is the identifier that can not join
+
+## query 1
+[roles]; [0, builtin@=, 0.9]
+
+## query 2
+[attachments]; [0, digest@=#filesize@=#and, 0.8]
+
+## query 3
+[users]; [0, lastname@=, 0.4]
+
+## query 4
+[users]; [0, type@=, 0.88]; [1, user.id, 1, 2]  
+[email_addresses]; [0, address@=, 0.88]; [2, user_id, 0.3, users.id, 1, 2]         
+
+## query 5
+[users]; [0, status@=, 0.3]; [1, user.id, 4, 8]
+[watchers]; [0, watchable_type@=#watchable_id@=#and, 0.88]; [2, user_id, 0.4, users.id, 4, 8]
+
+## query 6
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.5]
+
+## query 7
+[custom_field_enumerations]; [0, custom_field_id@=, 0.5]
+
+## query 8
+[watchers]; [0, watchable_type@=, 0.55]
+
+## query 9
+[imports]; [0, filename@=, 0.08]
+
+## query 10
+[comments]; [0, commented_id@=, 0.3]
+
+## query 11
+[custom_fields]; [0, type@=, 0.8]; [1, custom_fields.id, 1, 2]
+[custom_fields_trackers]; [2, custom_field_id, 0.5, custom_fields.id, 1, 2]
+
+## query 12
+[users]; [0, type@=#status@=#and, 0.9]; [1, users.id, 16, 32]
+[members]; [2, user_id, 0.5, users.id, 16, 32]
+
+## query 13
+[roles]; [1, roles.id, 1, 2]
+[member_roles]; [2, member_id, 0.5, roles.id, 1, 2]
+
+## query 14
+[trackers]; [1, trackers.id, 1, 2]
+[projects_trackers]; [2, tracker_id, 0.5, trackers.id, 1, 2]
+
+## query 15
+[projects]; [1, projects.id, 1, 2]
+[members]; [2, project_id, 0.5, projects.id, 1, 2]
+
+## query 16
+[projects]; [1, projects.id, 4, 8]
+[trackers]; [1, trackers.id, 4, 8]
+[projects_trackers]; [2, project_id, 0.5, projects.id, 2, 4]; [2, tracker_id, 0.5, trackers.id, 4, 8]
+
+## query 17
+[users]; [0, type@=, 0.5]; [1, users.id, 64, 128]
+[groups_users]; [2, user_id, 0.5, users.id, 64, 128]
+
+## query 18
+[projects]; [1, projects.id, 16, 32]
+[members]; [1, members.id, 1, 2]; [2, project_id, 0.5, projects.id, 16, 32]
+[member_roles]; [2, member_id, 0.5, members.id, 1, 2]
+
+## query 19
+[roles]; [1, roles.id, 4, 8]
+[users]; [1, users.id, 256, 512]
+[members]; [1, members.id, 4, 8]; [2, user_id, 0.5, users.id, 256, 512]
+[member_roles]; [2, role_id, 0.5, roles.id, 4, 8]; [2, member_id, 0.5, members.id, 4, 8]
+
+## query 20
+[queries]; [0, type@=, 0.5]
+
+## query 21
+[projects]; [1, projects.id, 64, 128]
+[documents]; [2, project_id, 0.5, projects.id, 64, 128]
+
+## query 22
+[projects]; [1, projects.id, 256, 512]
+[issues]; [2, project_id, 0.5, projects.id, 256, 512]
+
+## query 23
+[issues]; [0, lft@>93#rgt@<94#and, 0.5]
+
+## query 24
+[projects]; [1, projects.id, 1024, 2048]
+[issue_statuses];[1, issue_statuses.id, 1, 2]
+[trackers]; [1, trackers.id, 16, 32]
+[issues]; [2, project_id, 0.5, projects.id, 1024, 2048]; [2, status_id, 0.5, issue_statuses.id, 1, 2]; [2, tracker_id, 0.5, trackers.id, 16, 32]
+
+## query 25
+[issue_statuses]; [1, issue_statuses.id, 2, 4]
+[issues]; [2, status_id, 0.5, issue_statuses.id, 2, 4]
+
+## query 26
+[custom_fields]; [0, type@=, 0.5]
+
+## query 27
+[attachments]; [0, disk_filename@=, 0.5]
+
+## query 28
+[projects]; [1, projects.id, 4096, 8192]
+[wikis]; [2, project_id, 0.5, projects.id, 4096, 8192]
+
+## query 29
+[projects]; [1, projects.id, 16384, 32768]
+[issues]; [1, issues.id, 1, 2]; [2, project_id, 0.5, projects.id, 16384, 32768]
+[journals]; [0, journalized_type@=, 0.5]; [2, journalized_id, 0.5, issues.id, 1, 2]
+
+## query 30
+[users]; [0, type@=User#type@=AnonymousUser#or, 0.5]
+
+## query 31
+[wiki_redirects]; [0, title@=, 0.5]
+
+## query 32
+[projects]; [0, description@=, 0.5]
+
+## query 33
+[projects]; [0, name@=, 0.5]
+
+## query 34
+[projects]; [0, name@=#description@=#and, 0.5]
+
+## query 35
+[projects]; [0, name@=#description@=#or, 0.5]
+
+## query 36
+[projects]; [0, homepage@=, 0.5]
+
+## query 37
+[projects]; [0, homepage@=#name@=#description@=#and, 0.5]
+
+## query 38
+[projects]; [0, rgt@>, 0.5]
+
+## query 39
+[projects]; [0, lft@<, 0.5]
+
+## query 40
+[projects]; [0, lft@<20#rgt@>30#and, 0.5]
+
+## query 41
+[projects]; [0, rgt@>, 0.5]; [1, projects.id, 65536, 131072]
+[members]; [2, project_id, 0.5, projects.id, 65536, 131072]
+
+## query 42
+[projects]; [0, homepage@=#name@=#status@=#and, 0.5]; [1, projects.id, 262144, 524288]
+[enabled_modules]; [2, project_id, 0.5, projects.id, 262144, 524288]
+
+## query 43
+[projects]; [0, name@=#description@=#or, 0.5]; [1, projects.id, 1048576, 2097152]
+[enabled_modules]; [2, project_id, 0.5, projects.id, 1048576, 2097152]
+[members]; [2, project_id, 0.5, projects.id, 1048576, 2097152]
+[repositories]; [2, project_id, 0.5, projects.id, 1048576, 2097152]
+
+## query 44
+[projects]; [0, name@=#description@=#or, 0.5]; [1, projects.id, 4194304, 8388608]
+[projects_trackers]; [2, project_id, 0.5, projects.id, 4194304, 8388608]
+[repositories]; [0, url@=www.google.com, 0.5]; [2, project_id, 0.5, projects.id, 4194304, 8388608]
+
+## query 45
+[projects]; [0, name@=constropt, 0.5]; [1, projects.id, 16777216, 33554432]
+[projects_trackers]; [2, project_id, 0.5, projects.id, 16777216, 33554432]
+[repositories]; [0, url@=www.yahoo.finance.com, 0.5]; [2, project_id, 0.5, projects.id, 16777216, 33554432]
+
+## query 46
+[projects]; [0, created_on@bet, 0.5]
+
+## query 47
+[projects]; [0, status@<>9, 0.5]
+
+## query 48
+[projects]; [0, lft@>=5#rgt@<=8#and, 0.5]
+
+## query 49
+[projects]; [0, name@like#description@not like#or, 0.5]
+
+## query 50
+[projects]; [0, name@=constropt, 0.5]; [1, projects.id, 67108864, 134217728]
+[repositories]; [2, project_id, 0.5, projects.id, 67108864, 134217728]
+
+## query 51
+[projects]; [0, homepage@like mypage#name@like myname#and, 0.5]
+
+## query 52
+[projects]; [0, homepage@not like mypage#name@not like myname#and, 0.5]
+
+## query 53
+[projects]; [0, description@<>baddescription, 0.5]
+
+## query 54
+[projects]; [0, status@=8#description@like#or, 0.5]
+
+## query 55
+[projects]; [1, projects.id, 268435456, 536870912]
+[wikis]; [2, project_id, 0.5, projects.id, 268435456, 536870912]
+[repositories]; [2, project_id, 0.5, projects.id,  268435456, 536870912]
+
+## query 56
+[projects]; [0, status@=8#description@like#created_on@bet#or, 0.5]
+
+## query 57
+[projects]; [0, status@=8#description@like#created_on@bet#and, 0.5]
+
+## query 58
+[projects]; [0, updated_on@bet#created_on@bet#and, 0.5]
+
+## query 59
+[projects]; [0, default_version_id@in(4), 0.5]
+
+## query 60
+[projects]; [0, default_version_id@in(4)#updated_on@bet#created_on@bet#and, 0.5]
+
+## query 61
+[projects]; [0, description@like#default_version_id@in(3)#updated_on@bet#created_on@bet#and, 0.5]
+
+## query 62
+[projects]; [0, description@like#default_version_id@in(3)#updated_on@bet#created_on@bet#or, 0.5]
+
+## query 63
+[projects]; [0, default_version_id@in(4)#identifier@=#and, 0.5]
+
+## query 64
+[projects]; [0, identifier@=, 0.5]
+
+## query 65
+[projects]; [0, identifier@=sunday, 0.5]
+
+## query 66
+[projects]; [0, identifier@=sunday#name@=monday#or, 0.5]
+
+## query 67
+[projects]; [0, identifier@=sunday#name@=hey#and, 0.5]
+
+## query 68
+[projects]; [0, description@like fair, 0.5]
+
+## query 69
+[projects]; [0, name@<>, 0.5]
+
+## query 70
+[projects]; [0, description@=monday, 0.5]
+

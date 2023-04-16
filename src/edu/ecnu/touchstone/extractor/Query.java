@@ -1,0 +1,106 @@
+package edu.ecnu.touchstone.extractor;
+import java.util.List;
+import java.util.stream.*;
+import java.util.regex.Pattern;
+import java.util.regex.MatchResult;
+
+import edu.ecnu.touchstone.schema.*;
+import net.sf.jsqlparser.statement.*;
+import net.sf.jsqlparser.util.TablesNamesFinder;
+import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.parser.*;
+public class Query {
+
+    int id = 0;
+    String sql = null;
+    Statement stmt = null;
+
+    // tables used in the query
+    List<Table> tables = null;
+
+    public Query(int id, String strQuery, List<Table> tables) {
+        this.id = id;
+        this.sql = strQuery;
+        init(tables);
+    }
+
+    public void init(List<Table> tables) {
+        try {
+            stmt = CCJSqlParserUtil.parse(sql, 
+                    parser -> parser.withSquareBracketQuotation(true));
+            TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
+            List<String> tableList = tablesNamesFinder.getTableList(stmt);
+            this.tables = tables.stream()
+                                .filter(table -> tableList.contains(table.getTableName()))
+                                .collect(Collectors.toList());
+        } catch (JSQLParserException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public boolean containNQ() {
+        List<String> select = Pattern.compile("select")
+                                 .matcher(this.sql)
+                                 .results()
+                                 .map(MatchResult::group)
+                                 .collect(Collectors.toList());
+        return select.size() > 1;
+    }
+
+    /* 
+     * @Description: Gievn an attribute name, return the table name it belongs to
+     * @Input: attribute (column) name
+     * @Return: table name
+     */
+    public String attrToTable(String attr) throws Exception {
+        List<String> table = this.tables.stream()
+                                        .filter(t -> belongTable(attr, t))
+                                        .map(t -> t.getTableName())
+                                        .collect(Collectors.toList());
+        if (table.size() == 0 || table.size() > 1) {
+            throw new Exception("\nBad sttribute name " + attr);
+        } 
+        return table.get(0);
+    }
+
+    /* 
+     * @Description: return true if attribute belongs to table
+     */
+    private boolean belongTable(String targetAttr, Table table) {
+        List<String> attrList = table.getAttributes()
+                                        .stream()
+                                        .map(attr -> attr.getAttrName())
+                                        .collect(Collectors.toList());
+        attrList.addAll(table.getForeignKeys()
+                             .stream()
+                             .map(fk -> fk.getAttrName())
+                             .collect(Collectors.toList()));
+        attrList.addAll(table.getPrimaryKey()
+                             .stream()
+                             .map(pk -> pk.split("\\.")[1])
+                             .collect(Collectors.toList()));
+        return attrList.contains(targetAttr);
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getSQL() {
+        return this.sql;
+    }
+
+    public List<Table> getTables() {
+        return this.tables;
+    }
+
+    public Statement getStmt() {
+        return this.stmt;
+    }
+
+    @Override
+    public String toString() {
+        return "\nquery" + id + ": " + this.sql;
+    }
+}

@@ -1,0 +1,40 @@
+
+T[attachments; 2000; id, integer; container_id, integer; container_type, varchar; filename, varchar; disk_filename, varchar; filesize, integer; content_type, varchar; digest, varchar; downloads, integer; author_id, integer; created_on, datetime; description, varchar; disk_directory, varchar; author, integer; p(id); f(author_id, users.id)]
+D[attachments.id; 0; 2000; 1; 9999]
+D[attachments.container_type; 0; 15; 30]
+D[attachments.disk_filename; 0; 15; 30]
+D[attachments.digest; 0; 32; 64]
+D[attachments.downloads; 0; 1000; 1; 9999]
+
+T[auth_sources; 2000; id, integer; type, varchar; name, varchar; host, varchar; port, integer; account, varchar; account_password, varchar; base_dn, varchar; attr_login, varchar; attr_firstname, varchar; attr_lastname, varchar; attr_mail, varchar; onthefly_register, bool; tls, bool; filter, varchar; timeout, integer; qify_peer, bool; p(id)]
+D[auth_sources.type; 0; 15; 30]
+D[auth_sources.name; 0; 20; 60]
+
+
+T[custom_values; 2000; id, integer; customized_type, varchar; customized_id, integer; custom_field_id, integer; value, varchar; p(id)]
+T[issue_statuses; 2000; id, integer; name, varchar; is_closed, bool; position, integer; default_done_ratio, integer; p(id)]
+
+T[users; 2000; id, integer; login, varchar; hashed_password, varchar; firstname, varchar; lastname, varchar; admin, bool; status, integer; last_login_on, datetime; language, varchar; auth_source_id, integer; created_on, datetime; updated_on, datetime; type, varchar; identity_url, varchar; mail_notification, varchar; salt, varchar; must_change_passwd, bool; passwd_changed_on, datetime; twofa_scheme, varchar; twofa_totp_key, varchar; twofa_totp_last_used_at, integer; p(id)]
+D[users.firstname; 0; 10; 30]
+D[users.lastname; 0; 20; 255]
+
+T[custom_fields; 2000; id, integer; type, varchar; name, varchar; field_format, varchar; possible_values, varchar; regexp, varchar; min_length, integer; max_length, integer; is_required, bool; is_for_all, bool; is_filter, bool; position, integer; searchable, bool; default_value, varchar; editable, bool; visible, bool; multiple, bool; format_store, varchar; description, varchar; p(id)]
+T[trackers; 2000; id, integer; name, varchar; is_in_chlog, bool; position, integer; is_in_roadmap, bool; fields_bits, integer; default_status_id, integer; description, varchar; default_status, integer; p(id); f(default_status_id, issue_statuses.id)]
+
+T[roles; 2000; id, integer; name, varchar; position, integer; assignable, bool; builtin, integer; permissions, varchar; issues_visibility, varchar; users_visibility, varchar; time_entries_visibility, varchar; all_roles_managed, bool; settings, varchar; p(id)]
+D[roles.id; 0; 2000; 1; 9999]
+D[roles.name; 0; 10; 255]
+D[roles.issues_visibility; 0; 10; 30]
+
+T[watchers; 2000; id, integer; watchable_type, varchar; watchable_id, integer; user_id, integer; p(id); f(user_id, users.id)]
+
+T[tokens; 2000; id, integer; user_id, integer; action, varchar; value, varchar; created_on, datetime; updated_on, datetime; p(id); f(user_id, users.id)]
+T[comments; 2000; id, integer; commented_type, varchar; commented_id, integer; author_id, integer; content, varchar; created_on, datetime; updated_on, datetime; commented, integer; author, integer; p(id); f(author_id, users.id)]
+T[user_preferences; 2000; id, integer; user_id, integer; others, varchar; hide_mail, bool; time_zone, varchar; p(id); f(user_id, users.id)]
+T[open_id_authentication_nonces; 2000; id, integer; timestamp, integer; server_url, varchar; salt, varchar; p(id)]
+
+T[email_addresses; 2000; id, integer; user_id, integer; address, varchar; is_default, bool; notify, bool; created_on, datetime; updated_on, datetime; p(id); f(user_id, users.id)]
+
+T[imports; 2000; id, integer; type, varchar; user_id, integer; filename, varchar; settings, varchar; total_items, integer; finished, bool; created_at, datetime; updated_at, datetime; p(id); f(user_id, users.id)]
+T[custom_field_enumerations; 2000; id, integer; custom_field_id, integer; name, varchar; active, bool; position, integer; p(id)]
+T[import_items; 2000; id, integer; import_id, integer; position, integer; obj_id, integer; message, varchar; unique_id, varchar; p(id); f(import_id, imports.id)]
