@@ -3,8 +3,14 @@ package edu.ecnu.touchstone.extractor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.annotation.processing.Filer;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
+import edu.ecnu.touchstone.rule.Rule;
 import edu.ecnu.touchstone.run.Touchstone;
 import edu.ecnu.touchstone.schema.Table;
 import edu.ecnu.touchstone.schema.SchemaReader;
@@ -26,7 +32,7 @@ public class Loader {
     // Read in a .sql file line by line
     public List<Query> load(String sqlInputFile, List<Table> tables) {
         List<Query> queryOut = new ArrayList<Query>();
-        List<String> cardinalityInputList = new ArrayList<>();
+        List<String> CCList = new ArrayList<>();
 
         String inputLine = null;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new 
@@ -48,8 +54,8 @@ public class Loader {
                     if (queryLine.startsWith("select")) { 
                         Query query = new Query(id, queryLine, tables);
                         // Call Rule on each Query
-                        List<String> cardinalityInput = parseQuery(query, joinTable); 
-                        cardinalityInputList.addAll(cardinalityInput);
+                        List<String> constraintChains = parseQuery(id, query, joinTable); 
+                        CCList.addAll(constraintChains);
                         queryOut.add(query);
                         id += 1;
                     }
@@ -66,12 +72,45 @@ public class Loader {
             System.exit(0);
         }
         logger.debug("Query Info is: \n" + queryOut);
-        logger.debug("Cardinality inout is: \n" + cardinalityInputList);
+        logger.debug("Cardinality input is: \n" + CCList);
         return queryOut;
     }
     
-    public List<String> parseQuery(Query query, HashMap<String, Integer> joinTable) {
-        return null;
+    /* 
+     * @Description: decouple table from query to format constraint chain 
+     */
+    public List<String> parseQuery(int id, Query query, HashMap<String, Integer> joinTable) {
+        List<String> ret = new ArrayList<>();
+        ret.add("## query " + id);
+        Rule rule = new Rule();
+        List<Info> infos = rule.parse(query);
+        List<Table> tables = query.getTables();
+        for (Table table: tables) {
+            List<String> CCList = new ArrayList<>();
+            CCList.add("[" + table.getTableName() + "]");
+            String filterInfos = infos.stream()
+                                          .filter(info -> info.getTable().equals(table.getTableName()))
+                                          .filter(info -> info instanceof FilterOpInfo)
+                                          .map(info -> info.toString())
+                                          .collect(Collectors.joining("#"));
+            String filter = String.format("[0, %s, %f]", filterInfos, 0.5);
+            CCList.add(filter);
+            String pkInfos = infos.stream()
+                                 .filter(info -> info.getTable().equals(table.getTableName()))
+                                 .filter(info -> info instanceof PkInfo)
+                                 .map(info -> info.toString())
+                                 .collect(Collectors.joining("; "));
+            CCList.add(pkInfos);
+            String FkInfos = infos.stream()
+                                        .filter(info -> info.getTable().equals(table.getTableName()))
+                                        .filter(info -> info instanceof FkInfo)
+                                        .map(info -> info.toString())
+                                        .collect(Collectors.joining("; "));
+            CCList.add(FkInfos);
+            String constraintChain = CCList.stream().collect(Collectors.joining("; "));
+            ret.add(constraintChain);
+        }
+        return ret;
     }
 
     // test 
@@ -79,7 +118,7 @@ public class Loader {
         PropertyConfigurator.configure(".//test//lib//log4j.properties");
         Loader loader = new Loader();
         SchemaReader schemaReader = new SchemaReader();
-        List<Table> tables = schemaReader.read(".//test//input//redmine_schema_sf_1.txt");
-        loader.load(".//test//input//redmine_test.sql", tables);
+        List<Table> tables = schemaReader.read(".//test//input//redmine_schema.txt");
+        loader.load(".//test//input//redmine_sql.sql", tables);
     }
 }
