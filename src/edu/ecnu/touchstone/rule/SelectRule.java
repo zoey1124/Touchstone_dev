@@ -1,10 +1,7 @@
 package edu.ecnu.touchstone.rule;
 
-public class FromRule extends Rule {
-    String type = "FromNQ";
-
+public class SelectRule extends Rule {
     public void apply() {
         
     }
-    
-} 
+}

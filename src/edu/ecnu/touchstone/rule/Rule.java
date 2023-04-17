@@ -30,7 +30,11 @@ public class Rule {
         List<Rule> rules = new ArrayList<>();
         // set operations
         if (selectBody instanceof SetOperationList) {
-
+            SetOperationList setOperationList = (SetOperationList) selectBody;
+            SetOperationRule setOperationRule = 
+                    new SetOperationRule(setOperationList.getOperations(), 
+                                         setOperationList.getSelects());
+            setOperationRule.apply();
         }
         else if (selectBody instanceof PlainSelect) {
             PlainSelect plainSelect = (PlainSelect) selectBody;
@@ -38,13 +42,15 @@ public class Rule {
             List<SelectItem> selectItems = plainSelect.getSelectItems();
             for (SelectItem selectItem: selectItems) {
                 if (selectItem.toString().contains("select")) {
-
+                    SelectRule selectRule = new SelectRule();
+                    selectRule.apply();
                 }
             }
             // from
             FromItem from = plainSelect.getFromItem();
             if (from instanceof SubSelect) {
-                rules.add(new FromRule());
+                FromRule fromRule = new FromRule();
+                fromRule.apply();
             }
             // where
             Expression where = plainSelect.getWhere();
@@ -54,9 +60,11 @@ public class Rule {
                     public void visit(InExpression inExpression) {
                         if (inExpression.toString().contains("select")) {
                             if (inExpression.isNot()) {
-                                rules.add(new NotInRule());
+                                NotInRule notInRule = new NotInRule();
+                                notInRule.apply();
                             } else {
-                                rules.add(new InRule());
+                                InRule inRule = new InRule();
+                                inRule.apply();
                             }
                         }
                     }
@@ -76,7 +84,7 @@ public class Rule {
             // having
             Expression having = plainSelect.getHaving();
             if (having != null) {
-
+                
             }
         } else if (selectBody instanceof WithItem) {
 
@@ -213,8 +221,6 @@ public class Rule {
                 @Override
                 public void visit(InExpression inExpr) {
                     System.out.println(inExpr);
-                    System.out.println(inExpr.getLeftExpression());
-                    System.out.println(inExpr.getRightItemsList());
                 }
             });
         } catch (Exception e) {
