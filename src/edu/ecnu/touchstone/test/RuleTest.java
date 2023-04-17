@@ -1,16 +1,18 @@
 package edu.ecnu.touchstone.test;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ecnu.touchstone.extractor.Query;
 import edu.ecnu.touchstone.rule.Rule;
-import edu.ecnu.touchstone.schema.SchemaReader;
-import net.sf.jsqlparser.parser.CCJSqlParser;
+import edu.ecnu.touchstone.schema.Table;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.select.Join;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.expression.*;
@@ -22,8 +24,10 @@ public class RuleTest {
     String sql1 = "select issues.* from issues "
                 + "where issues.root_id = $1 and (issues.lft >= 4 and issues.rgt <= 5) "
                 + "order by issues.lft ASC;";
+
     String sql2 = "select 1 as one from enumerations "
-                + "where enumerations.type in ('IssuePriority') limit $1";
+                + "where enumerations.type in ('IssuePriority') "
+                + "or enumeration.type not in ('test') limit $1";
     
     String sql3 = "select attachments.* from attachments where (filename like '%');";
     
@@ -41,6 +45,8 @@ public class RuleTest {
                      + "and n_regionkey = r_regionkey and r_name = '[REGION]' "
                      + "and o_orderdate >= date '[DATE]' and o_orderdate < date '[DATE]' + interval '1' year "
                      + "group by n_name order by revenue desc;";
+                     
+    String sql5 = "select * from r join s on r.k1 = s.k2 join t on s.k3 = t.k4;";
 
     @Before
     public void setUp() {
@@ -54,7 +60,7 @@ public class RuleTest {
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
             Expression where = plainSelect.getWhere();
-            List<Expression> conditions = rule.parseWhere(where);
+            List<Object> conditions = rule.parseExpression(where);
             assertEquals("Base case parse where should work", 3, conditions.size());
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,8 +74,8 @@ public class RuleTest {
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
             Expression where = plainSelect.getWhere();
-            List<Expression> conditions = rule.parseWhere(where);
-            assertEquals("IN case parse where should work", 1, conditions.size());
+            List<Object> conditions = rule.parseExpression(where);
+            assertEquals("IN case parse where should work", 2, conditions.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,7 +88,7 @@ public class RuleTest {
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
             Expression where = plainSelect.getWhere();
-            List<Expression> conditions = rule.parseWhere(where);
+            List<Object> conditions = rule.parseExpression(where);
             assertEquals("LIKE case parse where should work", 1, conditions.size());
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,7 +102,7 @@ public class RuleTest {
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
             Expression where = plainSelect.getWhere();
-            List<Expression> conditions = rule.parseWhere(where);
+            List<Object> conditions = rule.parseExpression(where);
             assertEquals("<> case parse where should work", 2, conditions.size());
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,11 +116,38 @@ public class RuleTest {
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
             Expression where = plainSelect.getWhere();
-            List<Expression> conditions = rule.parseWhere(where);
+            List<Object> conditions = rule.parseExpression(where);
             assertEquals("<> case parse where should work", 9, conditions.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @Test
+    public void testParseJoinBaseCase() throws Exception {
+        List<Object> conditions = new ArrayList<>();
+        try {
+            Statement stmt = CCJSqlParserUtil.parse(sql5);
+            Select select = (Select) stmt;
+            PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
+            List<Join> joinList = plainSelect.getJoins();
+            for (Join join: joinList) {
+                List<Expression> onExprs = (List<Expression>) join.getOnExpressions();  
+                for (Expression onExpr: onExprs) {
+                    conditions.addAll(rule.parseExpression(onExpr));
+                }
+            }
+            assertEquals("Base case parse join ON should work", 2, conditions.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testParser() throws Exception {
+        List<Table> tables = new ArrayList<>();
+        Query query = new Query(0, sql1, tables);
+        List<Object> conditions = rule.parse(query);
+        assertEquals("Base case parse should work", 3, conditions.size());
+    }
 }

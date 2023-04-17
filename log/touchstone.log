@@ -618,3 +618,356 @@ ConstraintChain [tableName=r, nodes=[
  Query Filter Operations are: [
 [filename@like'%', filename@<>]
 ]
+[2023-04-16 21:28:44,456] ERROR edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:60) main - 
+	Error input line: null
+[2023-04-16 21:29:51,010] ERROR edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:60) main - 
+	Error input line: null
+[2023-04-16 21:30:55,196] ERROR edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:60) main - 
+	Error input line: null
+[2023-04-16 21:32:15,211] DEBUG edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:142) main - 
+The schema of database instance (include the basic data characteristic): [
+Table [tableName=region, tableSize=500, primaryKey=[region.r_regionkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=r_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=13, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=r_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=132, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=nation, tableSize=2500, primaryKey=[nation.n_nationkey], foreignKeys=[ForeignKey [attrName=n_regionkey, referencedKey=region.r_regionkey]], 
+attributes=[
+	Attribute [attrName=n_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=14, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=n_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=148, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=part, tableSize=200000, primaryKey=[part.p_partkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=p_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=55, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_mfgr, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=3, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_brand, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=6, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_type, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=16, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_size, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=50, min=1, max=50, quotiety=0.98, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=0.02, piecewiseFunction=null]], 
+	Attribute [attrName=p_container, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=5, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_retailprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=2098.99]], 
+	Attribute [attrName=p_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=4, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=supplier, tableSize=10000, primaryKey=[supplier.s_suppkey], foreignKeys=[ForeignKey [attrName=s_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=s_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=9, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-998.22, max=9999.72]], 
+	Attribute [attrName=s_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=24, maxLength=101, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=partsupp, tableSize=800000, primaryKey=[partsupp.ps_partkey, partsupp.ps_suppkey], foreignKeys=[ForeignKey [attrName=ps_partkey, referencedKey=part.p_partkey], ForeignKey [attrName=ps_suppkey, referencedKey=supplier.s_suppkey]], 
+attributes=[
+	Attribute [attrName=ps_availqty, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=9999, min=1, max=9999, quotiety=0.9999, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0001000100010001E-4, piecewiseFunction=null]], 
+	Attribute [attrName=ps_supplycost, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=1000.0]], 
+	Attribute [attrName=ps_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=48, maxLength=199, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=customer, tableSize=150000, primaryKey=[customer.c_custkey], foreignKeys=[ForeignKey [attrName=c_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=c_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-999.99, max=9999.99]], 
+	Attribute [attrName=c_mktsegment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=7, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=28, maxLength=117, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=orders, tableSize=1500000, primaryKey=[orders.o_orderkey], foreignKeys=[ForeignKey [attrName=o_custkey, referencedKey=customer.c_custkey]], 
+attributes=[
+	Attribute [attrName=o_orderstatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_totalprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=857.71, max=555285.16]], 
+	Attribute [attrName=o_orderdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694252800000, endTimeMilliseconds=902041200000, startTimeOriginalString=19920101000000, endTimeOriginalString=19980802000000]], 
+	Attribute [attrName=o_orderpriority, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_clerk, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_shippriority, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=1, min=0, max=0, quotiety=0.0, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0, piecewiseFunction=null]], 
+	Attribute [attrName=o_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=18, maxLength=79, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=lineitem, tableSize=6001215, primaryKey=[lineitem.l_orderkey, lineitem.l_linenumber], foreignKeys=[ForeignKey [attrName=l_partkey, referencedKey=partsupp.ps_partkey], ForeignKey [attrName=l_suppkey, referencedKey=partsupp.ps_suppkey], ForeignKey [attrName=l_orderkey, referencedKey=orders.o_orderkey]], 
+attributes=[
+	Attribute [attrName=l_quantity, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=50.0]], 
+	Attribute [attrName=l_extendedprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=104949.5]], 
+	Attribute [attrName=l_discount, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.1]], 
+	Attribute [attrName=l_tax, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.08]], 
+	Attribute [attrName=l_returnflag, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_linestatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694339200000, endTimeMilliseconds=912499200000, startTimeOriginalString=19920102000000, endTimeOriginalString=19981201000000]], 
+	Attribute [attrName=l_commitdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=696844800000, endTimeMilliseconds=909820800000, startTimeOriginalString=19920131000000, endTimeOriginalString=19981031000000]], 
+	Attribute [attrName=l_receiptdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694512000000, endTimeMilliseconds=915091200000, startTimeOriginalString=19920104000000, endTimeOriginalString=19981231000000]], 
+	Attribute [attrName=l_shipinstruct, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipmode, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=8, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=8, maxLength=44, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]]]
+[2023-04-16 21:32:15,295]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:179) main - 
+ Query Filter Operations are: [
+[edu.ecnu.touchstone.rule.JoinInfo@17ed40e0]
+]
+[2023-04-16 21:36:18,602] DEBUG edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:142) main - 
+The schema of database instance (include the basic data characteristic): [
+Table [tableName=region, tableSize=500, primaryKey=[region.r_regionkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=r_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=13, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=r_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=132, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=nation, tableSize=2500, primaryKey=[nation.n_nationkey], foreignKeys=[ForeignKey [attrName=n_regionkey, referencedKey=region.r_regionkey]], 
+attributes=[
+	Attribute [attrName=n_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=14, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=n_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=148, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=part, tableSize=200000, primaryKey=[part.p_partkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=p_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=55, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_mfgr, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=3, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_brand, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=6, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_type, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=16, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_size, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=50, min=1, max=50, quotiety=0.98, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=0.02, piecewiseFunction=null]], 
+	Attribute [attrName=p_container, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=5, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_retailprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=2098.99]], 
+	Attribute [attrName=p_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=4, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=supplier, tableSize=10000, primaryKey=[supplier.s_suppkey], foreignKeys=[ForeignKey [attrName=s_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=s_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=9, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-998.22, max=9999.72]], 
+	Attribute [attrName=s_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=24, maxLength=101, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=partsupp, tableSize=800000, primaryKey=[partsupp.ps_partkey, partsupp.ps_suppkey], foreignKeys=[ForeignKey [attrName=ps_partkey, referencedKey=part.p_partkey], ForeignKey [attrName=ps_suppkey, referencedKey=supplier.s_suppkey]], 
+attributes=[
+	Attribute [attrName=ps_availqty, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=9999, min=1, max=9999, quotiety=0.9999, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0001000100010001E-4, piecewiseFunction=null]], 
+	Attribute [attrName=ps_supplycost, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=1000.0]], 
+	Attribute [attrName=ps_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=48, maxLength=199, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=customer, tableSize=150000, primaryKey=[customer.c_custkey], foreignKeys=[ForeignKey [attrName=c_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=c_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-999.99, max=9999.99]], 
+	Attribute [attrName=c_mktsegment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=7, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=28, maxLength=117, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=orders, tableSize=1500000, primaryKey=[orders.o_orderkey], foreignKeys=[ForeignKey [attrName=o_custkey, referencedKey=customer.c_custkey]], 
+attributes=[
+	Attribute [attrName=o_orderstatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_totalprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=857.71, max=555285.16]], 
+	Attribute [attrName=o_orderdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694252800000, endTimeMilliseconds=902041200000, startTimeOriginalString=19920101000000, endTimeOriginalString=19980802000000]], 
+	Attribute [attrName=o_orderpriority, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_clerk, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_shippriority, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=1, min=0, max=0, quotiety=0.0, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0, piecewiseFunction=null]], 
+	Attribute [attrName=o_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=18, maxLength=79, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=lineitem, tableSize=6001215, primaryKey=[lineitem.l_orderkey, lineitem.l_linenumber], foreignKeys=[ForeignKey [attrName=l_partkey, referencedKey=partsupp.ps_partkey], ForeignKey [attrName=l_suppkey, referencedKey=partsupp.ps_suppkey], ForeignKey [attrName=l_orderkey, referencedKey=orders.o_orderkey]], 
+attributes=[
+	Attribute [attrName=l_quantity, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=50.0]], 
+	Attribute [attrName=l_extendedprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=104949.5]], 
+	Attribute [attrName=l_discount, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.1]], 
+	Attribute [attrName=l_tax, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.08]], 
+	Attribute [attrName=l_returnflag, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_linestatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694339200000, endTimeMilliseconds=912499200000, startTimeOriginalString=19920102000000, endTimeOriginalString=19981201000000]], 
+	Attribute [attrName=l_commitdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=696844800000, endTimeMilliseconds=909820800000, startTimeOriginalString=19920131000000, endTimeOriginalString=19981031000000]], 
+	Attribute [attrName=l_receiptdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694512000000, endTimeMilliseconds=915091200000, startTimeOriginalString=19920104000000, endTimeOriginalString=19981231000000]], 
+	Attribute [attrName=l_shipinstruct, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipmode, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=8, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=8, maxLength=44, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]]]
+[2023-04-16 21:36:48,880]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:180) main - 
+ Query Filter Operations are: [
+[edu.ecnu.touchstone.rule.JoinInfo@50675690]
+]
+[2023-04-16 21:38:05,530] DEBUG edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:142) main - 
+The schema of database instance (include the basic data characteristic): [
+Table [tableName=region, tableSize=500, primaryKey=[region.r_regionkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=r_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=13, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=r_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=132, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=nation, tableSize=2500, primaryKey=[nation.n_nationkey], foreignKeys=[ForeignKey [attrName=n_regionkey, referencedKey=region.r_regionkey]], 
+attributes=[
+	Attribute [attrName=n_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=14, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=n_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=148, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=part, tableSize=200000, primaryKey=[part.p_partkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=p_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=55, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_mfgr, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=3, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_brand, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=6, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_type, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=16, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_size, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=50, min=1, max=50, quotiety=0.98, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=0.02, piecewiseFunction=null]], 
+	Attribute [attrName=p_container, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=5, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_retailprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=2098.99]], 
+	Attribute [attrName=p_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=4, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=supplier, tableSize=10000, primaryKey=[supplier.s_suppkey], foreignKeys=[ForeignKey [attrName=s_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=s_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=9, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-998.22, max=9999.72]], 
+	Attribute [attrName=s_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=24, maxLength=101, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=partsupp, tableSize=800000, primaryKey=[partsupp.ps_partkey, partsupp.ps_suppkey], foreignKeys=[ForeignKey [attrName=ps_partkey, referencedKey=part.p_partkey], ForeignKey [attrName=ps_suppkey, referencedKey=supplier.s_suppkey]], 
+attributes=[
+	Attribute [attrName=ps_availqty, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=9999, min=1, max=9999, quotiety=0.9999, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0001000100010001E-4, piecewiseFunction=null]], 
+	Attribute [attrName=ps_supplycost, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=1000.0]], 
+	Attribute [attrName=ps_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=48, maxLength=199, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=customer, tableSize=150000, primaryKey=[customer.c_custkey], foreignKeys=[ForeignKey [attrName=c_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=c_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-999.99, max=9999.99]], 
+	Attribute [attrName=c_mktsegment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=7, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=28, maxLength=117, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=orders, tableSize=1500000, primaryKey=[orders.o_orderkey], foreignKeys=[ForeignKey [attrName=o_custkey, referencedKey=customer.c_custkey]], 
+attributes=[
+	Attribute [attrName=o_orderstatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_totalprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=857.71, max=555285.16]], 
+	Attribute [attrName=o_orderdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694252800000, endTimeMilliseconds=902041200000, startTimeOriginalString=19920101000000, endTimeOriginalString=19980802000000]], 
+	Attribute [attrName=o_orderpriority, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_clerk, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_shippriority, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=1, min=0, max=0, quotiety=0.0, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0, piecewiseFunction=null]], 
+	Attribute [attrName=o_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=18, maxLength=79, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=lineitem, tableSize=6001215, primaryKey=[lineitem.l_orderkey, lineitem.l_linenumber], foreignKeys=[ForeignKey [attrName=l_partkey, referencedKey=partsupp.ps_partkey], ForeignKey [attrName=l_suppkey, referencedKey=partsupp.ps_suppkey], ForeignKey [attrName=l_orderkey, referencedKey=orders.o_orderkey]], 
+attributes=[
+	Attribute [attrName=l_quantity, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=50.0]], 
+	Attribute [attrName=l_extendedprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=104949.5]], 
+	Attribute [attrName=l_discount, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.1]], 
+	Attribute [attrName=l_tax, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.08]], 
+	Attribute [attrName=l_returnflag, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_linestatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694339200000, endTimeMilliseconds=912499200000, startTimeOriginalString=19920102000000, endTimeOriginalString=19981201000000]], 
+	Attribute [attrName=l_commitdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=696844800000, endTimeMilliseconds=909820800000, startTimeOriginalString=19920131000000, endTimeOriginalString=19981031000000]], 
+	Attribute [attrName=l_receiptdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694512000000, endTimeMilliseconds=915091200000, startTimeOriginalString=19920104000000, endTimeOriginalString=19981231000000]], 
+	Attribute [attrName=l_shipinstruct, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipmode, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=8, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=8, maxLength=44, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]]]
+[2023-04-16 21:38:05,583]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:180) main - 
+ Query Filter Operations are: [
+[edu.ecnu.touchstone.rule.JoinInfo@17ed40e0]
+]
+[2023-04-16 21:38:05,583]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:180) main - 
+ Query Filter Operations are: [
+[edu.ecnu.touchstone.rule.JoinInfo@50675690]
+]
+[2023-04-16 21:40:05,252] DEBUG edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:142) main - 
+The schema of database instance (include the basic data characteristic): [
+Table [tableName=region, tableSize=500, primaryKey=[region.r_regionkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=r_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=13, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=r_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=132, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=nation, tableSize=2500, primaryKey=[nation.n_nationkey], foreignKeys=[ForeignKey [attrName=n_regionkey, referencedKey=region.r_regionkey]], 
+attributes=[
+	Attribute [attrName=n_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=14, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=n_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=148, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=part, tableSize=200000, primaryKey=[part.p_partkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=p_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=55, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_mfgr, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=3, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_brand, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=6, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_type, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=16, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_size, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=50, min=1, max=50, quotiety=0.98, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=0.02, piecewiseFunction=null]], 
+	Attribute [attrName=p_container, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=5, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_retailprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=2098.99]], 
+	Attribute [attrName=p_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=4, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=supplier, tableSize=10000, primaryKey=[supplier.s_suppkey], foreignKeys=[ForeignKey [attrName=s_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=s_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=9, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-998.22, max=9999.72]], 
+	Attribute [attrName=s_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=24, maxLength=101, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=partsupp, tableSize=800000, primaryKey=[partsupp.ps_partkey, partsupp.ps_suppkey], foreignKeys=[ForeignKey [attrName=ps_partkey, referencedKey=part.p_partkey], ForeignKey [attrName=ps_suppkey, referencedKey=supplier.s_suppkey]], 
+attributes=[
+	Attribute [attrName=ps_availqty, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=9999, min=1, max=9999, quotiety=0.9999, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0001000100010001E-4, piecewiseFunction=null]], 
+	Attribute [attrName=ps_supplycost, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=1000.0]], 
+	Attribute [attrName=ps_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=48, maxLength=199, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=customer, tableSize=150000, primaryKey=[customer.c_custkey], foreignKeys=[ForeignKey [attrName=c_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=c_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-999.99, max=9999.99]], 
+	Attribute [attrName=c_mktsegment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=7, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=28, maxLength=117, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=orders, tableSize=1500000, primaryKey=[orders.o_orderkey], foreignKeys=[ForeignKey [attrName=o_custkey, referencedKey=customer.c_custkey]], 
+attributes=[
+	Attribute [attrName=o_orderstatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_totalprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=857.71, max=555285.16]], 
+	Attribute [attrName=o_orderdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694252800000, endTimeMilliseconds=902041200000, startTimeOriginalString=19920101000000, endTimeOriginalString=19980802000000]], 
+	Attribute [attrName=o_orderpriority, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_clerk, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_shippriority, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=1, min=0, max=0, quotiety=0.0, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0, piecewiseFunction=null]], 
+	Attribute [attrName=o_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=18, maxLength=79, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=lineitem, tableSize=6001215, primaryKey=[lineitem.l_orderkey, lineitem.l_linenumber], foreignKeys=[ForeignKey [attrName=l_partkey, referencedKey=partsupp.ps_partkey], ForeignKey [attrName=l_suppkey, referencedKey=partsupp.ps_suppkey], ForeignKey [attrName=l_orderkey, referencedKey=orders.o_orderkey]], 
+attributes=[
+	Attribute [attrName=l_quantity, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=50.0]], 
+	Attribute [attrName=l_extendedprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=104949.5]], 
+	Attribute [attrName=l_discount, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.1]], 
+	Attribute [attrName=l_tax, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.08]], 
+	Attribute [attrName=l_returnflag, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_linestatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694339200000, endTimeMilliseconds=912499200000, startTimeOriginalString=19920102000000, endTimeOriginalString=19981201000000]], 
+	Attribute [attrName=l_commitdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=696844800000, endTimeMilliseconds=909820800000, startTimeOriginalString=19920131000000, endTimeOriginalString=19981031000000]], 
+	Attribute [attrName=l_receiptdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694512000000, endTimeMilliseconds=915091200000, startTimeOriginalString=19920104000000, endTimeOriginalString=19981231000000]], 
+	Attribute [attrName=l_shipinstruct, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipmode, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=8, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=8, maxLength=44, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]]]
+[2023-04-16 21:40:05,304]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:183) main - 
+ Query Filter Operations are: [
+[edu.ecnu.touchstone.rule.JoinInfo@17ed40e0]
+]
+[2023-04-16 21:40:05,304]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:183) main - 
+ Query Filter Operations are: [
+[edu.ecnu.touchstone.rule.JoinInfo@50675690]
+]
+[2023-04-16 21:42:06,938] DEBUG edu.ecnu.touchstone.schema.SchemaReader.read(SchemaReader.java:142) main - 
+The schema of database instance (include the basic data characteristic): [
+Table [tableName=region, tableSize=500, primaryKey=[region.r_regionkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=r_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=13, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=r_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=132, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=nation, tableSize=2500, primaryKey=[nation.n_nationkey], foreignKeys=[ForeignKey [attrName=n_regionkey, referencedKey=region.r_regionkey]], 
+attributes=[
+	Attribute [attrName=n_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=14, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=n_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=148, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=part, tableSize=200000, primaryKey=[part.p_partkey], foreignKeys=[], 
+attributes=[
+	Attribute [attrName=p_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=55, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_mfgr, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=3, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_brand, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=6, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_type, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=16, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_size, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=50, min=1, max=50, quotiety=0.98, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=0.02, piecewiseFunction=null]], 
+	Attribute [attrName=p_container, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=5, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=p_retailprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=2098.99]], 
+	Attribute [attrName=p_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=4, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=supplier, tableSize=10000, primaryKey=[supplier.s_suppkey], foreignKeys=[ForeignKey [attrName=s_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=s_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=9, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=s_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-998.22, max=9999.72]], 
+	Attribute [attrName=s_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=24, maxLength=101, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=partsupp, tableSize=800000, primaryKey=[partsupp.ps_partkey, partsupp.ps_suppkey], foreignKeys=[ForeignKey [attrName=ps_partkey, referencedKey=part.p_partkey], ForeignKey [attrName=ps_suppkey, referencedKey=supplier.s_suppkey]], 
+attributes=[
+	Attribute [attrName=ps_availqty, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=9999, min=1, max=9999, quotiety=0.9999, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0001000100010001E-4, piecewiseFunction=null]], 
+	Attribute [attrName=ps_supplycost, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=1000.0]], 
+	Attribute [attrName=ps_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=48, maxLength=199, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=customer, tableSize=150000, primaryKey=[customer.c_custkey], foreignKeys=[ForeignKey [attrName=c_nationkey, referencedKey=nation.n_nationkey]], 
+attributes=[
+	Attribute [attrName=c_name, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=11, maxLength=25, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_address, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=10, maxLength=40, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_phone, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_acctbal, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=-999.99, max=9999.99]], 
+	Attribute [attrName=c_mktsegment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=7, maxLength=10, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=c_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=28, maxLength=117, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=orders, tableSize=1500000, primaryKey=[orders.o_orderkey], foreignKeys=[ForeignKey [attrName=o_custkey, referencedKey=customer.c_custkey]], 
+attributes=[
+	Attribute [attrName=o_orderstatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_totalprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=857.71, max=555285.16]], 
+	Attribute [attrName=o_orderdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694252800000, endTimeMilliseconds=902041200000, startTimeOriginalString=19920101000000, endTimeOriginalString=19980802000000]], 
+	Attribute [attrName=o_orderpriority, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_clerk, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=15, maxLength=15, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=o_shippriority, dataType=integer, dataTypeInfo=TSInteger [nullRatio=0.0, cardinality=1, min=0, max=0, quotiety=0.0, indexProbabilityMap={}, adjustedIndexes=[], avgProbability=1.0, piecewiseFunction=null]], 
+	Attribute [attrName=o_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=18, maxLength=79, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]], 
+Table [tableName=lineitem, tableSize=6001215, primaryKey=[lineitem.l_orderkey, lineitem.l_linenumber], foreignKeys=[ForeignKey [attrName=l_partkey, referencedKey=partsupp.ps_partkey], ForeignKey [attrName=l_suppkey, referencedKey=partsupp.ps_suppkey], ForeignKey [attrName=l_orderkey, referencedKey=orders.o_orderkey]], 
+attributes=[
+	Attribute [attrName=l_quantity, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=1.0, max=50.0]], 
+	Attribute [attrName=l_extendedprice, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=901.0, max=104949.5]], 
+	Attribute [attrName=l_discount, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.1]], 
+	Attribute [attrName=l_tax, dataType=decimal, dataTypeInfo=TSDecimal [nullRatio=0.0, min=0.0, max=0.08]], 
+	Attribute [attrName=l_returnflag, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_linestatus, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=1, maxLength=1, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694339200000, endTimeMilliseconds=912499200000, startTimeOriginalString=19920102000000, endTimeOriginalString=19981201000000]], 
+	Attribute [attrName=l_commitdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=696844800000, endTimeMilliseconds=909820800000, startTimeOriginalString=19920131000000, endTimeOriginalString=19981031000000]], 
+	Attribute [attrName=l_receiptdate, dataType=datetime, dataTypeInfo=TSDateTime [nullRatio=0.0, startTimeMilliseconds=694512000000, endTimeMilliseconds=915091200000, startTimeOriginalString=19920104000000, endTimeOriginalString=19981231000000]], 
+	Attribute [attrName=l_shipinstruct, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=23, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_shipmode, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=0, maxLength=8, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]], 
+	Attribute [attrName=l_comment, dataType=varchar, dataTypeInfo=TSVarchar [nullRatio=0.0, minLength=8, maxLength=44, equalCandidates=[], equalCandidateSet=[], equalCumulativeProbability=0.0, likeCandidates=[], likeCandidateList=[], likeCumulativeProbability=0.0]]]]]
+[2023-04-16 21:42:06,993]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:183) main - 
+ Query Filter Operations are: [
+[JoinInfo = pkk1, fk:k2]
+]
+[2023-04-16 21:42:06,993]  INFO edu.ecnu.touchstone.rule.Rule.parseExpression(Rule.java:183) main - 
+ Query Filter Operations are: [
+[JoinInfo = pkk3, fk:k4]
+]

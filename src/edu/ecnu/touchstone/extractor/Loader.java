@@ -1,6 +1,7 @@
 package edu.ecnu.touchstone.extractor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -15,6 +16,8 @@ public class Loader {
 
     private Logger logger = null;
 
+    HashMap<String, Integer> joinTable = new HashMap<>(); 
+
     public Loader() {
         logger = Logger.getLogger(Touchstone.class);
     }
@@ -23,6 +26,7 @@ public class Loader {
     // Read in a .sql file line by line
     public List<Query> load(String sqlInputFile, List<Table> tables) {
         List<Query> queryOut = new ArrayList<Query>();
+        List<String> cardinalityInputList = new ArrayList<>();
 
         String inputLine = null;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new 
@@ -43,6 +47,9 @@ public class Loader {
                     // don't consider non-queey sql (e.g. create, drop)
                     if (queryLine.startsWith("select")) { 
                         Query query = new Query(id, queryLine, tables);
+                        // Call Rule on each Query
+                        List<String> cardinalityInput = parseQuery(query, joinTable); 
+                        cardinalityInputList.addAll(cardinalityInput);
                         queryOut.add(query);
                         id += 1;
                     }
@@ -59,10 +66,13 @@ public class Loader {
             System.exit(0);
         }
         logger.debug("Query Info is: \n" + queryOut);
+        logger.debug("Cardinality inout is: \n" + cardinalityInputList);
         return queryOut;
     }
     
-    
+    public List<String> parseQuery(Query query, HashMap<String, Integer> joinTable) {
+        return null;
+    }
 
     // test 
     public static void main(String[] args) {
