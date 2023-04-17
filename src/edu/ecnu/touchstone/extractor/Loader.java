@@ -71,7 +71,7 @@ public class Loader {
             System.exit(0);
         }
         logger.debug("Query Info is: \n" + queryOut);
-        logger.debug("Cardinality input is: \n" + CCList);
+        logger.debug("cardinality input is: \n" + CCList);
         return queryOut;
     }
     
@@ -92,20 +92,26 @@ public class Loader {
                                           .filter(info -> info instanceof FilterOpInfo)
                                           .map(info -> info.toString())
                                           .collect(Collectors.joining("#"));
-            String filter = String.format("[0, %s, %f]", filterInfos, 0.5);
-            CCList.add(filter);
+            if (filterInfos.length() > 0) {
+                String filter = String.format("[0, %s, %f]", filterInfos, 0.5);
+                CCList.add(filter);
+            }
             String pkInfos = infos.stream()
                                  .filter(info -> info.getTable().equals(table.getTableName()))
                                  .filter(info -> info instanceof PkInfo)
                                  .map(info -> info.toString())
                                  .collect(Collectors.joining("; "));
-            CCList.add(pkInfos);
-            String FkInfos = infos.stream()
+            if (pkInfos.length() > 0) {
+                CCList.add(pkInfos);
+            }
+            String fkInfos = infos.stream()
                                         .filter(info -> info.getTable().equals(table.getTableName()))
                                         .filter(info -> info instanceof FkInfo)
                                         .map(info -> info.toString())
                                         .collect(Collectors.joining("; "));
-            CCList.add(FkInfos);
+            if (fkInfos.length() > 0) {
+                CCList.add(fkInfos);
+            }
             String constraintChain = CCList.stream().collect(Collectors.joining("; "));
             ret.add(constraintChain);
         }

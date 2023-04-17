@@ -26,15 +26,16 @@ public class Rule {
         logger = Logger.getLogger(Touchstone.class);
     }
 
-    public static List<Rule> NQcase(SelectBody selectBody) {
+    public static List<Rule> NQcase(SelectBody selectBody, Query query) {
         List<Rule> rules = new ArrayList<>();
         // set operations
         if (selectBody instanceof SetOperationList) {
             SetOperationList setOperationList = (SetOperationList) selectBody;
             SetOperationRule setOperationRule = 
-                    new SetOperationRule(setOperationList.getOperations(), 
+                    new SetOperationRule(query.getTables(), 
+                                         setOperationList.getOperations(), 
                                          setOperationList.getSelects());
-            setOperationRule.apply();
+            // setOperationRule.parse();
         }
         else if (selectBody instanceof PlainSelect) {
             PlainSelect plainSelect = (PlainSelect) selectBody;
@@ -84,7 +85,7 @@ public class Rule {
             // having
             Expression having = plainSelect.getHaving();
             if (having != null) {
-                
+
             }
         } else if (selectBody instanceof WithItem) {
 
