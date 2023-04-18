@@ -1,13 +1,10 @@
--- q1
+-- q0
 SELECT  roles.* FROM roles WHERE roles.builtin = $1;
 
+-- q1
+SELECT  attachments.* FROM attachments WHERE attachments.digest <> $1 AND attachments.filesize <= $2;
+
 -- q2
-SELECT  attachments.* FROM attachments WHERE attachments.digest = $1 AND attachments.filesize = $2;
-
--- q3
-SELECT  auth_sources.* FROM auth_sources WHERE auth_sources.id = $1;
-
--- q4
 SELECT 
 	count(users.* )
 FROM 
@@ -17,26 +14,17 @@ INNER JOIN
 ON 
 	email_addresses.user_id = users.id 
 WHERE 
-	users.type = $1
-	AND email_addresses.address = $2;
+	users.type IN ($1, $2)
+	AND email_addresses.address = $3;
 
-
--- q5 
-SELECT 
-	count(users.* )
-FROM 
-	users 
-INNER JOIN
-	watchers_copy 
-ON 
-	users.id = watchers_copy.user_id 
+-- q3
+SELECT users.* 
+FROM users 
 WHERE 
-	watchers_copy.watchable_type = $1
-	AND watchers_copy.watchable_id = $2
-	AND users.status = $3;
+	users.type IN ('User', 'AnonymousUser') 
+	AND (LOWER(login) = 'foo') LIMIT $1;
 
-
--- q6
+-- q4
 SELECT 
 	custom_values.* 
 FROM 
@@ -46,7 +34,7 @@ WHERE
 	AND custom_values.customized_type = $2;
 
 
--- q7
+-- q5
 SELECT 
 	MAX(custom_field_enumerations.position) 
 FROM 

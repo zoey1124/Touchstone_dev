@@ -81,34 +81,48 @@ public class Loader {
     public List<String> parseQuery(int id, Query query, HashMap<String, Integer> joinTable) {
         List<String> ret = new ArrayList<>();
         ret.add("## query " + id);
-        Rule rule = new Rule();
-        List<Info> infos = rule.parse(query);
+        Rule rule = new Rule(query);
+        List<Info> infos = rule.parse();
         List<Table> tables = query.getTables();
         for (Table table: tables) {
             List<String> CCList = new ArrayList<>();
             CCList.add("[" + table.getTableName() + "]");
-            String filterInfos = infos.stream()
-                                          .filter(info -> info.getTable().equals(table.getTableName()))
-                                          .filter(info -> info instanceof FilterOpInfo)
-                                          .map(info -> info.toString())
-                                          .collect(Collectors.joining("#"));
-            if (filterInfos.length() > 0) {
-                String filter = String.format("[0, %s, %f]", filterInfos, 0.5);
-                CCList.add(filter);
+            // filter operation cardinality format 
+            List<Info> filterInfos = infos.stream()                                    
+                                    .filter(info -> info.getTable().equals(table.getTableName()))
+                                    .filter(info -> info instanceof FilterOpInfo)
+                                    .collect(Collectors.toList());
+            if (filterInfos.size() == 1) {
+                String filter = filterInfos.get(0).toString();
+                String filterInfo = String.format("[0, %s, %f]", filter, 0.5);
+                CCList.add(filterInfo);
+            } 
+            // add logical relation if multiple filters 
+            else if (filterInfos.size() > 1) {
+                String logicalRelation = rule.getLogicalRelation();
+                String filter = filterInfos.stream()
+                            .map(info -> info.toString())
+                            .collect(Collectors.joining("#"));
+                String filterInfo = String.format("[0, %s#%s, %f]", filter, logicalRelation, 0.5);
+                CCList.add(filterInfo);
             }
+
+            // public key cardinality constraint format
             String pkInfos = infos.stream()
-                                 .filter(info -> info.getTable().equals(table.getTableName()))
-                                 .filter(info -> info instanceof PkInfo)
-                                 .map(info -> info.toString())
-                                 .collect(Collectors.joining("; "));
+                                .filter(info -> info.getTable().equals(table.getTableName()))
+                                .filter(info -> info instanceof PkInfo)
+                                .map(info -> info.toString())
+                                .collect(Collectors.joining("; "));
             if (pkInfos.length() > 0) {
                 CCList.add(pkInfos);
             }
+
+            // foreign key cardinality constraint format
             String fkInfos = infos.stream()
-                                        .filter(info -> info.getTable().equals(table.getTableName()))
-                                        .filter(info -> info instanceof FkInfo)
-                                        .map(info -> info.toString())
-                                        .collect(Collectors.joining("; "));
+                                    .filter(info -> info.getTable().equals(table.getTableName()))
+                                    .filter(info -> info instanceof FkInfo)
+                                    .map(info -> info.toString())
+                                    .collect(Collectors.joining("; "));
             if (fkInfos.length() > 0) {
                 CCList.add(fkInfos);
             }

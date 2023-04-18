@@ -53,14 +53,11 @@ public class Query {
      * @Input: attribute (column) name
      * @Return: table name
      */
-    public String attrToTable(String attr) throws Exception {
+    public String attrToTable(String attr) {
         List<String> table = this.tables.stream()
                                         .filter(t -> belongTable(attr, t))
                                         .map(t -> t.getTableName())
                                         .collect(Collectors.toList());
-        if (table.size() == 0 || table.size() > 1) {
-            throw new Exception("\nBad sttribute name " + attr);
-        } 
         return table.get(0);
     }
 
