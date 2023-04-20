@@ -65,13 +65,13 @@ public class RuleTest {
     List<Table> redmine_tables = redmine_SchemaReader.read(".//test//input//redmine_schema.txt");
     SchemaReader tpch_SchemaReader = new SchemaReader();
     List<Table> tpch_tables = tpch_SchemaReader.read(".//test//input//tpch_schema_sf_1.txt");
-    Query q1 = new Query(0, sql1, redmine_tables);
-    Query q2 = new Query(1, sql2, redmine_tables);
-    Query q3 = new Query(2, sql3, redmine_tables);
-    Query q4 = new Query(3, sql4, redmine_tables);
-    Query q5 = new Query(5, tpch_sql5, tpch_tables);
-    Query q6 = new Query(6, sql6, redmine_tables);
-    Query q7 = new Query(7, sql7, redmine_tables);
+    Query q1 = new Query(sql1, redmine_tables);
+    Query q2 = new Query(sql2, redmine_tables);
+    Query q3 = new Query(sql3, redmine_tables);
+    Query q4 = new Query(sql4, redmine_tables);
+    Query q5 = new Query(tpch_sql5, tpch_tables);
+    Query q6 = new Query(sql6, redmine_tables);
+    Query q7 = new Query(sql7, redmine_tables);
 
     @Test
     public void testParseWhereBaseCase() throws Exception {

@@ -51,7 +51,7 @@ public class Loader {
                     queryLine += inputLine;
                     // don't consider non-queey sql (e.g. create, drop)
                     if (queryLine.startsWith("select")) { 
-                        Query query = new Query(id, queryLine, tables);
+                        Query query = new Query(queryLine, tables);
                         // Call Rule on each Query
                         List<String> constraintChains = parseQuery(id, query, joinTable); 
                         CCList.addAll(constraintChains);
@@ -70,7 +70,6 @@ public class Loader {
             e.printStackTrace();
             System.exit(0);
         }
-        logger.debug("Query Info is: \n" + queryOut);
         logger.debug("cardinality input is: \n" + CCList);
         return queryOut;
     }

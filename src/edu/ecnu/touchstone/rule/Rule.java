@@ -204,7 +204,6 @@ public class Rule {
                 infos.add(filterOp);
             }
         });
-        logger.info("\n Query Filter Ops are: [\n" + infos + "\n]");
         return infos;
     }
 
@@ -241,7 +240,10 @@ public class Rule {
     }
 
     public static void main(String[] args) {
-        String sql = "SELECT users.* FROM users WHERE users.type IN ('User', 'AnonymousUser') AND (LOWER(login) = 'foo') LIMIT $1;";
+        String sql = "SELECT users.* FROM users WHERE users.type IN ('User', 'AnonymousUser') AND (LOWER(login) = lower('foo')) LIMIT $1;";
+        List<String> s = new ArrayList<>();
+        s.add("hi");
+        System.out.println(s);
         PropertyConfigurator.configure(".//test//lib//log4j.properties");
         try {
             Statement stmt = CCJSqlParserUtil.parse(sql);
@@ -250,8 +252,8 @@ public class Rule {
             Expression expr = plainSelect.getWhere();
             expr.accept(new ExpressionVisitorAdapter() {
                 @Override
-                public void visit(EqualsTo expr) {
-                    System.out.println(expr.getLeftExpression().getClass());
+                public void visit(StringValue expr) {
+                    System.out.println(expr.getNotExcapedValue());
                 }
             });
         } catch (Exception e) {

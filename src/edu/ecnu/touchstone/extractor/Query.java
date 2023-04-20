@@ -11,15 +11,13 @@ import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.*;
 public class Query {
 
-    int id = 0;
     String sql = null;
     Statement stmt = null;
 
     // tables used in the query
     List<Table> tables = null;
 
-    public Query(int id, String strQuery, List<Table> tables) {
-        this.id = id;
+    public Query(String strQuery, List<Table> tables) {
         this.sql = strQuery;
         init(tables);
     }
@@ -80,10 +78,6 @@ public class Query {
         return attrList.contains(targetAttr);
     }
 
-    public int getId() {
-        return this.id;
-    }
-
     public String getSQL() {
         return this.sql;
     }
@@ -98,6 +92,6 @@ public class Query {
 
     @Override
     public String toString() {
-        return "\nquery" + id + ": " + this.sql;
+        return "\n" + this.sql;
     }
 }

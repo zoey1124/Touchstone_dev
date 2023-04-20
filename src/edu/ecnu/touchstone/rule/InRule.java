@@ -8,13 +8,11 @@ import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.*;
 
 public class InRule extends Rule {
+    String type = "InNQ";
+
     public InRule(Query query) {
         super(query);
-        //TODO Auto-generated constructor stub
     }
-
-    String type = "InNQ";
-    Query query = null;
 
     public SubSelect getSubSelect() {
         Statement stmt = query.getStmt();
