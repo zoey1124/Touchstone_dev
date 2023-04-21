@@ -8,10 +8,15 @@ import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.*;
 
 public class InRule extends Rule {
-    String type = "InNQ";
+    String type = "In";
 
     public InRule(Query query) {
         super(query);
+    }
+
+    public InRule(Query query, Select select) {
+        super(query);
+
     }
 
     public SubSelect getSubSelect() {

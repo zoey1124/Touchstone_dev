@@ -1,6 +1,7 @@
 package edu.ecnu.touchstone.rule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -24,6 +25,7 @@ import net.sf.jsqlparser.statement.select.*;
 public class Rule {
     private Logger logger = null;
     Query query = null;
+    String[] ruleOrder = {"SELECT", "UNION", "In", "EXIST", "NOT IN", "NOT EXIST"};
 
     public Rule(Query query) {
         logger = Logger.getLogger(Touchstone.class);
