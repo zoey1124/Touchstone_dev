@@ -195,28 +195,10 @@ public class Controller {
 				"C://Program Files//Wolfram Research//Mathematica//10.0//SystemFiles//Links//JLink");
 		
 		// TPC-H
-//		SchemaReader schemaReader = new SchemaReader();
-//		List<Table> tables = schemaReader.read(".//test//input//tpch_schema_sf_1.txt");
-//		ConstraintChainsReader constraintChainsReader = new ConstraintChainsReader();
-//		List<ConstraintChain> constraintChains = constraintChainsReader.read(".//test//input//tpch_cardinality_constraints_sf_1.txt");
-//		ComputingThreadPool computingThreadPool = new ComputingThreadPool(2, 20, 0.00001);
-//		QueryInstantiator queryInstantiator = new QueryInstantiator(tables, constraintChains, null, 20, 0.00001, computingThreadPool);
-//		queryInstantiator.iterate();
-//		List<Parameter> parameters = queryInstantiator.getParameters();
-//		
-//		Preprocessor preprocessor = new Preprocessor(tables, constraintChains, parameters);
-//		List<String> tablePartialOrder = preprocessor.getPartialOrder();
-//		Map<String, TableGeneTemplate> tableGeneTemplateMap = preprocessor.getTableGeneTemplates(1000, 10000);
-//		Configurations configurations = new Configurations(".//test//touchstone2.conf");
-//		Controller controller = new Controller(tablePartialOrder, tableGeneTemplateMap, configurations);
-//		controller.setUpNetworkThreads();
-//		controller.geneData();
-		
-		// SSB
 		SchemaReader schemaReader = new SchemaReader();
-		List<Table> tables = schemaReader.read(".//test//input//ssb_schema_sf_1_D.txt");
+		List<Table> tables = schemaReader.read(".//test//input//tpch_schema_sf_1.txt");
 		ConstraintChainsReader constraintChainsReader = new ConstraintChainsReader();
-		List<ConstraintChain> constraintChains = constraintChainsReader.read(".//test//input//ssb_cardinality_constraints_sf_1.txt");
+		List<ConstraintChain> constraintChains = constraintChainsReader.read(".//test//input//tpch_cardinality_constraints_sf_1.txt");
 		ComputingThreadPool computingThreadPool = new ComputingThreadPool(2, 20, 0.00001);
 		QueryInstantiator queryInstantiator = new QueryInstantiator(tables, constraintChains, null, 20, 0.00001, computingThreadPool);
 		queryInstantiator.iterate();
@@ -229,6 +211,24 @@ public class Controller {
 		Controller controller = new Controller(tablePartialOrder, tableGeneTemplateMap, configurations);
 		controller.setUpNetworkThreads();
 		controller.geneData();
+		
+		// SSB
+		// SchemaReader schemaReader = new SchemaReader();
+		// List<Table> tables = schemaReader.read(".//test//input//ssb_schema_sf_1_D.txt");
+		// ConstraintChainsReader constraintChainsReader = new ConstraintChainsReader();
+		// List<ConstraintChain> constraintChains = constraintChainsReader.read(".//test//input//ssb_cardinality_constraints_sf_1.txt");
+		// ComputingThreadPool computingThreadPool = new ComputingThreadPool(2, 20, 0.00001);
+		// QueryInstantiator queryInstantiator = new QueryInstantiator(tables, constraintChains, null, 20, 0.00001, computingThreadPool);
+		// queryInstantiator.iterate();
+		// List<Parameter> parameters = queryInstantiator.getParameters();
+		
+		// Preprocessor preprocessor = new Preprocessor(tables, constraintChains, parameters);
+		// List<String> tablePartialOrder = preprocessor.getPartialOrder();
+		// Map<String, TableGeneTemplate> tableGeneTemplateMap = preprocessor.getTableGeneTemplates(1000, 10000);
+		// Configurations configurations = new Configurations(".//test//touchstone2.conf");
+		// Controller controller = new Controller(tablePartialOrder, tableGeneTemplateMap, configurations);
+		// controller.setUpNetworkThreads();
+		// controller.geneData();
 		
 	}
 }

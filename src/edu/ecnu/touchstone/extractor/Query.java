@@ -51,10 +51,9 @@ public class Query {
      * @Input: attribute (column) name
      * @Return: table name
      */
-    public String attrToTable(String attr) {
-        List<String> table = this.tables.stream()
+    public Table attrToTable(String attr) {
+        List<Table> table = this.tables.stream()
                                         .filter(t -> belongTable(attr, t))
-                                        .map(t -> t.getTableName())
                                         .collect(Collectors.toList());
         return table.get(0);
     }

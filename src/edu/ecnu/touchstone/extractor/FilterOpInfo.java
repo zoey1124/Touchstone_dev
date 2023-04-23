@@ -18,25 +18,18 @@ public class FilterOpInfo implements Info {
         ItemsList right = expr.getRightItemsList();
         Column leftColumn = getLeftColumn(left);
         String attr = leftColumn.getColumnName();
-        this.table = (leftColumn.getTable() != null) ? leftColumn.getTable().getName() : query.attrToTable(attr);
+        this.table = (leftColumn.getTable() != null) ? leftColumn.getTable().getName() : query.attrToTable(attr).getTableName();
         this.expression = attr;
-        if (!right.toString().contains("$")) {
-            operator += getRightValue(right);
-        }
-        this.operator = operator;
+        this.operator = operator + String.format("(%d)", right.toString().split(",").length);
     }
 
     public FilterOpInfo(BinaryExpression expr, String operator, Query query) {
         Expression left = expr.getLeftExpression();
-        Expression right = expr.getRightExpression();
         Column leftColumn = getLeftColumn(left);
         String attr = leftColumn.getColumnName();
         this.table = (leftColumn.getTable() != null) ? this.table = leftColumn.getTable().getName()
-                                                     : query.attrToTable(attr);
+                                                     : query.attrToTable(attr).getTableName();
         this.expression = attr;
-        if (!right.toString().contains("$")) {
-            operator += getRightValue(right);
-        } 
         this.operator = operator;
     }
 

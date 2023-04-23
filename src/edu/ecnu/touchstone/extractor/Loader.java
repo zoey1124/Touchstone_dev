@@ -15,16 +15,19 @@ import edu.ecnu.touchstone.schema.Table;
 import edu.ecnu.touchstone.schema.SchemaReader;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 
 public class Loader {
 
     private Logger logger = null;
+    String ccInputFile = null;
 
     HashMap<String, Integer> joinTable = new HashMap<>(); 
 
-    public Loader() {
+    public Loader(String ccInputFile) {
         logger = Logger.getLogger(Touchstone.class);
+        this.ccInputFile = ccInputFile;
     }
 
 
@@ -32,10 +35,10 @@ public class Loader {
     public List<Query> load(String sqlInputFile, List<Table> tables) {
         List<Query> queryOut = new ArrayList<Query>();
         List<String> CCList = new ArrayList<>();
-
         String inputLine = null;
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new 
-                FileInputStream(sqlInputFile)))) 
+        try (FileWriter ccWriter = new FileWriter(this.ccInputFile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(new 
+                                FileInputStream(sqlInputFile)))) 
         {
             String queryLine = "";
             int id = 0;
@@ -54,6 +57,11 @@ public class Loader {
                         Query query = new Query(queryLine, tables);
                         // Call Rule on each Query
                         List<String> constraintChains = parseQuery(id, query, joinTable); 
+                        // Write into cc input file 
+                        for (String cc: constraintChains) {
+                            ccWriter.write(cc + System.lineSeparator());
+                        }
+                        ccWriter.write("\n");
                         CCList.addAll(constraintChains);
                         queryOut.add(query);
                         id += 1;
@@ -65,6 +73,7 @@ public class Loader {
                     queryLine += inputLine + " ";
                 }
             }
+            ccWriter.close();
         } catch (Exception e) {
             System.out.println("\n\tError input line: ");
             e.printStackTrace();
@@ -134,7 +143,7 @@ public class Loader {
     // test 
     public static void main(String[] args) {
         PropertyConfigurator.configure(".//test//lib//log4j.properties");
-        Loader loader = new Loader();
+        Loader loader = new Loader(".//test//input//redmine_cardinality_constraint.txt");
         SchemaReader schemaReader = new SchemaReader();
         List<Table> tables = schemaReader.read(".//test//input//redmine_schema.txt");
         loader.load(".//test//input//redmine_sql.sql", tables);

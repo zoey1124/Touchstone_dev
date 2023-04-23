@@ -21,6 +21,7 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.util.TablesNamesFinder;
 
 public class Rule {
     private Logger logger = null;
@@ -172,7 +173,7 @@ public class Rule {
             @Override
             public void visit(EqualsTo equalsTo) {
                 if (isJoinCondition(equalsTo)) {
-                    PkInfo pkInfo = new PkInfo(equalsTo);
+                    PkInfo pkInfo = new PkInfo(equalsTo, getQuery());
                     FkInfo fkInfo = new FkInfo(pkInfo);
                     infos.add(pkInfo);
                     infos.add(fkInfo);
@@ -242,22 +243,14 @@ public class Rule {
     }
 
     public static void main(String[] args) {
-        String sql = "SELECT users.* FROM users WHERE users.type IN ('User', 'AnonymousUser') AND (LOWER(login) = lower('foo')) LIMIT $1;";
-        List<String> s = new ArrayList<>();
-        s.add("hi");
-        System.out.println(s);
+        String sql = "SELECT count(users.* ) FROM users INNER JOIN email_addresses ON email_addresses.user_id = users.id WHERE users.type IN ($1, $2) AND email_addresses.address = $3;";
         PropertyConfigurator.configure(".//test//lib//log4j.properties");
         try {
             Statement stmt = CCJSqlParserUtil.parse(sql);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
-            Expression expr = plainSelect.getWhere();
-            expr.accept(new ExpressionVisitorAdapter() {
-                @Override
-                public void visit(StringValue expr) {
-                    System.out.println(expr.getNotExcapedValue());
-                }
-            });
+            TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
+            System.out.println(tablesNamesFinder.getTableList(stmt));
         } catch (Exception e) {
             e.printStackTrace();
         }
