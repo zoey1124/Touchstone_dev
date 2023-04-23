@@ -2,7 +2,6 @@ package edu.ecnu.touchstone.rule;
 
 import edu.ecnu.touchstone.extractor.Query;
 import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.expression.ExpressionVisitorAdapter;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.*;

@@ -90,7 +90,7 @@ public class Loader {
         List<String> ret = new ArrayList<>();
         ret.add("## query " + id);
         Rule rule = new Rule(query);
-        List<Info> infos = rule.parse();
+        List<Info> infos = rule.parseBasic(query);
         List<Table> tables = query.getTables();
         for (Table table: tables) {
             List<String> CCList = new ArrayList<>();

@@ -2,12 +2,9 @@ package edu.ecnu.touchstone.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import edu.ecnu.touchstone.extractor.FilterOpInfo;
@@ -24,11 +21,12 @@ import net.sf.jsqlparser.statement.select.Join;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.expression.*;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 
 public class RuleTest {
 
-    private Rule rule;
     String sql1 = "select issues.* from issues "
                 + "where issues.root_id = $1 and (issues.lft >= 4 and issues.rgt <= 5) "
                 + "order by issues.lft ASC;";
@@ -56,15 +54,15 @@ public class RuleTest {
 
     String sql6 = "select roles.* from roles where roles.builtin = $1;";
 
-    String sql7 = "SELECT count(users.* ) FROM users INNER JOIN watchers_copy "
-                + "ON users.id = watchers_copy.user_id "
-                + "WHERE watchers_copy.watchable_type = $1 "
-                + "AND watchers_copy.watchable_id = $2 AND users.status = $3;";
+    String sql7 = "SELECT count(users.* ) FROM users INNER JOIN watchers "
+                + "ON users.id = watchers.user_id "
+                + "WHERE watchers.watchable_type = $1 "
+                + "AND watchers.watchable_id = $2 AND users.status = $3;";
 
     SchemaReader redmine_SchemaReader = new SchemaReader();
-    List<Table> redmine_tables = redmine_SchemaReader.read(".//test//input//redmine_schema.txt");
+    List<Table> redmine_tables = redmine_SchemaReader.read("/Users/mengzhusun/Desktop/Touchstone_dev" + "//test//input//redmine_schema.txt");
     SchemaReader tpch_SchemaReader = new SchemaReader();
-    List<Table> tpch_tables = tpch_SchemaReader.read(".//test//input//tpch_schema_sf_1.txt");
+    List<Table> tpch_tables = tpch_SchemaReader.read("/Users/mengzhusun/Desktop/Touchstone_dev" + "//test//input//tpch_schema_sf_1.txt");
     Query q1 = new Query(sql1, redmine_tables);
     Query q2 = new Query(sql2, redmine_tables);
     Query q3 = new Query(sql3, redmine_tables);
@@ -74,8 +72,8 @@ public class RuleTest {
     Query q7 = new Query(sql7, redmine_tables);
 
     @Test
-    public void testParseWhereBaseCase() throws Exception {
-        try {
+    public void testParseExpressionBaseCase() throws Exception {        try {
+            Rule rule = new Rule(q1);
             Statement stmt = CCJSqlParserUtil.parse(sql1);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -88,8 +86,9 @@ public class RuleTest {
     }
     
     @Test
-    public void testParseWhereIn() throws Exception {
+    public void testParseExpressionIn() throws Exception {
         try {
+            Rule rule = new Rule(q2);
             Statement stmt = CCJSqlParserUtil.parse(sql2);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -102,8 +101,9 @@ public class RuleTest {
     }
 
     @Test
-    public void testParseWhereLike() throws Exception {
+    public void testParseExpressionLike() throws Exception {
         try {
+            Rule rule = new Rule(q3);
             Statement stmt = CCJSqlParserUtil.parse(sql3);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -116,8 +116,9 @@ public class RuleTest {
     }
 
     @Test
-    public void testParseWhereNotEqual() throws Exception {
+    public void testParseExpressionNotEqual() throws Exception {
         try {
+            Rule rule = new Rule(q4);
             Statement stmt = CCJSqlParserUtil.parse(sql4);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -130,8 +131,9 @@ public class RuleTest {
     }
 
     @Test
-    public void testParseWhereTpch5() throws Exception {
+    public void testParseExpressionTpch5() throws Exception {
         try {
+            Rule rule = new Rule(q5);
             Statement stmt = CCJSqlParserUtil.parse(tpch_sql5);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -144,16 +146,16 @@ public class RuleTest {
     }
 
     @Test
-    public void testParse() throws Exception {
+    public void testParseBasic() throws Exception {
         Rule rule = new Rule(q1);
-        List<Info> infos = rule.parse();
+        List<Info> infos = rule.parseBasic(q1);
         assertEquals("Base case parse should work", 3, infos.size());
     }
 
     @Test
-    public void testParseFilterOpInfo() throws Exception {
+    public void testParseBasic2() throws Exception {
         Rule rule = new Rule(q6);
-        List<Info> infos = rule.parse();
+        List<Info> infos = rule.parseBasic(q6);
         assertEquals("Should have 1 Info", 1, infos.size());
         assertTrue(infos.get(0) instanceof FilterOpInfo);
         FilterOpInfo filterOpInfo = (FilterOpInfo) infos.get(0);
@@ -162,9 +164,9 @@ public class RuleTest {
     }
 
     @Test
-    public void testParseJoinInfo() throws Exception {
+    public void testParseBasicJoinInfo() throws Exception {
         Rule rule = new Rule(q7);
-        List<Info> infos = rule.parse();
+        List<Info> infos = rule.parse(q7);
         assertEquals("Should have 5 Info", 5, infos.size());
         List<Info> filterOpInfos = infos.stream()
                                     .filter(i -> i instanceof FilterOpInfo)
@@ -181,11 +183,11 @@ public class RuleTest {
         // check table names and key attributes on join information
         PkInfo pkInfo = (PkInfo) pkInfos.get(0);
         assertTrue(pkInfo.getTable().equals("users"));
-        assertTrue(pkInfo.getFkTable().equals("watchers_copy"));
+        assertTrue(pkInfo.getFkTable().equals("watchers"));
         assertTrue(pkInfo.getPk().equals("id"));
         assertTrue(pkInfo.getFk().equals("user_id"));
 
         FkInfo fkInfo = (FkInfo) fkInfos.get(0);
-        assertTrue(fkInfo.getTable().equals("watchers_copy"));
+        assertTrue(fkInfo.getTable().equals("watchers"));
     }
 }

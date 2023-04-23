@@ -20,7 +20,7 @@ public class PkInfo implements Info {
         Column right = (Column) expr.getRightExpression();
         Table leftTable = query.attrToTable(left.getColumnName());
         // set keys
-        if (leftTable.getPrimaryKey().contains(left.getColumnName())) {
+        if (leftTable.getPrimaryKey().toString().contains(left.getColumnName())) {
             this.pk = left.getColumnName();
             this.fk = right.getColumnName();
         } else {
