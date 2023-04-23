@@ -25,9 +25,9 @@ public class FromRuleTest {
                 + "or (n1.n_name = '[NATION2]' and n2.n_name = '[NATION1]')) "
                 + "and l_shipdate between date '1995-01-01' and date '1996-12-31') as shipping "
                 + "group by supp_nation, cust_nation, l_year order by supp_nation, cust_nation, l_year;";
-    SchemaReader redmineSchemaReader = new SchemaReader();
-    List<Table> redmine_tables = redmineSchemaReader.read("/Users/mengzhusun/Desktop/Touchstone_dev" + "//test//input//redmine_schema.txt");
-    Query q1 = new Query(sql1, redmine_tables);
+    SchemaReader schemaReader = new SchemaReader();
+    List<Table> tpch_tables = schemaReader.read("/Users/mengzhusun/Desktop/Touchstone_dev" + "//test//input//tpch_schema_sf_1.txt");
+    Query q1 = new Query(sql1, tpch_tables);
 
     @Test
     public void TestFromSubQueryCase() {
@@ -40,7 +40,7 @@ public class FromRuleTest {
         List<Info> filterOpInfos = infos.stream()
                                 .filter(i -> i instanceof FilterOpInfo)
                                 .collect(Collectors.toList());
-        assertEquals("Should have filterOps", 0, 0);
+        assertEquals("Should have filterOps", 5, filterOpInfos.size());
         List<Info> pkInfos = infos.stream()
                                 .filter(i -> i instanceof PkInfo)
                                 .collect(Collectors.toList());
@@ -48,7 +48,7 @@ public class FromRuleTest {
         List<Info> fkInfos = infos.stream()
                                 .filter(i -> i instanceof FkInfo)
                                 .collect(Collectors.toList());
-        assertEquals("Should have PkInfo", 6, fkInfos.size());
+        assertEquals("Should have PkInfo", 5, fkInfos.size());
 
     }
 }

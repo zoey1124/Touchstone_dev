@@ -8,5 +8,5 @@
 [users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
 
 ## query 3
-[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+[users]; [0, status@=#status@=#type@in(2)#id@=#and, 0.500000]
 

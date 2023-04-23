@@ -3,3 +3,4 @@ bin/*
 log/*
 data/*
 *.log
+.DS_Store

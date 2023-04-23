@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import edu.ecnu.touchstone.constraintchain.Filter;
 import edu.ecnu.touchstone.extractor.FilterOpInfo;
 import edu.ecnu.touchstone.extractor.FkInfo;
 import edu.ecnu.touchstone.extractor.Info;
@@ -44,7 +45,7 @@ public class Rule {
             for (Rule rule: rules) {
             }
         } else {
-            List<Info> CCList = this.parseBasic(this.query);
+            List<Info> CCList = this.parseBasic(query);
             return CCList;
         }
         return null;
@@ -175,6 +176,13 @@ public class Rule {
                 infos.add(filterOp);
             }
 
+            @Override
+            public void visit(Between between) {
+                String operator = "bet";
+                FilterOpInfo filterOp = new FilterOpInfo(between, operator, getQuery());
+                infos.add(filterOp);
+            }
+
             @Override 
             public void visit(NotEqualsTo notEqualsTo) {
                 FilterOpInfo filterOp = new FilterOpInfo(notEqualsTo, "<>", getQuery());
@@ -254,15 +262,21 @@ public class Rule {
     }
 
     public static void main(String[] args) {
-        String sql = "select * from (select n1.n_name as supp_nation, n2.n_name as cust_nation from nation n1, nation n2) as shipping;";
+        String sql = "select * from lineitem where l_shipdate between date '1995-01-01' and date '1996-12-31'";
         PropertyConfigurator.configure(".//test//lib//log4j.properties");
         try {
             Statement stmt = CCJSqlParserUtil.parse(sql);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
-            Query q = new Query(sql, new ArrayList<>());
-            Rule r = new Rule(q);
-            r.subQueryCase(q);
+            Expression where = plainSelect.getWhere();
+            where.accept(new ExpressionVisitorAdapter() {
+                @Override 
+                public void visit(Between between) {
+                    System.out.println(between.getBetweenExpressionEnd());
+                    System.out.println(between.getBetweenExpressionStart());
+                    System.out.println(between.getLeftExpression());
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
