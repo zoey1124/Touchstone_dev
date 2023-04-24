@@ -1,12 +1,13 @@
 package edu.ecnu.touchstone.rule;
 
+import java.util.HashMap;
+
 import edu.ecnu.touchstone.extractor.Query;
 
 public class NotExistRule extends Rule {
-    public NotExistRule(Query query) {
-        super(query);
+    String type = "NotExists";
+    public NotExistRule(Query query, HashMap<String, Integer> joinTable) {
+        super(query, joinTable);
         //TODO Auto-generated constructor stub
     }
-
-    String type = "NotExist";
 }

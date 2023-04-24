@@ -1,5 +1,6 @@
 package edu.ecnu.touchstone.rule;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -23,8 +24,8 @@ public class SetOperationRule extends Rule {
     SetOperation setOp = null;
     List<SelectBody> selects = null;
 
-    public SetOperationRule(Query query) {
-        super(query);
+    public SetOperationRule(Query query, HashMap<String, Integer> joinTable) {
+        super(query, joinTable);
         Select select = (Select) query.getStmt();
         SetOperationList setOperationList = (SetOperationList) select.getSelectBody();
         this.setOp = setOperationList.getOperations().get(0);
@@ -39,14 +40,14 @@ public class SetOperationRule extends Rule {
         Query q2 = new Query(sql2, this.query.getTables());
         if (setOp.toString().equals("UNION")
             || setOp.toString().equals("UNION ALL")) {
-                Rule rule1 = new Rule(q1);
-                Rule rule2 = new Rule(q2);
+                Rule rule1 = new Rule(q1, joinTable);
+                Rule rule2 = new Rule(q2, joinTable);
         }
         else if (setOp.toString().equals("INTERSECT")) {
 
         }
         else if (setOp.toString().equals("EXCEPT")) {
-            Rule rule1 = new Rule(q1);
+            Rule rule1 = new Rule(q1, joinTable);
         }
         return null;
     }

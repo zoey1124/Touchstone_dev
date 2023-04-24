@@ -2,6 +2,7 @@ package edu.ecnu.touchstone.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,8 +73,10 @@ public class RuleTest {
     Query q7 = new Query(sql7, redmine_tables);
 
     @Test
-    public void testParseExpressionBaseCase() throws Exception {        try {
-            Rule rule = new Rule(q1);
+    public void testParseExpressionBaseCase() throws Exception {        
+        try {
+            HashMap<String, Integer> joinTable = new HashMap<>();
+            Rule rule = new Rule(q1, joinTable);
             Statement stmt = CCJSqlParserUtil.parse(sql1);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -88,7 +91,8 @@ public class RuleTest {
     @Test
     public void testParseExpressionIn() throws Exception {
         try {
-            Rule rule = new Rule(q2);
+            HashMap<String, Integer> joinTable = new HashMap<>();
+            Rule rule = new Rule(q2, joinTable);
             Statement stmt = CCJSqlParserUtil.parse(sql2);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -103,7 +107,8 @@ public class RuleTest {
     @Test
     public void testParseExpressionLike() throws Exception {
         try {
-            Rule rule = new Rule(q3);
+            HashMap<String, Integer> joinTable = new HashMap<>();
+            Rule rule = new Rule(q3, joinTable);
             Statement stmt = CCJSqlParserUtil.parse(sql3);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -118,7 +123,8 @@ public class RuleTest {
     @Test
     public void testParseExpressionNotEqual() throws Exception {
         try {
-            Rule rule = new Rule(q4);
+            HashMap<String, Integer> joinTable = new HashMap<>();
+            Rule rule = new Rule(q4, joinTable);
             Statement stmt = CCJSqlParserUtil.parse(sql4);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -133,7 +139,8 @@ public class RuleTest {
     @Test
     public void testParseExpressionTpch5() throws Exception {
         try {
-            Rule rule = new Rule(q5);
+            HashMap<String, Integer> joinTable = new HashMap<>();
+            Rule rule = new Rule(q5, joinTable);
             Statement stmt = CCJSqlParserUtil.parse(tpch_sql5);
             Select select = (Select) stmt;
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
@@ -147,14 +154,16 @@ public class RuleTest {
 
     @Test
     public void testParseBasic() throws Exception {
-        Rule rule = new Rule(q1);
+        HashMap<String, Integer> joinTable = new HashMap<>();
+        Rule rule = new Rule(q1, joinTable);
         List<Info> infos = rule.parseBasic(q1);
         assertEquals("Base case parse should work", 3, infos.size());
     }
 
     @Test
     public void testParseBasic2() throws Exception {
-        Rule rule = new Rule(q6);
+        HashMap<String, Integer> joinTable = new HashMap<>();
+        Rule rule = new Rule(q6, joinTable);
         List<Info> infos = rule.parseBasic(q6);
         assertEquals("Should have 1 Info", 1, infos.size());
         assertTrue(infos.get(0) instanceof FilterOpInfo);
@@ -165,7 +174,8 @@ public class RuleTest {
 
     @Test
     public void testParseBasicJoinInfo() throws Exception {
-        Rule rule = new Rule(q7);
+        HashMap<String, Integer> joinTable = new HashMap<>();
+        Rule rule = new Rule(q7, joinTable);
         List<Info> infos = rule.parse(q7);
         assertEquals("Should have 5 Info", 5, infos.size());
         List<Info> filterOpInfos = infos.stream()

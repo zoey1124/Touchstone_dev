@@ -1,6 +1,7 @@
 package edu.ecnu.touchstone.test;
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,8 @@ public class FromRuleTest {
 
     @Test
     public void TestFromSubQueryCase() {
-        Rule r = new Rule(q1);
+        HashMap<String, Integer> joinTable = new HashMap<>();
+        Rule r = new Rule(q1, joinTable);
         List<Rule> subqueryRules = r.subQueryCase(q1);
         assertEquals("Should contain 1 rule", 1, subqueryRules.size());
         FromRule fromRule = (FromRule) subqueryRules.get(0);

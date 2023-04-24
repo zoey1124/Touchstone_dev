@@ -5,13 +5,14 @@ public class FkInfo implements Info {
     String fkTable = null;
     String pk = null;
     String fk = null;
-    int joinIndex = 1;
+    int joinIndex = 0;
 
     public FkInfo(PkInfo pkInfo) {
         this.pk = pkInfo.getPk();
         this.fk = pkInfo.getFk();
         this.pkTable = pkInfo.getPkTable();
         this.fkTable = pkInfo.getFkTable();
+        this.joinIndex = pkInfo.getJoinIndex();
     }
 
     public void setJoinIndex(int i) {
@@ -26,7 +27,7 @@ public class FkInfo implements Info {
     @Override
     public String toString() {
         return String.format("[2, %s, %f, %s.%s, %d, %d]", 
-        this.fk, 0.5, this.pkTable, this.pk, this.joinIndex, this.joinIndex + 1);
+        this.fk, 0.5, this.pkTable, this.pk, (int) Math.pow(2, this.joinIndex), (int) Math.pow(2, this.joinIndex + 1));
     }
 
 }

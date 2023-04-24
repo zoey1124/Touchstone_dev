@@ -2,6 +2,7 @@ package edu.ecnu.touchstone.rule;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -27,11 +28,13 @@ import net.sf.jsqlparser.util.TablesNamesFinder;
 public class Rule {
     private Logger logger = null;
     Query query = null;
+    HashMap<String, Integer> joinTable = null;
     String[] ruleOrder = {"SELECT", "From", "UNION", "In", "EXIST", "NOT IN", "NOT EXIST"};
 
-    public Rule(Query query) {
+    public Rule(Query query, HashMap<String, Integer> joinTable) {
         logger = Logger.getLogger(Touchstone.class);
         this.query = query;
+        this.joinTable = joinTable;
     }
 
     public Query getQuery() {
@@ -39,15 +42,19 @@ public class Rule {
     }
 
     public List<Info> parse(Query query) {
+        List<Info> CCList = new ArrayList<>();
         if (query.containNQ()) {
             List<Rule> rules = subQueryCase(query);
             // sort, apply
             for (Rule rule: rules) {
+                CCList.addAll(rule.apply());
             }
-        } else {
-            List<Info> CCList = this.parseBasic(query);
-            return CCList;
-        }
+        } 
+        CCList.addAll(parseBasic(query));
+        return CCList;
+    }
+
+    public List<Info> apply() {
         return null;
     }
 
@@ -70,33 +77,35 @@ public class Rule {
             FromItem from = plainSelect.getFromItem();
             if (from instanceof SubSelect) {
                 Query subquery = getSubQuery(from.toString(), query);
-                FromRule rule = new FromRule(query, subquery);
+                FromRule rule = new FromRule(query, subquery, joinTable);
                 rules.add(rule);
             }
             // where
             Expression where = plainSelect.getWhere();
-            if (where != null && where.toString().contains("select")) {
+            if (where != null && where.toString().contains("SELECT")) {
                 where.accept(new ExpressionVisitorAdapter() {
                     @Override 
                     public void visit(InExpression inExpression) {
-                        if (inExpression.toString().contains("select")) {
+                        if (inExpression.toString().contains("SELECT")) {
                             if (inExpression.isNot()) {
                                 // NotInRule notInRule = new NotInRule();
                                 // notInRule.apply();
                             } else {
                                 Query subquery = getSubQuery(inExpression.toString(), query);
-                                InRule inRule = new InRule(query, subquery);
-                                inRule.apply();
+                                InRule rule = new InRule(query, subquery, joinTable);
+                                rules.add(rule);
                             }
                         }
                     }
                     @Override
                     public void visit(ExistsExpression existExpression) {
-                        if (existExpression.toString().contains("select")) {
+                        if (existExpression.toString().contains("SELECT")) {
                             if (existExpression.isNot()) {
-                                Rule rule = new NotExistRule(query);
+                                Rule rule = new NotExistRule(query, joinTable);
                             } else {
-                                Rule rule = new ExistRule(query);
+                                Query subquery = getSubQuery(existExpression.toString(), query);
+                                Rule rule = new ExistRule(query, subquery, joinTable);
+                                rules.add(rule);
                             }
 
                         }
@@ -201,7 +210,7 @@ public class Rule {
             @Override
             public void visit(EqualsTo equalsTo) {
                 if (isJoinCondition(equalsTo)) {
-                    PkInfo pkInfo = new PkInfo(equalsTo, getQuery());
+                    PkInfo pkInfo = new PkInfo(equalsTo, getQuery(), getJoinTable());
                     FkInfo fkInfo = new FkInfo(pkInfo);
                     infos.add(pkInfo);
                     infos.add(fkInfo);
@@ -248,12 +257,16 @@ public class Rule {
                 && (!right.toString().contains("$"));
     }
 
+    public HashMap<String, Integer> getJoinTable() {
+        return this.joinTable;
+    }
+
     /*
      * @Return: String and || or
      */
-    public String getLogicalRelation() {
+    public String getLogicalRelation(Query query) {
         List<String> logicalRelations = new ArrayList<>();
-        Select select = (Select) this.query.getStmt();
+        Select select = (Select) query.getStmt();
         PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
         Expression where = plainSelect.getWhere();
         where.accept(new ExpressionVisitorAdapter() {

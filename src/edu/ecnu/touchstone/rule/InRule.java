@@ -1,5 +1,6 @@
 package edu.ecnu.touchstone.rule;
 
+import java.util.HashMap;
 import java.util.List;
 
 import edu.ecnu.touchstone.extractor.Info;
@@ -10,12 +11,13 @@ public class InRule extends Rule {
     Query subquery = null;
 
 
-    public InRule(Query query, Query subquery) {
-        super(query);
+    public InRule(Query query, Query subquery, HashMap<String, Integer> joinTable) {
+        super(query, joinTable);
         this.subquery = subquery;
     }
 
 
+    @Override
     public List<Info> apply() {
         return parse(subquery);
     }

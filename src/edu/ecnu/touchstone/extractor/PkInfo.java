@@ -1,5 +1,6 @@
 package edu.ecnu.touchstone.extractor;
 
+import java.util.HashMap;
 import java.util.List;
 
 import edu.ecnu.touchstone.schema.Table;
@@ -12,10 +13,10 @@ public class PkInfo implements Info {
     String fkTable = null;
     String pk = null;
     String fk = null;
-    int joinIndex = 1;
+    int joinIndex = 0;
 
     // expr left and right should both be column type, and op should be =
-    public PkInfo(BinaryExpression expr, Query query) {
+    public PkInfo(BinaryExpression expr, Query query, HashMap<String, Integer> joinTable) {
         Column left = (Column) expr.getLeftExpression();
         Column right = (Column) expr.getRightExpression();
         Table leftTable = query.attrToTable(left.getColumnName());
@@ -31,6 +32,8 @@ public class PkInfo implements Info {
             this.fk = left.getColumnName();
             this.fkTable = (left.getTable() != null) ? left.getTable().getName() : query.attrToTable(fk).getTableName();
         }
+        this.joinIndex = joinTable.get(pkTable);
+        joinTable.put(pkTable, joinIndex + 2);
     }
 
     public String getPk() {
@@ -60,7 +63,7 @@ public class PkInfo implements Info {
     @Override
     public String toString() {
         return String.format("[1, %s, %d, %d]", 
-        this.pk, this.joinIndex, this.joinIndex + 1); 
+        this.pk, (int) Math.pow(2, this.joinIndex), (int) Math.pow(2, this.joinIndex + 1)); 
     }
 
     @Override 

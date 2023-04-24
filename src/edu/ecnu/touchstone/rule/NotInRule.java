@@ -1,16 +1,19 @@
 package edu.ecnu.touchstone.rule;
 
+import java.util.HashMap;
+import java.util.List;
+
+import edu.ecnu.touchstone.extractor.Info;
 import edu.ecnu.touchstone.extractor.Query;
 
 public class NotInRule extends Rule {
-    public NotInRule(Query query) {
-        super(query);
-        //TODO Auto-generated constructor stub
+    String type = "NotIn";
+    public NotInRule(Query query, HashMap<String, Integer> joinTable) {
+        super(query, joinTable);
     }
 
-    String type = "NotInNQ";
-
-    public void apply() {
-
+    @Override
+    public List<Info> apply() {
+        return null;
     }
 }

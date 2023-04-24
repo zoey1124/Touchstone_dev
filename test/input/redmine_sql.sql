@@ -69,8 +69,10 @@ WHERE tokens.user_id = $1
 AND tokens.action = $2 
 AND tokens.value = $3 LIMIT $4;
 
--- q9
+-- q9 ok
 SELECT 1 AS one FROM issues INNER JOIN projects ON projects.id = issues.project_id WHERE (projects.lft < 11 OR projects.rgt > 12) AND issues.fixed_version_id IN ($1, $2) LIMIT $3;
+
+
 
 -- q10
 SELECT *
@@ -78,4 +80,4 @@ FROM issues
 INNER JOIN projects 
 	ON projects.id = issues.project_id 
 WHERE 
-	EXISTS (SELECT 1 AS one FROM enabled_modules WHERE enabled_modules.project_id = projects.id AND enabled_modules.name='issue_tracking');
+	EXISTS (SELECT 1 AS one FROM enabled_modules WHERE enabled_modules.project_id = projects.id AND enabled_modules.name='issue_tracking')

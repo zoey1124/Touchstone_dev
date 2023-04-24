@@ -3,6 +3,7 @@ package edu.ecnu.touchstone.extractor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -23,8 +24,6 @@ public class Loader {
     private Logger logger = null;
     String ccInputFile = null;
 
-    HashMap<String, Integer> joinTable = new HashMap<>(); 
-
     public Loader(String ccInputFile) {
         logger = Logger.getLogger(Touchstone.class);
         this.ccInputFile = ccInputFile;
@@ -33,6 +32,11 @@ public class Loader {
 
     // Read in a .sql file line by line
     public List<Query> load(String sqlInputFile, List<Table> tables) {
+        // initialize joinTable: tableName -> pk start join number 
+        HashMap<String, Integer> joinTable = (HashMap<String, Integer>) 
+                            tables.stream()
+                            .collect(Collectors.toMap(t -> t.getTableName(), value -> 0));
+
         List<Query> queryOut = new ArrayList<Query>();
         List<String> CCList = new ArrayList<>();
         String inputLine = null;
@@ -89,8 +93,8 @@ public class Loader {
     public List<String> parseQuery(int id, Query query, HashMap<String, Integer> joinTable) {
         List<String> ret = new ArrayList<>();
         ret.add("## query " + id);
-        Rule rule = new Rule(query);
-        List<Info> infos = rule.parseBasic(query);
+        Rule rule = new Rule(query, joinTable);
+        List<Info> infos = rule.parse(query);
         List<Table> tables = query.getTables();
         for (Table table: tables) {
             List<String> CCList = new ArrayList<>();
@@ -107,7 +111,7 @@ public class Loader {
             } 
             // add logical relation if multiple filters 
             else if (filterInfos.size() > 1) {
-                String logicalRelation = rule.getLogicalRelation();
+                String logicalRelation = rule.getLogicalRelation(query);
                 String filter = filterInfos.stream()
                             .map(info -> info.toString())
                             .collect(Collectors.joining("#"));
@@ -121,9 +125,7 @@ public class Loader {
                                 .filter(info -> info instanceof PkInfo)
                                 .map(info -> info.toString())
                                 .collect(Collectors.joining("; "));
-            if (pkInfos.length() > 0) {
-                CCList.add(pkInfos);
-            }
+            if (pkInfos.length() > 0)    CCList.add(pkInfos);
 
             // foreign key cardinality constraint format
             String fkInfos = infos.stream()
@@ -131,11 +133,13 @@ public class Loader {
                                     .filter(info -> info instanceof FkInfo)
                                     .map(info -> info.toString())
                                     .collect(Collectors.joining("; "));
-            if (fkInfos.length() > 0) {
-                CCList.add(fkInfos);
+            if (fkInfos.length() > 0)    CCList.add(fkInfos);
+
+            // the table should have some cardinality constraints 
+            if (CCList.size() > 1) {
+                String constraintChain = CCList.stream().collect(Collectors.joining("; "));
+                ret.add(constraintChain);
             }
-            String constraintChain = CCList.stream().collect(Collectors.joining("; "));
-            ret.add(constraintChain);
         }
         return ret;
     }
