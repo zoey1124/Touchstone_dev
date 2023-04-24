@@ -30,3 +30,8 @@
 [issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 1, 2]
 [projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 1, 2]
 
+## query 10
+[issues]; [2, project_id, 0.500000, projects.id, 1, 2]
+[projects]; [1, id, 1, 2]
+[enabled_modules]
+

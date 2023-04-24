@@ -69,10 +69,7 @@ public class Rule {
             // from
             FromItem from = plainSelect.getFromItem();
             if (from instanceof SubSelect) {
-                int firstIndex = from.toString().indexOf("(");
-                int lastIndex = from.toString().lastIndexOf(")");
-                String subqueryStr = from.toString().substring(firstIndex+1, lastIndex);
-                Query subquery = new Query(subqueryStr, query.getTables());
+                Query subquery = getSubQuery(from.toString(), query);
                 FromRule rule = new FromRule(query, subquery);
                 rules.add(rule);
             }
@@ -87,8 +84,9 @@ public class Rule {
                                 // NotInRule notInRule = new NotInRule();
                                 // notInRule.apply();
                             } else {
-                                // InRule inRule = new InRule();
-                                // inRule.apply();
+                                Query subquery = getSubQuery(inExpression.toString(), query);
+                                InRule inRule = new InRule(query, subquery);
+                                inRule.apply();
                             }
                         }
                     }
@@ -116,6 +114,17 @@ public class Rule {
 
         }
         return rules;
+    }
+
+    /*
+     * @Input: e.g. String "EXISTS (SELECT ...)"
+     *         e.g. String "FROM (SELECT ...)"
+     */
+    private Query getSubQuery(String expr, Query query) {
+        int firstIndex = expr.indexOf("(");
+        int lastIndex = expr.lastIndexOf(")");
+        String subqueryStr = expr.toString().substring(firstIndex+1, lastIndex);
+        return new Query(subqueryStr, query.getTables());
     }
 
     /* 
@@ -262,7 +271,7 @@ public class Rule {
     }
 
     public static void main(String[] args) {
-        String sql = "select * from lineitem where l_shipdate between date '1995-01-01' and date '1996-12-31'";
+        String sql = "select * from issues inner join projects on projects.id = issues.project_id where exists (select 1 as one from enabled_modules where enabled_modules.project_id = project.id);";
         PropertyConfigurator.configure(".//test//lib//log4j.properties");
         try {
             Statement stmt = CCJSqlParserUtil.parse(sql);
@@ -271,10 +280,8 @@ public class Rule {
             Expression where = plainSelect.getWhere();
             where.accept(new ExpressionVisitorAdapter() {
                 @Override 
-                public void visit(Between between) {
-                    System.out.println(between.getBetweenExpressionEnd());
-                    System.out.println(between.getBetweenExpressionStart());
-                    System.out.println(between.getLeftExpression());
+                public void visit(ExistsExpression expr) {
+                    System.out.println(expr);
                 }
             });
 
