@@ -5,7 +5,7 @@ public class FkInfo implements Info {
     String fkTable = null;
     String pk = null;
     String fk = null;
-    int joinIndex = 0;
+    int joinIndex = 1;
 
     public FkInfo(PkInfo pkInfo) {
         this.pk = pkInfo.getPk();

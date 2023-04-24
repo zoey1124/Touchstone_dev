@@ -1,12 +1,32 @@
 ## query 0
-[users]; [0, type@in(2)#login@=#and, 0.500000]
+[roles]; [0, builtin@=, 0.500000]
 
 ## query 1
-[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
 
 ## query 2
-[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+[users]; [0, type@in(2), 0.500000]; [1, id, 1, 2]
+[email_addresses]; [2, user_id, 0.500000, users.id, 1, 2]
 
 ## query 3
-[users]; [0, status@=#status@=#type@in(2)#id@=#and, 0.500000]
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 4
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 5
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 6
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 7
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 8
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 9
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 1, 2]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 1, 2]
 

@@ -1,11 +1,10 @@
 package edu.ecnu.touchstone.run;
 import java.sql.*;
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-// Put data in txt files into postgreSQL database 
-public class PostgresqlConn {
+public class Pipeline{
     private final String url = "jdbc:postgresql://localhost:5432/tpch";
     private final String user = "tpch";
     private final String password = "123456";
@@ -51,10 +50,29 @@ public class PostgresqlConn {
         }
     }
 
-    // this file will also be uploaded to remote server under /start_test directory
-    public static void main() throws Exception {
-        PostgresqlConn db = new PostgresqlConn();
-        Connection conn = db.connect();
-        db.importData(conn);
+
+    public static void main(String[] args) {
+        // args[0]: the path of the configuration file 
+        if (args.length != 1) {
+			System.out.println("Please specify the configuration file for Touchstone!");
+			System.exit(0);
+		} 
+        try {
+            Configurations configurations = new Configurations(args[0]);
+            // parse SQL file 
+    
+            // run controller
+            String[] cmd = new String[]{"zsh", "-c", ""};
+            Process process = Runtime.getRuntime().exec(cmd);
+
+            // run data generator 
+    
+            // run db connector
+            Pipeline db = new Pipeline();
+            Connection conn = db.connect();
+            db.importData(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

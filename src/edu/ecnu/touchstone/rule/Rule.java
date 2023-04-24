@@ -198,7 +198,7 @@ public class Rule {
                     infos.add(fkInfo);
                 } else {
                     FilterOpInfo filterOp = new FilterOpInfo(equalsTo, "=", getQuery());
-                    infos.add(filterOp);
+                    if (!filterOp.filterOnKey()) infos.add(filterOp);
                 }
             }
 

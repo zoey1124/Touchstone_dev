@@ -22,14 +22,15 @@ public class PkInfo implements Info {
         // set keys
         if (leftTable.getPrimaryKey().toString().contains(left.getColumnName())) {
             this.pk = left.getColumnName();
+            this.pkTable = (left.getTable() != null) ? left.getTable().getName() : query.attrToTable(pk).getTableName();
             this.fk = right.getColumnName();
+            this.fkTable = (right.getTable() != null) ? right.getTable().getName() : query.attrToTable(fk).getTableName();
         } else {
             this.pk = right.getColumnName();
+            this.pkTable = (right.getTable() != null) ? right.getTable().getName() : query.attrToTable(pk).getTableName();
             this.fk = left.getColumnName();
+            this.fkTable = (left.getTable() != null) ? left.getTable().getName() : query.attrToTable(fk).getTableName();
         }
-        // set tables according to keys
-        this.pkTable = query.attrToTable(this.pk).getTableName();
-        this.fkTable = query.attrToTable(this.fk).getTableName();
     }
 
     public String getPk() {
@@ -58,8 +59,8 @@ public class PkInfo implements Info {
 
     @Override
     public String toString() {
-        return String.format("[1, %s.%s, %d, %d]", 
-        this.pkTable, this.pk, this.joinIndex, this.joinIndex + 1); 
+        return String.format("[1, %s, %d, %d]", 
+        this.pk, this.joinIndex, this.joinIndex + 1); 
     }
 
     @Override 

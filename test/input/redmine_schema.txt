@@ -1,3 +1,10 @@
+T[issues; 2000; id, integer; tracker_id, integer; project_id, integer; subject, varchar; description, varchar; due_date, date; category_id, integer; status_id, integer; assigned_to_id, integer; priority_id, integer; fixed_version_id, integer; author_id, integer; lock_version, integer; created_on, datetime; updated_on, datetime; start_date, date; done_ratio, integer; estimated_hours, decimal; parent_id, integer; root_id, integer; lft, integer; rgt, integer; is_private, bool; closed_on, datetime; project, integer; tracker, integer; priority, integer; status, integer; author, integer; p(id); f(project_id, projects.id)]
+
+T[projects; 2000; id, integer; name, varchar; description, varchar; homepage, varchar; is_public, bool; parent_id, integer; created_on, datetime; updated_on, datetime; identifier, varchar; status, integer; lft, integer; rgt, integer; inherit_members, bool; default_version_id, integer; default_assigned_to_id, integer; p(id)]
+
+T[versions; 2000; id, integer; project_id, integer; name, varchar; description, varchar; effective_date, date; created_on, datetime; updated_on, datetime; wiki_page_title, varchar; status, varchar; sharing, varchar; p(id); f(project_id, projects.id)]
+
+T[enabled_modules; 2000; id, integer; project_id, integer; name, varchar; p(id); f(project_id, projects.id)]
 
 T[attachments; 2000; id, integer; container_id, integer; container_type, varchar; filename, varchar; disk_filename, varchar; filesize, integer; content_type, varchar; digest, varchar; downloads, integer; author_id, integer; created_on, datetime; description, varchar; disk_directory, varchar; author, integer; p(id); f(author_id, users.id)]
 D[attachments.id; 0; 2000; 1; 9999]
