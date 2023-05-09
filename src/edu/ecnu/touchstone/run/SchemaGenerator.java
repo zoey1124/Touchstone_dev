@@ -1,6 +1,7 @@
 package edu.ecnu.touchstone.run;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SchemaGenerator {
@@ -9,17 +10,19 @@ public class SchemaGenerator {
     private final String password = "my_password";
     int NUM = 3000;
 
-    Map<String, String> dataToType = Map.of(
-        "integer", "integer",
-        "character varying", "varchar",
-        "timestamp without time zone'", "datetime",
-        "text", "varchar",
-        "boolean", "bool",
-        "bytea", "varchar",
-        "date", "date",
-        "double precision", "decimal",
-        "bigint", "integer"
-    );
+    HashMap<String, String> dataToType = new HashMap<>();
+
+    // Map.of(
+    //     "integer", "integer",
+    //     "character varying", "varchar",
+    //     "timestamp without time zone'", "datetime",
+    //     "text", "varchar",
+    //     "boolean", "bool",
+    //     "bytea", "varchar",
+    //     "date", "date",
+    //     "double precision", "decimal",
+    //     "bigint", "integer"
+    // );
 
     public Connection connect() throws Exception {
         Connection c = null;

@@ -47,16 +47,16 @@ public class Loader {
             String queryLine = "";
             int id = 0;
             while ((inputLine = br.readLine()) != null) {
-                inputLine = inputLine.toLowerCase().strip();
+                inputLine = inputLine.toLowerCase().trim();
                 // comments or blank
                 if (inputLine.startsWith("--") 
-                    || inputLine.isBlank()) { 
+                    || inputLine.length() == 0) { 
                     continue;
                 } 
                 // end of a query
                 else if (inputLine.contains(";")) { 
                     queryLine += inputLine;
-                    // don't consider non-queey sql (e.g. create, drop)
+                    // don't consider non-query sql (e.g. create, drop)
                     if (queryLine.startsWith("select")) { 
                         Query query = new Query(queryLine, tables);
                         // Call Rule on each Query

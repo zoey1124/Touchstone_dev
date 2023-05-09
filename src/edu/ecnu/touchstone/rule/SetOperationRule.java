@@ -1,5 +1,6 @@
 package edu.ecnu.touchstone.rule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -20,9 +21,10 @@ import net.sf.jsqlparser.statement.select.SetOperationList;
  * Set Operation nested query. e.g., UNION, INTERSECT, EXCEPT
  */
 public class SetOperationRule extends Rule {
-    String type = "SetOperationNQ";
+    String type = "SetOperation";
     SetOperation setOp = null;
     List<SelectBody> selects = null;
+    HashMap<String, Integer> joinTable = null;
 
     public SetOperationRule(Query query, HashMap<String, Integer> joinTable) {
         super(query, joinTable);
@@ -30,10 +32,13 @@ public class SetOperationRule extends Rule {
         SetOperationList setOperationList = (SetOperationList) select.getSelectBody();
         this.setOp = setOperationList.getOperations().get(0);
         this.selects = setOperationList.getSelects();
+        this.joinTable = joinTable;
     }
 
     
+    @Override 
     public List<Info> apply() {
+        List<Info> CCList =  new ArrayList<>();
         String sql1 = this.selects.get(0).toString();
         String sql2 = this.selects.get(1).toString();
         Query q1 = new Query(sql1, this.query.getTables());
@@ -41,7 +46,9 @@ public class SetOperationRule extends Rule {
         if (setOp.toString().equals("UNION")
             || setOp.toString().equals("UNION ALL")) {
                 Rule rule1 = new Rule(q1, joinTable);
+                CCList.addAll(rule1.parse(q1));
                 Rule rule2 = new Rule(q2, joinTable);
+                CCList.addAll(rule2.parse(q2));
         }
         else if (setOp.toString().equals("INTERSECT")) {
 
@@ -49,21 +56,6 @@ public class SetOperationRule extends Rule {
         else if (setOp.toString().equals("EXCEPT")) {
             Rule rule1 = new Rule(q1, joinTable);
         }
-        return null;
-    }
-
-    public static void main(String[] args) {
-        PropertyConfigurator.configure(".//test//lib//log4j.properties");
-        String sql = "(select a.c1 from product) except (select b.c1 from sells);";
-        try {
-            Statement stmt = CCJSqlParserUtil.parse(sql);
-            Select select = (Select) stmt;
-            SetOperationList setOperationList = (SetOperationList) select.getSelectBody();
-            System.out.println(setOperationList.getSelects());
-            System.out.println(setOperationList.getOperations().get(0).toString());
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-        
+        return CCList;
     }
 }
