@@ -32,6 +32,7 @@ public class Loader {
 
     // Read in a .sql file line by line
     public List<Query> load(String sqlInputFile, List<Table> tables) {
+        long startTime = System.currentTimeMillis();
         // initialize joinTable: tableName -> pk start join number 
         HashMap<String, Integer> joinTable = (HashMap<String, Integer>) 
                             tables.stream()
@@ -83,6 +84,8 @@ public class Loader {
             e.printStackTrace();
             System.exit(0);
         }
+        long endTime = System.currentTimeMillis();
+        logger.info("Analyzing query time is: " + (endTime - startTime) + "ms\n");
         logger.debug("cardinality input is: \n" + CCList);
         return queryOut;
     }

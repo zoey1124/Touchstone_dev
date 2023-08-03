@@ -30,3 +30,785 @@
 [issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 1, 2]
 [projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 1, 2]
 
+## query 10
+[issues]; [2, project_id, 0.500000, projects.id, 16, 32]
+[projects]; [1, id, 4, 8]; [1, id, 16, 32]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 4, 8]
+
+## query 11
+[roles]; [0, builtin@=, 0.500000]
+
+## query 12
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 13
+[users]; [0, type@in(2), 0.500000]; [1, id, 4, 8]
+[email_addresses]; [2, user_id, 0.500000, users.id, 4, 8]
+
+## query 14
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 15
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 16
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 17
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 18
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 19
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 20
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 64, 128]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 64, 128]
+
+## query 21
+[issues]; [2, project_id, 0.500000, projects.id, 1024, 2048]
+[projects]; [1, id, 256, 512]; [1, id, 1024, 2048]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 256, 512]
+
+## query 22
+[roles]; [0, builtin@=, 0.500000]
+
+## query 23
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 24
+[users]; [0, type@in(2), 0.500000]; [1, id, 16, 32]
+[email_addresses]; [2, user_id, 0.500000, users.id, 16, 32]
+
+## query 25
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 26
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 27
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 28
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 29
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 30
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 31
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 4096, 8192]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 4096, 8192]
+
+## query 32
+[issues]; [2, project_id, 0.500000, projects.id, 65536, 131072]
+[projects]; [1, id, 16384, 32768]; [1, id, 65536, 131072]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 16384, 32768]
+
+## query 33
+[roles]; [0, builtin@=, 0.500000]
+
+## query 34
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 35
+[users]; [0, type@in(2), 0.500000]; [1, id, 64, 128]
+[email_addresses]; [2, user_id, 0.500000, users.id, 64, 128]
+
+## query 36
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 37
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 38
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 39
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 40
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 41
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 42
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 262144, 524288]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 262144, 524288]
+
+## query 43
+[issues]; [2, project_id, 0.500000, projects.id, 4194304, 8388608]
+[projects]; [1, id, 1048576, 2097152]; [1, id, 4194304, 8388608]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 1048576, 2097152]
+
+## query 44
+[roles]; [0, builtin@=, 0.500000]
+
+## query 45
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 46
+[users]; [0, type@in(2), 0.500000]; [1, id, 256, 512]
+[email_addresses]; [2, user_id, 0.500000, users.id, 256, 512]
+
+## query 47
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 48
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 49
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 50
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 51
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 52
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 53
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 16777216, 33554432]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 16777216, 33554432]
+
+## query 54
+[issues]; [2, project_id, 0.500000, projects.id, 268435456, 536870912]
+[projects]; [1, id, 67108864, 134217728]; [1, id, 268435456, 536870912]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 67108864, 134217728]
+
+## query 55
+[roles]; [0, builtin@=, 0.500000]
+
+## query 56
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 57
+[users]; [0, type@in(2), 0.500000]; [1, id, 1024, 2048]
+[email_addresses]; [2, user_id, 0.500000, users.id, 1024, 2048]
+
+## query 58
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 59
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 60
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 61
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 62
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 63
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 64
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 1073741824, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 1073741824, 2147483647]
+
+## query 65
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 66
+[roles]; [0, builtin@=, 0.500000]
+
+## query 67
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 68
+[users]; [0, type@in(2), 0.500000]; [1, id, 4096, 8192]
+[email_addresses]; [2, user_id, 0.500000, users.id, 4096, 8192]
+
+## query 69
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 70
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 71
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 72
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 73
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 74
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 75
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 76
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 77
+[roles]; [0, builtin@=, 0.500000]
+
+## query 78
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 79
+[users]; [0, type@in(2), 0.500000]; [1, id, 16384, 32768]
+[email_addresses]; [2, user_id, 0.500000, users.id, 16384, 32768]
+
+## query 80
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 81
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 82
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 83
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 84
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 85
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 86
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 87
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 88
+[roles]; [0, builtin@=, 0.500000]
+
+## query 89
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 90
+[users]; [0, type@in(2), 0.500000]; [1, id, 65536, 131072]
+[email_addresses]; [2, user_id, 0.500000, users.id, 65536, 131072]
+
+## query 91
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 92
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 93
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 94
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 95
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 96
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 97
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 98
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 99
+[roles]; [0, builtin@=, 0.500000]
+
+## query 100
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 101
+[users]; [0, type@in(2), 0.500000]; [1, id, 262144, 524288]
+[email_addresses]; [2, user_id, 0.500000, users.id, 262144, 524288]
+
+## query 102
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 103
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 104
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 105
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 106
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 107
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 108
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 109
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 110
+[roles]; [0, builtin@=, 0.500000]
+
+## query 111
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 112
+[users]; [0, type@in(2), 0.500000]; [1, id, 1048576, 2097152]
+[email_addresses]; [2, user_id, 0.500000, users.id, 1048576, 2097152]
+
+## query 113
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 114
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 115
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 116
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 117
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 118
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 119
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 120
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 121
+[roles]; [0, builtin@=, 0.500000]
+
+## query 122
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 123
+[users]; [0, type@in(2), 0.500000]; [1, id, 4194304, 8388608]
+[email_addresses]; [2, user_id, 0.500000, users.id, 4194304, 8388608]
+
+## query 124
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 125
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 126
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 127
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 128
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 129
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 130
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 131
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 132
+[roles]; [0, builtin@=, 0.500000]
+
+## query 133
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 134
+[users]; [0, type@in(2), 0.500000]; [1, id, 16777216, 33554432]
+[email_addresses]; [2, user_id, 0.500000, users.id, 16777216, 33554432]
+
+## query 135
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 136
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 137
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 138
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 139
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 140
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 141
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 142
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 143
+[roles]; [0, builtin@=, 0.500000]
+
+## query 144
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 145
+[users]; [0, type@in(2), 0.500000]; [1, id, 67108864, 134217728]
+[email_addresses]; [2, user_id, 0.500000, users.id, 67108864, 134217728]
+
+## query 146
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 147
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 148
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 149
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 150
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 151
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 152
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 153
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 154
+[roles]; [0, builtin@=, 0.500000]
+
+## query 155
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 156
+[users]; [0, type@in(2), 0.500000]; [1, id, 268435456, 536870912]
+[email_addresses]; [2, user_id, 0.500000, users.id, 268435456, 536870912]
+
+## query 157
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 158
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 159
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 160
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 161
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 162
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 163
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 164
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 165
+[roles]; [0, builtin@=, 0.500000]
+
+## query 166
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 167
+[users]; [0, type@in(2), 0.500000]; [1, id, 1073741824, 2147483647]
+[email_addresses]; [2, user_id, 0.500000, users.id, 1073741824, 2147483647]
+
+## query 168
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 169
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 170
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 171
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 172
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 173
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 174
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 175
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 176
+[roles]; [0, builtin@=, 0.500000]
+
+## query 177
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 178
+[users]; [0, type@in(2), 0.500000]; [1, id, 2147483647, 2147483647]
+[email_addresses]; [2, user_id, 0.500000, users.id, 2147483647, 2147483647]
+
+## query 179
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 180
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 181
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 182
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 183
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 184
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 185
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 186
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 187
+[roles]; [0, builtin@=, 0.500000]
+
+## query 188
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 189
+[users]; [0, type@in(2), 0.500000]; [1, id, 2147483647, 2147483647]
+[email_addresses]; [2, user_id, 0.500000, users.id, 2147483647, 2147483647]
+
+## query 190
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 191
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 192
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 193
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 194
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 195
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 196
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 197
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 198
+[roles]; [0, builtin@=, 0.500000]
+
+## query 199
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 200
+[users]; [0, type@in(2), 0.500000]; [1, id, 2147483647, 2147483647]
+[email_addresses]; [2, user_id, 0.500000, users.id, 2147483647, 2147483647]
+
+## query 201
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 202
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 203
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 204
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 205
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 206
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 207
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 208
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 209
+[roles]; [0, builtin@=, 0.500000]
+
+## query 210
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 211
+[users]; [0, type@in(2), 0.500000]; [1, id, 2147483647, 2147483647]
+[email_addresses]; [2, user_id, 0.500000, users.id, 2147483647, 2147483647]
+
+## query 212
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 213
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 214
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 215
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 216
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 217
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 218
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 219
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 220
+[roles]; [0, builtin@=, 0.500000]
+
+## query 221
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 222
+[users]; [0, type@in(2), 0.500000]; [1, id, 2147483647, 2147483647]
+[email_addresses]; [2, user_id, 0.500000, users.id, 2147483647, 2147483647]
+
+## query 223
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 224
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 225
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 226
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 227
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 228
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 229
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 230
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
+## query 231
+[roles]; [0, builtin@=, 0.500000]
+
+## query 232
+[attachments]; [0, digest@<>#filesize@<=#and, 0.500000]
+
+## query 233
+[users]; [0, type@in(2), 0.500000]; [1, id, 2147483647, 2147483647]
+[email_addresses]; [2, user_id, 0.500000, users.id, 2147483647, 2147483647]
+
+## query 234
+[users]; [0, type@in(2)#login@=#and, 0.500000]
+
+## query 235
+[custom_values]; [0, customized_id@=#customized_type@=#and, 0.500000]
+
+## query 236
+[custom_field_enumerations]; [0, custom_field_id@=, 0.500000]
+
+## query 237
+[users]; [0, type@in(2)#status@<>#status@=#login@in(1)#firstname@like#lastname@like#and, 0.500000]
+
+## query 238
+[users]; [0, status@=#status@=#type@in(2)#and, 0.500000]
+
+## query 239
+[tokens]; [0, action@=#value@=#and, 0.500000]
+
+## query 240
+[issues]; [0, fixed_version_id@in(2), 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [0, lft@<#rgt@>#and, 0.500000]; [1, id, 2147483647, 2147483647]
+
+## query 241
+[issues]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+[projects]; [1, id, 2147483647, 2147483647]; [1, id, 2147483647, 2147483647]
+[enabled_modules]; [0, name@=, 0.500000]; [2, project_id, 0.500000, projects.id, 2147483647, 2147483647]
+
