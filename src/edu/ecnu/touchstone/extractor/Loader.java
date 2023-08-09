@@ -32,6 +32,7 @@ public class Loader {
 
     // Read in a .sql file line by line
     public List<Query> load(String sqlInputFile, List<Table> tables) {
+        long startTime = System.currentTimeMillis();
         // initialize joinTable: tableName -> pk start join number 
         HashMap<String, Integer> joinTable = (HashMap<String, Integer>) 
                             tables.stream()
@@ -47,16 +48,16 @@ public class Loader {
             String queryLine = "";
             int id = 0;
             while ((inputLine = br.readLine()) != null) {
-                inputLine = inputLine.toLowerCase().strip();
+                inputLine = inputLine.toLowerCase().trim();
                 // comments or blank
                 if (inputLine.startsWith("--") 
-                    || inputLine.isBlank()) { 
+                    || inputLine.length() == 0) { 
                     continue;
                 } 
                 // end of a query
                 else if (inputLine.contains(";")) { 
                     queryLine += inputLine;
-                    // don't consider non-queey sql (e.g. create, drop)
+                    // don't consider non-query sql (e.g. create, drop)
                     if (queryLine.startsWith("select")) { 
                         Query query = new Query(queryLine, tables);
                         // Call Rule on each Query
@@ -83,6 +84,8 @@ public class Loader {
             e.printStackTrace();
             System.exit(0);
         }
+        long endTime = System.currentTimeMillis();
+        logger.info("Analyzing query time is: " + (endTime - startTime) + "ms\n");
         logger.debug("cardinality input is: \n" + CCList);
         return queryOut;
     }

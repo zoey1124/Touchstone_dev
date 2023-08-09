@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.stream.*;
 import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 
 import edu.ecnu.touchstone.schema.*;
 import net.sf.jsqlparser.statement.*;
@@ -38,12 +39,12 @@ public class Query {
     }
 
     public boolean containNQ() {
-        List<String> select = Pattern.compile("select")
-                                 .matcher(this.sql)
-                                 .results()
-                                 .map(MatchResult::group)
-                                 .collect(Collectors.toList());
-        return select.size() > 1;
+        Matcher matcher = Pattern.compile("select").matcher(this.sql);
+        int hit = 0;
+        while (matcher.find()) {
+            hit += 1;
+        }
+        return hit > 1;
     }
 
     /* 

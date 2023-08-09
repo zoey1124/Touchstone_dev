@@ -49,3 +49,5 @@ T[email_addresses; 2000; id, integer; user_id, integer; address, varchar; is_def
 T[imports; 2000; id, integer; type, varchar; user_id, integer; filename, varchar; settings, varchar; total_items, integer; finished, bool; created_at, datetime; updated_at, datetime; p(id); f(user_id, users.id)]
 T[custom_field_enumerations; 2000; id, integer; custom_field_id, integer; name, varchar; active, bool; position, integer; p(id)]
 T[import_items; 2000; id, integer; import_id, integer; position, integer; obj_id, integer; message, varchar; unique_id, varchar; p(id); f(import_id, imports.id)]
+T[journals; 2000; id, integer; journalized_id, integer; journalized_type, varchar; user_id, integer; notes, varchar; created_on, datetime; private_notes, bool; p(id); f(user_id, users.id)]
+T[settings; 2000; id, integer; name, varchar; value, varchar; updated_on, datetime; p(id)]

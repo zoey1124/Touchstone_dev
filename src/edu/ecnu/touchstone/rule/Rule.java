@@ -64,12 +64,9 @@ public class Rule {
         List<Rule> rules = new ArrayList<>();
         // set operations
         if (selectBody instanceof SetOperationList) {
-            SetOperationList setOperationList = (SetOperationList) selectBody;
-            // SetOperationRule setOperationRule = 
-            //         new SetOperationRule(this.query.getTables(), 
-            //                              setOperationList.getOperations(), 
-            //                              setOperationList.getSelects());
-            // setOperationRule.apply();
+            SetOperationRule setOperationRule = 
+                    new SetOperationRule(query, joinTable);
+            rules.add(setOperationRule);
         }
         else if (selectBody instanceof PlainSelect) {
             PlainSelect plainSelect = (PlainSelect) selectBody;
@@ -144,6 +141,9 @@ public class Rule {
         Statement stmt = query.getStmt();
         Select select = (Select) stmt;
         SelectBody selectBody = select.getSelectBody();
+        if (!(selectBody instanceof PlainSelect)) {
+            return new ArrayList<>();
+        }
         PlainSelect plainSelect = (PlainSelect) selectBody;
         List<Info> ret = new ArrayList<>();
         // where 
