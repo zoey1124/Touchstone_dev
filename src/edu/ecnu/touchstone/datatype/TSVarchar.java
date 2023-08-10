@@ -29,6 +29,9 @@ public class TSVarchar implements TSDataTypeInfo {
 	private List<String> likeCandidateList = null;
 	private float likeCumulativeProbability;
 
+	// support inclusion data constraints
+	private String[] valuePool = null;
+
 	public TSVarchar() {
 		super();
 		nullRatio = 0;
@@ -37,9 +40,10 @@ public class TSVarchar implements TSDataTypeInfo {
 		init();
 	}
 
-	public TSVarchar(float nullRatio, float avgLength, int maxLength) {
+	public TSVarchar(float nullRatio, float avgLength, int maxLength, String[] valuePool) {
 		super();
 		this.nullRatio = nullRatio;
+		this.valuePool = valuePool;
 		if (maxLength / 2 > avgLength) {
 			minLength = 0;
 			this.maxLength = (int)(avgLength * 2);
@@ -69,6 +73,8 @@ public class TSVarchar implements TSDataTypeInfo {
 		this.likeCandidateList = new ArrayList<String>();
 		this.likeCandidateList.addAll(tsVarchar.likeCandidateList);
 		this.likeCumulativeProbability = tsVarchar.likeCumulativeProbability;
+
+		this.valuePool = tsVarchar.valuePool;
 	}
 
 	private void init() {
