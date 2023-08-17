@@ -33,12 +33,16 @@ public class TSVarchar implements TSDataTypeInfo {
 	// support inclusion data constraints
 	private List<String> valuePool = null;
 
+	// support format data constraints
+	private String regex;
+
 	public TSVarchar() {
 		super();
 		nullRatio = 0;
 		minLength = 0;
 		maxLength = 100;
 		valuePool = new ArrayList<>();
+		regex = "";
 		init();
 	}
 
