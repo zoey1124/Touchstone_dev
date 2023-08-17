@@ -192,9 +192,9 @@ public class SchemaReader {
 			if (dataInfo != null) {
 				if (arr.length == 3) {
 					dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]), 
-						Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), new String[0]);
+						Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), new ArrayList<>());
 				} else if (arr.length == 4) {
-					String[] valuePool = arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",");
+					List<String> valuePool = new ArrayList<>(Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",")));
 					dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]),
 						Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), valuePool);
 				}

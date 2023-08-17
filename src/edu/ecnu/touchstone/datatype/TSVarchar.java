@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 // In order to facilitate the data generation, the average length are converted to
@@ -30,17 +31,18 @@ public class TSVarchar implements TSDataTypeInfo {
 	private float likeCumulativeProbability;
 
 	// support inclusion data constraints
-	private String[] valuePool = null;
+	private List<String> valuePool = null;
 
 	public TSVarchar() {
 		super();
 		nullRatio = 0;
 		minLength = 0;
 		maxLength = 100;
+		valuePool = new ArrayList<>();
 		init();
 	}
 
-	public TSVarchar(float nullRatio, float avgLength, int maxLength, String[] valuePool) {
+	public TSVarchar(float nullRatio, float avgLength, int maxLength, List<String> valuePool) {
 		super();
 		this.nullRatio = nullRatio;
 		this.valuePool = valuePool;
@@ -107,6 +109,9 @@ public class TSVarchar implements TSDataTypeInfo {
 					return frontStr + likeCandidates.get(i).candidate + lastStr;
 				}
 			}
+		}
+		if (valuePool.size() > 0) {
+			return getRandomString(valuePool);
 		}
 		String randomString = null;
 		while(true) {
@@ -178,6 +183,12 @@ public class TSVarchar implements TSDataTypeInfo {
 		return getRandomString(length);
 	}
 
+	private String getRandomString(List<String> valuePool) {
+		Random random = new Random();
+		int randomIndex = random.nextInt(valuePool.size());
+		return valuePool.get(randomIndex);
+	}
+
 	private String getRandomString(int length) {
 		char[] buffer = new char[length];
 		for (int i = 0; i < length; i++) {
@@ -192,7 +203,7 @@ public class TSVarchar implements TSDataTypeInfo {
 				+ ", equalCandidates=" + equalCandidates + ", equalCandidateSet=" + equalCandidateSet
 				+ ", equalCumulativeProbability=" + equalCumulativeProbability + ", likeCandidates=" + likeCandidates
 				+ ", likeCandidateList=" + likeCandidateList + ", likeCumulativeProbability="
-				+ likeCumulativeProbability + "]";
+				+ likeCumulativeProbability + ", valuePool=" + valuePool + "]";
 	}
 
 	@Override
