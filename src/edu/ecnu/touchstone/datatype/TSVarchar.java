@@ -80,7 +80,10 @@ public class TSVarchar implements TSDataTypeInfo {
 		this.likeCandidateList.addAll(tsVarchar.likeCandidateList);
 		this.likeCumulativeProbability = tsVarchar.likeCumulativeProbability;
 
-		this.valuePool = tsVarchar.valuePool;
+		this.valuePool = new ArrayList<String>();
+		this.valuePool.addAll(tsVarchar.valuePool);
+
+		this.regex = tsVarchar.regex;
 	}
 
 	private void init() {
