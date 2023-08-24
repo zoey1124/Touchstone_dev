@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 // In order to facilitate the data generation, the average length are converted to
@@ -29,17 +30,26 @@ public class TSVarchar implements TSDataTypeInfo {
 	private List<String> likeCandidateList = null;
 	private float likeCumulativeProbability;
 
+	// support inclusion data constraints
+	private List<String> valuePool = null;
+
+	// support format data constraints
+	private String regex;
+
 	public TSVarchar() {
 		super();
 		nullRatio = 0;
 		minLength = 0;
 		maxLength = 100;
+		valuePool = new ArrayList<>();
+		regex = "";
 		init();
 	}
 
-	public TSVarchar(float nullRatio, float avgLength, int maxLength) {
+	public TSVarchar(float nullRatio, float avgLength, int maxLength, List<String> valuePool) {
 		super();
 		this.nullRatio = nullRatio;
+		this.valuePool = valuePool;
 		if (maxLength / 2 > avgLength) {
 			minLength = 0;
 			this.maxLength = (int)(avgLength * 2);
@@ -69,6 +79,11 @@ public class TSVarchar implements TSDataTypeInfo {
 		this.likeCandidateList = new ArrayList<String>();
 		this.likeCandidateList.addAll(tsVarchar.likeCandidateList);
 		this.likeCumulativeProbability = tsVarchar.likeCumulativeProbability;
+
+		this.valuePool = new ArrayList<String>();
+		this.valuePool.addAll(tsVarchar.valuePool);
+
+		this.regex = tsVarchar.regex;
 	}
 
 	private void init() {
@@ -101,6 +116,9 @@ public class TSVarchar implements TSDataTypeInfo {
 					return frontStr + likeCandidates.get(i).candidate + lastStr;
 				}
 			}
+		}
+		if (valuePool.size() > 0) {
+			return getRandomString(valuePool);
 		}
 		String randomString = null;
 		while(true) {
@@ -172,6 +190,12 @@ public class TSVarchar implements TSDataTypeInfo {
 		return getRandomString(length);
 	}
 
+	private String getRandomString(List<String> valuePool) {
+		Random random = new Random();
+		int randomIndex = random.nextInt(valuePool.size());
+		return valuePool.get(randomIndex);
+	}
+
 	private String getRandomString(int length) {
 		char[] buffer = new char[length];
 		for (int i = 0; i < length; i++) {
@@ -186,7 +210,7 @@ public class TSVarchar implements TSDataTypeInfo {
 				+ ", equalCandidates=" + equalCandidates + ", equalCandidateSet=" + equalCandidateSet
 				+ ", equalCumulativeProbability=" + equalCumulativeProbability + ", likeCandidates=" + likeCandidates
 				+ ", likeCandidateList=" + likeCandidateList + ", likeCumulativeProbability="
-				+ likeCumulativeProbability + "]";
+				+ likeCumulativeProbability + ", valuePool=" + valuePool + "]";
 	}
 
 	@Override
