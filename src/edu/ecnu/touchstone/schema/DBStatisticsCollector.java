@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -125,7 +126,7 @@ public class DBStatisticsCollector {
 						rs.next();
 						int maxLength = rs.getInt(1);
 
-						attribute.setDataTypeInfo(new TSVarchar(nullRatio, avgLength, maxLength));
+						attribute.setDataTypeInfo(new TSVarchar(nullRatio, avgLength, maxLength, new ArrayList<>()));
 						System.out.println("D[" + table.getTableName() + "." + attribute.getAttrName() + ";" + nullRatio + ";" 
 								+ avgLength + ";" + maxLength + "]");
 						break;
