@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import com.mifmif.common.regex.Generex;
+
 // In order to facilitate the data generation, the average length are converted to
 // minimum length in the constructor.
 
@@ -46,10 +48,11 @@ public class TSVarchar implements TSDataTypeInfo {
 		init();
 	}
 
-	public TSVarchar(float nullRatio, float avgLength, int maxLength, List<String> valuePool) {
+	public TSVarchar(float nullRatio, float avgLength, int maxLength, List<String> valuePool, String regex) {
 		super();
 		this.nullRatio = nullRatio;
 		this.valuePool = valuePool;
+		this.regex = regex;
 		if (maxLength / 2 > avgLength) {
 			minLength = 0;
 			this.maxLength = (int)(avgLength * 2);
@@ -122,7 +125,8 @@ public class TSVarchar implements TSDataTypeInfo {
 		}
 		String randomString = null;
 		while(true) {
-			randomString = getRandomString();
+			// randomString = getRandomString();
+			randomString = this.regex.isEmpty() ? getRandomString() : getRandomString(this.regex);
 			boolean flag = true;
 			for (int i = 0; i < likeCandidateList.size(); i++) {
 				if (randomString.contains(likeCandidateList.get(i))) {
@@ -196,6 +200,11 @@ public class TSVarchar implements TSDataTypeInfo {
 		return valuePool.get(randomIndex);
 	}
 
+	private String getRandomString(String regex) {
+		Generex generex = new Generex(regex);
+		return generex.random(this.minLength > 0 ? this.minLength : 1, this.maxLength);
+	}
+
 	private String getRandomString(int length) {
 		char[] buffer = new char[length];
 		for (int i = 0; i < length; i++) {
@@ -209,8 +218,8 @@ public class TSVarchar implements TSDataTypeInfo {
 		return "TSVarchar [nullRatio=" + nullRatio + ", minLength=" + minLength + ", maxLength=" + maxLength
 				+ ", equalCandidates=" + equalCandidates + ", equalCandidateSet=" + equalCandidateSet
 				+ ", equalCumulativeProbability=" + equalCumulativeProbability + ", likeCandidates=" + likeCandidates
-				+ ", likeCandidateList=" + likeCandidateList + ", likeCumulativeProbability="
-				+ likeCumulativeProbability + ", valuePool=" + valuePool + "]";
+				+ ", likeCandidateList=" + likeCandidateList + ", likeCumulativeProbability=" + likeCumulativeProbability 
+				+ ", valuePool=" + valuePool + ", regex=" + regex + "]";
 	}
 
 	@Override
