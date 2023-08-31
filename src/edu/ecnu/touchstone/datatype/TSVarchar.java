@@ -125,6 +125,7 @@ public class TSVarchar implements TSDataTypeInfo {
 		}
 		String randomString = null;
 		while(true) {
+			// randomString = getRandomString();
 			randomString = this.regex.isEmpty() ? getRandomString() : getRandomString(this.regex);
 			boolean flag = true;
 			for (int i = 0; i < likeCandidateList.size(); i++) {
@@ -201,7 +202,7 @@ public class TSVarchar implements TSDataTypeInfo {
 
 	private String getRandomString(String regex) {
 		Generex generex = new Generex(regex);
-		return generex.random(this.minLength, this.maxLength);
+		return generex.random(this.minLength > 0 ? this.minLength : 1, this.maxLength);
 	}
 
 	private String getRandomString(int length) {

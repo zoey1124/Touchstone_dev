@@ -193,7 +193,10 @@ public class SchemaReader {
 		case "varchar":
 			if (dataInfo != null) {
 				// assume there is no "" in the regex pattern, and there can only be one [] in regex
-				List<String> valuePool = new ArrayList<>(Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",")));
+				List<String> valuePool = new ArrayList<>();
+				if (!arr[3].equals("()")) {
+					valuePool = Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(","));
+				}
 				String regex = "";
 				if (arr.length == 5) {
 					regex = arr[4];
