@@ -49,7 +49,8 @@ public class SchemaReader {
 
 				if (inputLine.matches("[ ]*t[ ]*\\[[\\s\\S^\\]]+\\][ ]*")) {
 					tableInfos.add(inputLine);
-				} else if (inputLine.matches("[ ]*d[ ]*\\[[\\s\\S^\\]]+\\][ ]*")) {
+				// } else if (inputLine.matches("[ ]*d[ ]*\\[[\\s\\S^\\]]+\\][ ]*")) {
+				} else if (inputLine.matches("[ ]*d[ ]*\\[[\\s\\S^\\]]+\\\"[\\s\\S]*?\\\"\\][ ]*")) {
 					dataInfos.add(inputLine);
 				} else {
 					logger.error("\n\tUnrecognized input information: " + inputLine);
@@ -66,7 +67,8 @@ public class SchemaReader {
 		Map<String, String> attrDataInfoMap = new HashMap<String, String>();
 		for (int i = 0; i < dataInfos.size(); i++) {
 			String tmp = dataInfos.get(i);
-			tmp = tmp.substring(tmp.indexOf('[') + 1, tmp.indexOf(']'));
+			// tmp = tmp.substring(tmp.indexOf('[') + 1, tmp.indexOf(']'));
+			tmp = tmp.substring(tmp.indexOf('[') + 1, tmp.lastIndexOf(']'));
 			String[] arr = tmp.split(";", 2);
 			attrDataInfoMap.put(arr[0], arr[1]);
 		}
@@ -190,14 +192,18 @@ public class SchemaReader {
 			break;
 		case "varchar":
 			if (dataInfo != null) {
-				if (arr.length == 3) {
-					dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]), 
-						Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), new ArrayList<>());
-				} else if (arr.length == 4) {
-					List<String> valuePool = new ArrayList<>(Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",")));
-					dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]),
-						Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), valuePool);
-				}
+				// if (arr.length == 3) {
+				// 	dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]), 
+				// 		Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), new ArrayList<>());
+				// } else if (arr.length == 4) {
+				// 	List<String> valuePool = new ArrayList<>(Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",")));
+				// 	dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]),
+				// 		Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), valuePool);
+				// }
+
+				// assume there is no "" or ; in the regex pattern
+				List<String> valuePool = new ArrayList<>(Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",")));
+				dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), valuePool, arr[4]);
 			} else {
 				dataTypeInfo = new TSVarchar();
 			}
@@ -226,6 +232,6 @@ public class SchemaReader {
 //		schemaReader.read(".//test//input//tpch_schema_sf_1.txt");
 //		schemaReader.read(".//test//input//function_test_schema_0.txt");
 		
-		schemaReader.read(".//test//input//ssb_schema_sf_1_D.txt");
+		schemaReader.read(".//test//input//test_schema_sf_1.txt");
 	}
 }

@@ -126,7 +126,7 @@ public class DBStatisticsCollector {
 						rs.next();
 						int maxLength = rs.getInt(1);
 
-						attribute.setDataTypeInfo(new TSVarchar(nullRatio, avgLength, maxLength, new ArrayList<>()));
+						attribute.setDataTypeInfo(new TSVarchar(nullRatio, avgLength, maxLength, new ArrayList<>(), ""));
 						System.out.println("D[" + table.getTableName() + "." + attribute.getAttrName() + ";" + nullRatio + ";" 
 								+ avgLength + ";" + maxLength + "]");
 						break;

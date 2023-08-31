@@ -46,10 +46,11 @@ public class TSVarchar implements TSDataTypeInfo {
 		init();
 	}
 
-	public TSVarchar(float nullRatio, float avgLength, int maxLength, List<String> valuePool) {
+	public TSVarchar(float nullRatio, float avgLength, int maxLength, List<String> valuePool, String regex) {
 		super();
 		this.nullRatio = nullRatio;
 		this.valuePool = valuePool;
+		this.regex = regex;
 		if (maxLength / 2 > avgLength) {
 			minLength = 0;
 			this.maxLength = (int)(avgLength * 2);
@@ -209,8 +210,8 @@ public class TSVarchar implements TSDataTypeInfo {
 		return "TSVarchar [nullRatio=" + nullRatio + ", minLength=" + minLength + ", maxLength=" + maxLength
 				+ ", equalCandidates=" + equalCandidates + ", equalCandidateSet=" + equalCandidateSet
 				+ ", equalCumulativeProbability=" + equalCumulativeProbability + ", likeCandidates=" + likeCandidates
-				+ ", likeCandidateList=" + likeCandidateList + ", likeCumulativeProbability="
-				+ likeCumulativeProbability + ", valuePool=" + valuePool + "]";
+				+ ", likeCandidateList=" + likeCandidateList + ", likeCumulativeProbability=" + likeCumulativeProbability 
+				+ ", valuePool=" + valuePool + ", regex=" + regex + "]";
 	}
 
 	@Override
