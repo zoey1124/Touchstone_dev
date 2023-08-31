@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import com.mifmif.common.regex.Generex;
+
 // In order to facilitate the data generation, the average length are converted to
 // minimum length in the constructor.
 
@@ -123,7 +125,7 @@ public class TSVarchar implements TSDataTypeInfo {
 		}
 		String randomString = null;
 		while(true) {
-			randomString = getRandomString();
+			randomString = this.regex.isEmpty() ? getRandomString() : getRandomString(this.regex);
 			boolean flag = true;
 			for (int i = 0; i < likeCandidateList.size(); i++) {
 				if (randomString.contains(likeCandidateList.get(i))) {
@@ -195,6 +197,11 @@ public class TSVarchar implements TSDataTypeInfo {
 		Random random = new Random();
 		int randomIndex = random.nextInt(valuePool.size());
 		return valuePool.get(randomIndex);
+	}
+
+	private String getRandomString(String regex) {
+		Generex generex = new Generex(regex);
+		return generex.random(this.minLength, this.maxLength);
 	}
 
 	private String getRandomString(int length) {

@@ -50,7 +50,7 @@ public class SchemaReader {
 				if (inputLine.matches("[ ]*t[ ]*\\[[\\s\\S^\\]]+\\][ ]*")) {
 					tableInfos.add(inputLine);
 				// } else if (inputLine.matches("[ ]*d[ ]*\\[[\\s\\S^\\]]+\\][ ]*")) {
-				} else if (inputLine.matches("[ ]*d[ ]*\\[[\\s\\S^\\]]+\\\"[\\s\\S]*?\\\"\\][ ]*")) {
+				} else if (inputLine.matches("[ ]*d[ ]*\\[[\\s\\S]*?\\][ ]*")) {
 					dataInfos.add(inputLine);
 				} else {
 					logger.error("\n\tUnrecognized input information: " + inputLine);
@@ -192,18 +192,13 @@ public class SchemaReader {
 			break;
 		case "varchar":
 			if (dataInfo != null) {
-				// if (arr.length == 3) {
-				// 	dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]), 
-				// 		Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), new ArrayList<>());
-				// } else if (arr.length == 4) {
-				// 	List<String> valuePool = new ArrayList<>(Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",")));
-				// 	dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]),
-				// 		Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), valuePool);
-				// }
-
-				// assume there is no "" or ; in the regex pattern
+				// assume there is no "" in the regex pattern, and there can only be one [] in regex
 				List<String> valuePool = new ArrayList<>(Arrays.asList(arr[3].substring(arr[3].indexOf("(") + 1, arr[3].indexOf(")")).split(",")));
-				dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), valuePool, arr[4]);
+				String regex = "";
+				if (arr.length == 5) {
+					regex = arr[4];
+				}
+				dataTypeInfo = new TSVarchar(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Integer.parseInt(arr[2]), valuePool, regex);
 			} else {
 				dataTypeInfo = new TSVarchar();
 			}
