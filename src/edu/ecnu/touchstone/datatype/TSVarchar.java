@@ -126,7 +126,11 @@ public class TSVarchar implements TSDataTypeInfo {
 		String randomString = null;
 		while(true) {
 			// randomString = getRandomString();
-			randomString = this.regex.isEmpty() ? getRandomString() : getRandomString(this.regex);
+			if (!this.regex.isEmpty() && Generex.isValidPattern(this.regex)) {
+				randomString = getRandomString(this.regex);
+			} else {
+				randomString = getRandomString();
+			}
 			boolean flag = true;
 			for (int i = 0; i < likeCandidateList.size(); i++) {
 				if (randomString.contains(likeCandidateList.get(i))) {
