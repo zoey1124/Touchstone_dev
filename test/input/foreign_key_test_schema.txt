@@ -1,0 +1,4 @@
+## Notice foreignKeyConstraint is NOT the same as foreign key
+T[projects; 2000; id, integer; default_version_id, integer; p(id)]
+
+T[versions; 2000; id, integer; project_id, integer; p(id); f(project_id, projects.id)]
