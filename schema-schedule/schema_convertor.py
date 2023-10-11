@@ -52,19 +52,64 @@ class Table:
         table_info = f"T[{self.name}; {self.size}; "
         for col in self.column_list:
             table_info += f"{str(col)}; "
-        table_info += f"p(id)]"
+        table_info += f"p(id)]\n"
         return table_info
 
 class ConstraintType(Enum): 
-    pass
+    INTEGER = auto()
+    DECIMAL = auto()
+    VARCHAR = auto()
+    BOOL = auto()
+    DATETIME = auto()
+    DATE = auto()
+
 
 class Constraint:
-    def __init__(self, table, type, attribute):
+    def __init__(
+            self, 
+            table: str, 
+            type: ConstraintType, 
+            attribute: str,
+            null_ratio: float = 0,    
+            cardinality: int = 1000,   # Integer
+            min_value: int = 1,        # Integer and Decimal 
+            max_value: int = 9999,     # Integer and Decimal
+            ave_length: float = 15,    # Varchar
+            max_length: int = 100,     # Varchar
+            values: list[str] = [],    # Inclusion 
+            format: str = "",          # Format 
+            true_ratio: float = 0.5    # Bool
+        ):
         self.table = table
         self.type = type
         self.attribute = attribute
+        self.null_ratio = null_ratio
+        self.cardinality = cardinality
+        self.min_value = min_value
+        self.max_value = max_value
+        self.ave_length = ave_length
+        self.max_length = max_length
+        self.values = values
+        self.format = format
+        self.true_ratio = true_ratio
+
     def __str__(self):
-        return f"D[{self.table}.{self.attribute}; ]"
+        line = f"D[{self.table}.{self.attribute}; {self.null_ratio}; "
+        match self.type:
+            case ConstraintType.INTEGER:
+                line += f"{self.cardinality}; {self.min_value}; {self.max_value}"
+            case ConstraintType.DECIMAL:
+                line += f"{self.min_value}; {self.max_value}"
+            case ConstraintType.VARCHAR:
+                line += f"{self.ave_length}; {self.max_length}"
+            case ConstraintType.BOOL:
+                line += f"{self.true_ratio}"
+            case ConstraintType.DATETIME:
+                pass
+            case ConstraintType.DATE:
+                pass
+        line += "]\n"
+        return line
 
 table_name = ""
 column_list = []
@@ -99,22 +144,45 @@ with open(app_create_file_name, 'r') as app_create_file:
 
         line = app_create_file.readline()
 
+# handle constraints on each columns
 constraint_list = []
 table_name = ""
-# handle constraints on each columns
 with open(app_constraint_file_name) as app_constraint_file:
     constraint_json_list = json.load(app_constraint_file)
     for table_constraint_map in constraint_json_list:
         table_name = table_constraint_map["table"]
         table_constraint_list = table_constraint_map["constraints"]
+        for constraint_info in table_constraint_list:
+            # Need to consider the case where one attribute has Inclusion & Format Constraint
+            match constraint_info['^o']:
+                case "InclusionConstraint":
+                    attribute_name = constraint_info["field_name"]
+                    values = constraint_info["values"]
+                    print(values)
+                    constraint = Constraint(
+                        table=table_name, 
+                        type=ConstraintType.VARCHAR,
+                        attribute=attribute_name,
+                        values=values
+                    )
+                    constraint_list.append(constraint)
+                case "FormatConstraint":
+                    attribute_name = constraint_info["field_name"]
+                    format = constraint_info["format"]
+                    constraint = Constraint(
+                        table=table_name,
+                        type=ConstraintType.VARCHAR,
+                        attribute=attribute_name,
+                        format=format
+                    )
 
 # write to output file in certain format
 with open(output_file_name, 'w') as file:
     # write table with columns, primary keys, and foreign keys
     for table in table_list:
-        file.write(f"{str(table)}\n")
+        file.write(str(table))
 
     # write data constraints 
     for constraint in constraint_list:
-        file.write(f"{str(constraint)}\n")
+        file.write(str(constraint))
     

@@ -25,13 +25,21 @@ D[table\_name.column\_name; null\_ratio; min\_value; max\_value]
 D[T1.c2; 0; 0.1; 1000.5]
 
 **Varchar：**  
-D[table\_name.column\_name; null\_ratio; avg\_length; max\_length]  
+D[table\_name.column\_name; null\_ratio; avg\_length; max\_length; optional\_values; optional\_format]  
 示例：  
-D[T1.c3; 0; 123.5; 199]
+D[T1.c3; 0; 123.5; 199; (); ]
 
-如果有 data inclusion constraint, 则为
+如果有 inclusion constraint, 则为
 D[table\_name.column\_name; null\_ratio; avg\_length; max\_length; (value1, value2, ..., value_n)]
-其中(value_1, ..., valuen) 代表 attribute 的取值范围
+其中(value\_1, ..., value\_n) 代表 attribute 的取值范围
+示例：
+D[users.mail_notification; 0; 10; 15; (all, selected, only_my_event, only_assigned, only_owner, none); ]
+
+
+如果有 format constraint， 则为
+D[table\_name.column\_name; null\_ratio; ave\_length; max\_length; (value\_1, ..., value\_n); format]
+示例:
+D[users.login; 0; 10; 30; (); [a-z0-9]*]
 
 **Bool:**  
 D[table\_name.column\_name; null\_ratio; true\_ratio]  
