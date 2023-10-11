@@ -2,6 +2,7 @@ import re
 import copy
 import os
 import json
+from enum import Enum, auto
 
 # a script to convert create sceham sql to touchstone 
 
@@ -26,17 +27,37 @@ to_data_type = {
                 'bytea': 'varchar',
                 'tsvector': 'varchar'  # tool does not support for now
                 }
-class Table: 
-    pass
 
 class Column:
-    def __init__(self, column_name, data_type):
+    def __init__(self, column_name: str, data_type: str):
         self.column_name = column_name
         self.data_type = data_type
         self.present = False
+
     def __str__(self):
-        return f"{self.column_name}, {self.data_type};"
+        return f"{self.column_name}, {self.data_type}"
     
+class Table: 
+    def __init__(
+            self, 
+            name: str, 
+            size: int,
+            column_list: list[Column]
+            ):
+        self.name = name
+        self.size = size
+        self.column_list = column_list
+    
+    def __str__(self):
+        table_info = f"T[{self.name}; {self.size}; "
+        for col in self.column_list:
+            table_info += f"{str(col)}; "
+        table_info += f"p(id)]"
+        return table_info
+
+class ConstraintType(Enum): 
+    pass
+
 class Constraint:
     def __init__(self, table, type, attribute):
         self.table = table
@@ -47,7 +68,7 @@ class Constraint:
 
 table_name = ""
 column_list = []
-table_to_columns = {}
+table_list = []
 with open(app_create_file_name, 'r') as app_create_file:
     line = app_create_file.readline()
     while line: 
@@ -64,7 +85,8 @@ with open(app_create_file_name, 'r') as app_create_file:
         elif words_arr[0] == "create":
             # put last table & columns in map, clear variable names
             if table_name != "":
-                table_to_columns[table_name] = copy.deepcopy(column_list)
+                table = Table(name=table_name, size=table_size, column_list=copy.deepcopy(column_list))
+                table_list.append(table)
                 column_list = []
             table_name = words_arr[2]
         else: 
@@ -78,22 +100,21 @@ with open(app_create_file_name, 'r') as app_create_file:
         line = app_create_file.readline()
 
 constraint_list = []
+table_name = ""
 # handle constraints on each columns
 with open(app_constraint_file_name) as app_constraint_file:
     constraint_json_list = json.load(app_constraint_file)
-    for table_constraint_list in constraint_json_list:
-        print(table_constraint_list)
+    for table_constraint_map in constraint_json_list:
+        table_name = table_constraint_map["table"]
+        table_constraint_list = table_constraint_map["constraints"]
 
 # write to output file in certain format
 with open(output_file_name, 'w') as file:
     # write table with columns, primary keys, and foreign keys
-    for table, columns in table_to_columns.items():
-        line = "T[{}; {}; ".format(table, table_size)
-        for col in columns: 
-            line += str(col)
-        line += "]"
-        # print(line)
-        file.write(line + '\n')
+    for table in table_list:
+        file.write(f"{str(table)}\n")
 
     # write data constraints 
+    for constraint in constraint_list:
+        file.write(f"{str(constraint)}\n")
     
