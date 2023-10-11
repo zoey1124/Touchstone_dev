@@ -101,7 +101,7 @@ class Constraint:
             case ConstraintType.DECIMAL:
                 line += f"{self.min_value}; {self.max_value}"
             case ConstraintType.VARCHAR:
-                line += f"{self.ave_length}; {self.max_length}"
+                line += f"{self.ave_length}; {self.max_length}; ({str(self.values)[1: -1]}); {self.format}"
             case ConstraintType.BOOL:
                 line += f"{self.true_ratio}"
             case ConstraintType.DATETIME:
@@ -158,7 +158,6 @@ with open(app_constraint_file_name) as app_constraint_file:
                 case "InclusionConstraint":
                     attribute_name = constraint_info["field_name"]
                     values = constraint_info["values"]
-                    print(values)
                     constraint = Constraint(
                         table=table_name, 
                         type=ConstraintType.VARCHAR,
