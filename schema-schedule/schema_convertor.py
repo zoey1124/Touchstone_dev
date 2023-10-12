@@ -6,7 +6,7 @@ from enum import Enum, auto
 
 # a script to convert create sceham sql to touchstone 
 
-app_name = "mastodon"
+app_name = "openproject"
 script_directory = os.path.dirname(os.path.abspath(__file__))
 app_create_file_name = "{}/app_create/{}.sql".format(script_directory, app_name)
 app_constraint_file_name = "{}/app_constraint/{}.txt".format(script_directory, app_name)
@@ -25,7 +25,10 @@ to_data_type = {
                 'numeric': 'decimal',
                 'bigint': 'integer',
                 'bytea': 'varchar',
-                'tsvector': 'varchar'  # tool does not support for now
+                'tsvector': 'varchar', # tool does not support for now
+                'smallint': 'integer',
+                'xml': 'varchar',
+                'jsonb': 'varchar'
                 }
 
 class Column:
@@ -138,7 +141,9 @@ with open(app_create_file_name, 'r') as app_create_file:
             # it is a column
             column_name = words_arr[0]
             raw_column_type = re.sub(r'\(.*', '', words_arr[1])
-            data_type = to_data_type[raw_column_type]
+            if raw_column_type not in to_data_type:
+                continue
+            data_type = to_data_type[raw_column_type] 
             column = Column(column_name, data_type)
             column_list.append(column)
 
