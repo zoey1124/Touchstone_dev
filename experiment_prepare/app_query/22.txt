@@ -1,0 +1,25 @@
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=57762.35..57864.22 rows=763 width=72)
+   Group Key: (SUBSTRING(customer.c_phone FROM 1 FOR 2))
+   InitPlan 1 (returns $1)
+     ->  Finalize Aggregate  (cost=6248.83..6248.84 rows=1 width=32)
+           ->  Gather  (cost=6248.61..6248.82 rows=2 width=32)
+                 Workers Planned: 2
+                 ->  Partial Aggregate  (cost=5248.61..5248.62 rows=1 width=32)
+                       ->  Parallel Seq Scan on customer customer_1  (cost=0.00..5243.62 rows=1992 width=6)
+                             Filter: ((c_acctbal > 0.00) AND (SUBSTRING(c_phone FROM 1 FOR 2) = ANY ('{13,31,23,29,30,18,17}'::text[])))
+   ->  Gather Merge  (cost=51513.51..51595.67 rows=636 width=72)
+         Workers Planned: 2
+         Params Evaluated: $1
+         ->  Partial GroupAggregate  (cost=50513.49..50522.23 rows=318 width=72)
+               Group Key: (SUBSTRING(customer.c_phone FROM 1 FOR 2))
+               ->  Sort  (cost=50513.49..50514.28 rows=318 width=38)
+                     Sort Key: (SUBSTRING(customer.c_phone FROM 1 FOR 2))
+                     ->  Parallel Hash Anti Join  (cost=42797.50..50500.27 rows=318 width=38)
+                           Hash Cond: (customer.c_custkey = orders.o_custkey)
+                           ->  Parallel Seq Scan on customer  (cost=0.00..5243.62 rows=729 width=26)
+                                 Filter: ((c_acctbal > $1) AND (SUBSTRING(c_phone FROM 1 FOR 2) = ANY ('{13,31,23,29,30,18,17}'::text[])))
+                           ->  Parallel Hash  (cost=32543.00..32543.00 rows=625000 width=4)
+                                 ->  Parallel Seq Scan on orders  (cost=0.00..32543.00 rows=625000 width=4)
+(22 rows)

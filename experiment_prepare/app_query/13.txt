@@ -1,0 +1,23 @@
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=151333.69..151334.19 rows=200 width=16)
+   Sort Key: (count(*)) DESC, (count(orders.o_orderkey)) DESC
+   ->  HashAggregate  (cost=151324.05..151326.05 rows=200 width=16)
+         Group Key: count(orders.o_orderkey)
+         ->  Finalize GroupAggregate  (cost=111071.60..149074.05 rows=150000 width=12)
+               Group Key: customer.c_custkey
+               ->  Gather Merge  (cost=111071.60..146074.05 rows=300000 width=12)
+                     Workers Planned: 2
+                     ->  Sort  (cost=110071.58..110446.58 rows=150000 width=12)
+                           Sort Key: customer.c_custkey
+                           ->  Partial HashAggregate  (cost=88276.64..94610.13 rows=150000 width=12)
+                                 Group Key: customer.c_custkey
+                                 Planned Partitions: 4
+                                 ->  Parallel Hash Left Join  (cost=44256.51..53475.49 rows=618687 width=8)
+                                       Hash Cond: (customer.c_custkey = orders.o_custkey)
+                                       ->  Parallel Index Only Scan using customer_pkey on customer  (cost=0.42..3031.42 rows=62500 width=4)
+                                       ->  Parallel Hash  (cost=34105.50..34105.50 rows=618687 width=8)
+                                             ->  Parallel Seq Scan on orders  (cost=0.00..34105.50 rows=618687 width=8)
+                                                   Filter: ((o_comment)::text !~~ '%special%requests%'::text)
+(19 rows)
+
