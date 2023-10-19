@@ -1,0 +1,37 @@
+                                                                                  QUERY PLAN                                                                                  
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=190482.84..190482.90 rows=25 width=58)
+   Sort Key: (sum((lineitem.l_extendedprice * ('1'::numeric - lineitem.l_discount)))) DESC
+   ->  Finalize GroupAggregate  (cost=190436.93..190482.26 rows=25 width=58)
+         Group Key: nation.n_name
+         ->  Gather Merge  (cost=190436.93..190481.57 rows=50 width=58)
+               Workers Planned: 2
+               ->  Partial GroupAggregate  (cost=189436.90..189475.78 rows=25 width=58)
+                     Group Key: nation.n_name
+                     ->  Sort  (cost=189436.90..189444.61 rows=3085 width=38)
+                           Sort Key: nation.n_name
+                           ->  Hash Join  (cost=42091.70..189258.11 rows=3085 width=38)
+                                 Hash Cond: ((lineitem.l_suppkey = supplier.s_suppkey) AND (customer.c_nationkey = supplier.s_nationkey))
+                                 ->  Parallel Hash Join  (cost=41618.70..188380.29 rows=77109 width=50)
+                                       Hash Cond: (orders.o_custkey = customer.c_custkey)
+                                       ->  Parallel Hash Join  (cost=36872.56..181867.07 rows=385545 width=20)
+                                             Hash Cond: (lineitem.l_orderkey = orders.o_orderkey)
+                                             ->  Parallel Seq Scan on lineitem  (cost=0.00..138430.53 rows=2500553 width=20)
+                                             ->  Parallel Hash  (cost=35668.00..35668.00 rows=96365 width=8)
+                                                   ->  Parallel Seq Scan on orders  (cost=0.00..35668.00 rows=96365 width=8)
+                                                         Filter: ((o_orderdate >= '1994-01-01'::date) AND (o_orderdate < '1995-01-01 00:00:00'::timestamp without time zone))
+                                       ->  Parallel Hash  (cost=4589.88..4589.88 rows=12500 width=38)
+                                             ->  Hash Join  (cost=2.51..4589.88 rows=12500 width=38)
+                                                   Hash Cond: (customer.c_nationkey = nation.n_nationkey)
+                                                   ->  Parallel Seq Scan on customer  (cost=0.00..4228.00 rows=62500 width=8)
+                                                   ->  Hash  (cost=2.45..2.45 rows=5 width=30)
+                                                         ->  Hash Join  (cost=1.07..2.45 rows=5 width=30)
+                                                               Hash Cond: (nation.n_regionkey = region.r_regionkey)
+                                                               ->  Seq Scan on nation  (cost=0.00..1.25 rows=25 width=34)
+                                                               ->  Hash  (cost=1.06..1.06 rows=1 width=4)
+                                                                     ->  Seq Scan on region  (cost=0.00..1.06 rows=1 width=4)
+                                                                           Filter: (r_name = 'ASIA'::bpchar)
+                                 ->  Hash  (cost=323.00..323.00 rows=10000 width=8)
+                                       ->  Seq Scan on supplier  (cost=0.00..323.00 rows=10000 width=8)
+(33 rows)
+

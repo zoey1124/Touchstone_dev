@@ -1,0 +1,24 @@
+                                                                                                                  QUERY PLAN                                                                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=471696651.70..471696651.77 rows=27 width=51)
+   Sort Key: supplier.s_name
+   ->  Nested Loop  (cost=0.42..471696651.06 rows=27 width=51)
+         Join Filter: (supplier.s_nationkey = nation.n_nationkey)
+         ->  Seq Scan on nation  (cost=0.00..1.31 rows=1 width=4)
+               Filter: (n_name = 'CANADA'::bpchar)
+         ->  Nested Loop Semi Join  (cost=0.42..471696641.33 rows=673 width=55)
+               Join Filter: (supplier.s_suppkey = partsupp.ps_suppkey)
+               ->  Seq Scan on supplier  (cost=0.00..323.00 rows=10000 width=59)
+               ->  Materialize  (cost=0.42..471595370.02 rows=673 width=4)
+                     ->  Nested Loop  (cost=0.42..471595366.65 rows=673 width=4)
+                           ->  Seq Scan on part  (cost=0.00..6630.00 rows=2020 width=4)
+                                 Filter: ((p_name)::text ~~ 'forest%'::text)
+                           ->  Index Scan using partsupp_pkey on partsupp  (cost=0.42..233459.77 rows=1 width=8)
+                                 Index Cond: (ps_partkey = part.p_partkey)
+                                 Filter: ((ps_availqty)::numeric > (SubPlan 1))
+                                 SubPlan 1
+                                   ->  Aggregate  (cost=233452.79..233452.80 rows=1 width=32)
+                                         ->  Seq Scan on lineitem  (cost=0.00..233452.78 rows=1 width=5)
+                                               Filter: ((l_shipdate >= '1994-01-01'::date) AND (l_shipdate < '1995-01-01 00:00:00'::timestamp without time zone) AND (l_partkey = partsupp.ps_partkey) AND (l_suppkey = partsupp.ps_suppkey))
+(20 rows)
+

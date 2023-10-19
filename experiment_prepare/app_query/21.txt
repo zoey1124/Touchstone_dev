@@ -1,0 +1,36 @@
+                                                          QUERY PLAN                                                          
+------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=496411.34..496411.35 rows=1 width=34)
+   Sort Key: (count(*)) DESC, supplier.s_name
+   ->  GroupAggregate  (cost=311803.87..496411.33 rows=1 width=34)
+         Group Key: supplier.s_name
+         ->  Nested Loop  (cost=311803.87..496411.32 rows=1 width=26)
+               ->  Nested Loop Semi Join  (cost=311803.44..496410.81 rows=1 width=34)
+                     Join Filter: ((l2.l_suppkey <> l1.l_suppkey) AND (l1.l_orderkey = l2.l_orderkey))
+                     ->  Gather Merge  (cost=311803.44..311803.56 rows=1 width=34)
+                           Workers Planned: 2
+                           ->  Sort  (cost=310803.42..310803.42 rows=1 width=34)
+                                 Sort Key: supplier.s_name
+                                 ->  Parallel Hash Anti Join  (cost=158717.33..310803.41 rows=1 width=34)
+                                       Hash Cond: (l1.l_orderkey = l3.l_orderkey)
+                                       Join Filter: (l3.l_suppkey <> l1.l_suppkey)
+                                       ->  Hash Join  (cost=360.02..148501.39 rows=33341 width=34)
+                                             Hash Cond: (l1.l_suppkey = supplier.s_suppkey)
+                                             ->  Parallel Seq Scan on lineitem l1  (cost=0.00..144682.23 rows=833526 width=8)
+                                                   Filter: (l_receiptdate > l_commitdate)
+                                             ->  Hash  (cost=355.02..355.02 rows=400 width=30)
+                                                   ->  Hash Join  (cost=1.32..355.02 rows=400 width=30)
+                                                         Hash Cond: (supplier.s_nationkey = nation.n_nationkey)
+                                                         ->  Seq Scan on supplier  (cost=0.00..323.00 rows=10000 width=34)
+                                                         ->  Hash  (cost=1.31..1.31 rows=1 width=4)
+                                                               ->  Seq Scan on nation  (cost=0.00..1.31 rows=1 width=4)
+                                                                     Filter: (n_name = 'SAUDI ARABIA'::bpchar)
+                                       ->  Parallel Hash  (cost=144682.23..144682.23 rows=833526 width=8)
+                                             ->  Parallel Seq Scan on lineitem l3  (cost=0.00..144682.23 rows=833526 width=8)
+                                                   Filter: (l_receiptdate > l_commitdate)
+                     ->  Seq Scan on lineitem l2  (cost=0.00..173438.89 rows=6001389 width=8)
+               ->  Index Scan using orders_pkey on orders  (cost=0.43..0.51 rows=1 width=4)
+                     Index Cond: (o_orderkey = l1.l_orderkey)
+                     Filter: (o_orderstatus = 'F'::bpchar)
+(32 rows)
+

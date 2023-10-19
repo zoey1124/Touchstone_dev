@@ -1,0 +1,33 @@
+                                                                         QUERY PLAN                                                                          
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=174182.44..174186.32 rows=30 width=90)
+   Group Key: nation.n_name, (EXTRACT(year FROM orders.o_orderdate))
+   ->  Gather Merge  (cost=174182.44..174185.63 rows=24 width=90)
+         Workers Planned: 2
+         ->  Partial GroupAggregate  (cost=173182.42..173182.84 rows=12 width=90)
+               Group Key: nation.n_name, (EXTRACT(year FROM orders.o_orderdate))
+               ->  Sort  (cost=173182.42..173182.45 rows=12 width=81)
+                     Sort Key: nation.n_name, (EXTRACT(year FROM orders.o_orderdate)) DESC
+                     ->  Hash Join  (cost=15993.11..173182.20 rows=12 width=81)
+                           Hash Cond: (supplier.s_nationkey = nation.n_nationkey)
+                           ->  Nested Loop  (cost=15991.55..173180.58 rows=12 width=31)
+                                 ->  Nested Loop  (cost=15991.12..173174.99 rows=12 width=31)
+                                       ->  Parallel Hash Join  (cost=15990.84..173171.36 rows=12 width=35)
+                                             Hash Cond: ((lineitem.l_suppkey = partsupp.ps_suppkey) AND (lineitem.l_partkey = partsupp.ps_partkey))
+                                             ->  Parallel Seq Scan on lineitem  (cost=0.00..138428.15 rows=2500315 width=29)
+                                             ->  Parallel Hash  (cost=15927.70..15927.70 rows=4209 width=18)
+                                                   ->  Merge Join  (cost=7302.25..15927.70 rows=4209 width=18)
+                                                         Merge Cond: (partsupp.ps_partkey = part.p_partkey)
+                                                         ->  Parallel Index Scan using partsupp_pkey on partsupp  (cost=0.42..33673.34 rows=333333 width=14)
+                                                         ->  Sort  (cost=7301.83..7327.08 rows=10101 width=4)
+                                                               Sort Key: part.p_partkey
+                                                               ->  Seq Scan on part  (cost=0.00..6630.00 rows=10101 width=4)
+                                                                     Filter: ((p_name)::text ~~ '%green%'::text)
+                                       ->  Index Scan using supplier_pkey on supplier  (cost=0.29..0.30 rows=1 width=8)
+                                             Index Cond: (s_suppkey = lineitem.l_suppkey)
+                                 ->  Index Scan using orders_pkey on orders  (cost=0.43..0.47 rows=1 width=8)
+                                       Index Cond: (o_orderkey = lineitem.l_orderkey)
+                           ->  Hash  (cost=1.25..1.25 rows=25 width=30)
+                                 ->  Seq Scan on nation  (cost=0.00..1.25 rows=25 width=30)
+(29 rows)
+
