@@ -1,0 +1,19 @@
+                                                                      QUERY PLAN                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=199047.11..199091.18 rows=5 width=24)
+   Group Key: orders.o_orderpriority
+   ->  Gather Merge  (cost=199047.11..199091.08 rows=10 width=24)
+         Workers Planned: 2
+         ->  Partial GroupAggregate  (cost=198047.09..198089.90 rows=5 width=24)
+               Group Key: orders.o_orderpriority
+               ->  Sort  (cost=198047.09..198061.34 rows=5702 width=16)
+                     Sort Key: orders.o_orderpriority
+                     ->  Parallel Hash Semi Join  (cost=158356.89..197691.36 rows=5702 width=16)
+                           Hash Cond: (orders.o_orderkey = lineitem.l_orderkey)
+                           ->  Parallel Seq Scan on orders  (cost=0.00..35668.00 rows=23578 width=20)
+                                 Filter: ((o_orderdate >= '1993-07-01'::date) AND (o_orderdate < '1993-10-01 00:00:00'::timestamp without time zone))
+                           ->  Parallel Hash  (cost=144681.92..144681.92 rows=833518 width=4)
+                                 ->  Parallel Seq Scan on lineitem  (cost=0.00..144681.92 rows=833518 width=4)
+                                       Filter: (l_commitdate < l_receiptdate)
+(15 rows)
+

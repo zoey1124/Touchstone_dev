@@ -1,0 +1,38 @@
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=28291.73..28291.74 rows=1 width=192)
+   Sort Key: supplier.s_acctbal DESC, nation.n_name, supplier.s_name, part.p_partkey
+   ->  Nested Loop  (cost=1000.85..28291.72 rows=1 width=192)
+         Join Filter: (nation.n_regionkey = region.r_regionkey)
+         ->  Nested Loop  (cost=1000.85..28290.65 rows=1 width=196)
+               ->  Nested Loop  (cost=1000.71..28290.49 rows=1 width=170)
+                     ->  Nested Loop  (cost=1000.42..28290.18 rows=1 width=34)
+                           ->  Gather  (cost=1000.00..6464.90 rows=849 width=30)
+                                 Workers Planned: 2
+                                 ->  Parallel Seq Scan on part  (cost=0.00..5380.00 rows=354 width=30)
+                                       Filter: (((p_type)::text ~~ '%BRASS'::text) AND (p_size = 15))
+                           ->  Index Scan using partsupp_pkey on partsupp  (cost=0.42..25.70 rows=1 width=14)
+                                 Index Cond: (ps_partkey = part.p_partkey)
+                                 Filter: ((SubPlan 1) = ps_supplycost)
+                                 SubPlan 1
+                                   ->  Aggregate  (cost=17.98..17.99 rows=1 width=32)
+                                         ->  Nested Loop  (cost=0.85..17.98 rows=1 width=6)
+                                               Join Filter: (nation_1.n_regionkey = region_1.r_regionkey)
+                                               ->  Nested Loop  (cost=0.85..16.90 rows=1 width=10)
+                                                     ->  Nested Loop  (cost=0.71..16.75 rows=1 width=10)
+                                                           ->  Index Scan using partsupp_pkey on partsupp partsupp_1  (cost=0.42..8.44 rows=1 width=10)
+                                                                 Index Cond: (ps_partkey = part.p_partkey)
+                                                           ->  Index Scan using supplier_pkey on supplier supplier_1  (cost=0.29..8.30 rows=1 width=8)
+                                                                 Index Cond: (s_suppkey = partsupp_1.ps_suppkey)
+                                                     ->  Index Scan using nation_pkey on nation nation_1  (cost=0.14..0.16 rows=1 width=8)
+                                                           Index Cond: (n_nationkey = supplier_1.s_nationkey)
+                                               ->  Seq Scan on region region_1  (cost=0.00..1.06 rows=1 width=4)
+                                                     Filter: (r_name = 'EUROPE'::bpchar)
+                     ->  Index Scan using supplier_pkey on supplier  (cost=0.29..0.30 rows=1 width=144)
+                           Index Cond: (s_suppkey = partsupp.ps_suppkey)
+               ->  Index Scan using nation_pkey on nation  (cost=0.14..0.16 rows=1 width=34)
+                     Index Cond: (n_nationkey = supplier.s_nationkey)
+         ->  Seq Scan on region  (cost=0.00..1.06 rows=1 width=4)
+               Filter: (r_name = 'EUROPE'::bpchar)
+(34 rows)
+

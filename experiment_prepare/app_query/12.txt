@@ -1,0 +1,18 @@
+                                                                                                                                     QUERY PLAN                                                                                                                                     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=210511.03..210756.77 rows=7 width=27)
+   Group Key: lineitem.l_shipmode
+   ->  Gather Merge  (cost=210511.03..210756.59 rows=14 width=27)
+         Workers Planned: 2
+         ->  Partial GroupAggregate  (cost=209511.00..209754.95 rows=7 width=27)
+               Group Key: lineitem.l_shipmode
+               ->  Sort  (cost=209511.00..209541.49 rows=12194 width=27)
+                     Sort Key: lineitem.l_shipmode
+                     ->  Parallel Hash Join  (cost=169839.59..208683.40 rows=12194 width=27)
+                           Hash Cond: (orders.o_orderkey = lineitem.l_orderkey)
+                           ->  Parallel Seq Scan on orders  (cost=0.00..32543.00 rows=625000 width=20)
+                           ->  Parallel Hash  (cost=169687.17..169687.17 rows=12194 width=15)
+                                 ->  Parallel Seq Scan on lineitem  (cost=0.00..169687.17 rows=12194 width=15)
+                                       Filter: ((l_shipmode = ANY ('{MAIL,SHIP}'::bpchar[])) AND (l_commitdate < l_receiptdate) AND (l_shipdate < l_commitdate) AND (l_receiptdate >= '1994-01-01'::date) AND (l_receiptdate < '1995-01-01 00:00:00'::timestamp without time zone))
+(14 rows)
+

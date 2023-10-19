@@ -1,0 +1,18 @@
+                                                QUERY PLAN                                                
+----------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=2079985.53..2079985.54 rows=1 width=32)
+   ->  Hash Join  (cost=6400.70..2079980.93 rows=1840 width=8)
+         Hash Cond: (lineitem.l_partkey = part.p_partkey)
+         Join Filter: (lineitem.l_quantity < (SubPlan 1))
+         ->  Seq Scan on lineitem  (cost=0.00..173436.20 rows=6001120 width=17)
+         ->  Hash  (cost=6398.40..6398.40 rows=184 width=4)
+               ->  Gather  (cost=1000.00..6398.40 rows=184 width=4)
+                     Workers Planned: 2
+                     ->  Parallel Seq Scan on part  (cost=0.00..5380.00 rows=77 width=4)
+                           Filter: ((p_brand = 'Brand#23'::bpchar) AND (p_container = 'MED BOX'::bpchar))
+         SubPlan 1
+           ->  Aggregate  (cost=188439.08..188439.10 rows=1 width=32)
+                 ->  Seq Scan on lineitem lineitem_1  (cost=0.00..188439.00 rows=32 width=5)
+                       Filter: (l_partkey = part.p_partkey)
+(14 rows)
+
