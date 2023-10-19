@@ -4,6 +4,14 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/*
+ * Given TPC-H files, 
+ * 1. run Controller, 
+ * 2. run Generator, 
+ * 3. query parameters instantiation,
+ * 4. load data into database 
+ */
+
 public class Pipeline{
     private final String url = "jdbc:postgresql://localhost:5432/tpch";
     private final String user = "tpch";
@@ -50,7 +58,6 @@ public class Pipeline{
         }
     }
 
-
     public static void main(String[] args) {
         // args[0]: the path of the configuration file 
         if (args.length != 1) {
@@ -59,13 +66,16 @@ public class Pipeline{
 		} 
         try {
             Configurations configurations = new Configurations(args[0]);
-            // parse SQL file 
+            
     
             // run controller
             String[] cmd = new String[]{"zsh", "-c", ""};
             Process process = Runtime.getRuntime().exec(cmd);
 
             // run data generator 
+            /*
+             * want to execute: /usr/bin/env /home/zoey/jdk-17.0.8.1+1/bin/java -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=localhost:37293 @/tmp/cp_8gihk4qhd8gn88rpnjcyhffm5.argfile edu.ecnu.touchstone.run.RunController .//test//redmine.conf 
+             */
     
             // run db connector
             Pipeline db = new Pipeline();
