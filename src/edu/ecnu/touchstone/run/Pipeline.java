@@ -1,16 +1,17 @@
 package edu.ecnu.touchstone.run;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import io.netty.handler.codec.http.HttpContentEncoder.Result;
-
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 
@@ -23,6 +24,8 @@ import java.io.InputStreamReader;
  */
 
 public class Pipeline{
+    static String runTestPath = "/home/zoey/Touchstone_dev/test/";
+
     private static String getOrder() throws IOException{
         String out = "";
         try {
@@ -52,9 +55,64 @@ public class Pipeline{
             String table = partialOrder[i];
             String sql0 = "COPY " + table + " FROM '/home/zoey/Touchstone_dev/data/" + table + "_0.txt' delimiter ',' CSV;";
             stmt.executeUpdate(sql0);
-            String sql1 = "COPY " + table + " FROM '/home/zoey/Touchstone_dev/data/" + table + "_1.txt' delimiter ',' CSV;";
-            stmt.executeUpdate(sql1);
         }
+    }
+
+    // extract query parameter values from log and return a list of parameters
+    // key word: Final instantiated parameters:
+    // key word: Final global relative error:
+    public static ArrayList<String[]> extractParams() {
+        ArrayList<String[]> paramList = new ArrayList<>();
+        try {
+            String controllerLog = runTestPath + "/log/controller.log";
+            String grepParamValueCommand = 
+                "awk '/Final instantiated parameters:/,/Final global relative error:/ "
+                + "{ if (!/Final instantiated parameters:/ && !/Final global relative error:/) print }' " 
+                + controllerLog;
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            processBuilder.command("bash", "-c", grepParamValueCommand);
+            Process process = processBuilder.start();
+
+            // Read the output of the command
+            InputStream inputStream = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String scientificNotationPattern = "[-+]?[0-9]*\\.[0-9]+E([-+]?[0-9]+)?";
+            Pattern pattern = Pattern.compile(scientificNotationPattern);
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+                line = line.trim();
+                int startIndex = line.indexOf("values=[");
+                int endIndex = line.indexOf("]", startIndex);
+                String valueSubstring = line.substring(startIndex + "values=[".length(), endIndex);
+                String[] valuesArray = valueSubstring.split(", ");
+                // process date time format
+                for (int i = 0; i < valuesArray.length; i++) {
+                    String param = valuesArray[i];
+                    Matcher dateTimeMatcher = pattern.matcher(param);
+                    if (dateTimeMatcher.matches()) {
+                        long milliseconds = (long) Double.parseDouble(param);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = new Date(milliseconds);
+                        String formattedDate = dateFormat.format(date);
+                        valuesArray[i] = formattedDate;
+                        System.out.println(formattedDate);
+                    }
+                }
+                paramList.add(valuesArray);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return paramList;
+    }
+
+    public static ArrayList<String> loadQueries(ArrayList<String[]> paramList) {
+        String queryDirectory = "/home/zoey/Touchstone_dev/experiment_prepare/app_query";
+
+        return null;
     }
 
     public static void main(String[] args) {
@@ -68,7 +126,6 @@ public class Pipeline{
              * 1. run controller 
              * want to execute: java -jar <test_dir>//RunController.jar <test_dir>//tpch.conf
              */
-            String runTestPath = "/home/zoey/Touchstone_dev/test/";
             String runControllerPath = runTestPath + "//RunController.jar";
             String controllerCmd = "nohup java -jar " 
                                 + runControllerPath 
@@ -106,9 +163,9 @@ public class Pipeline{
              * 3. Extract total runtime from log
              * key word: Time of query instantiation
              */
+            // Thread.sleep(20 * 1000); // wait for thread to finish
             String controllerLog = runTestPath + "/log/controller.log";
             String controllerGrepTimeCommand = "sudo grep 'Time of query instantiation' " + controllerLog;
-            String generatorGrepTimeCommand = "sudo grep -A 1 'Time of query instantiation' " + runTestPath + "/log/generator.log | tail -n 1";
             ProcessBuilder timerProcessBuilder = new ProcessBuilder();
             timerProcessBuilder.command("bash", "-c", controllerGrepTimeCommand);
             Process timerProcess = timerProcessBuilder.start();
@@ -120,38 +177,25 @@ public class Pipeline{
             System.out.println(controllerTime);
 
             /* 
-             * 4. Connect with database
+             * 4. Load queries
+             */
+            ArrayList<String[]> paramList = extractParams();
+            ArrayList<String> queries = loadQueries(paramList);
+
+            /* 
+             * 5. Connect with database
              */
             String url = "jdbc:postgresql://localhost:5432/tpch_touchstone_sf_1";    
             String user = "postgres";
             String password = "123456";
             Connection connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the PostgreSQL database successfully!");   
+            System.exit(0);
 
             /* 
-             * 5. Load data to database
+             * 6. Load data to database
              */
             importData(connection);
-            
-            /*
-             * 6. Put values into queries
-             */
-            
-            String queryFilePath = "/home/zoey/Touchstone_dev/experiment_prepare/app_query/tpch_queries.sql";
-            BufferedReader queryFileReader = new BufferedReader(new FileReader(queryFilePath));
-            String currentQuery = "";
-            String line;
-            ArrayList<String> queries = new ArrayList<String>();
-            while ((line = queryFileReader.readLine()) != null) {
-                line = line.trim();
-                if (line.startsWith("--")) { // start a new query
-                    queries.add(currentQuery);
-                    currentQuery = "";
-                } else { // append to current query
-                    currentQuery += " " + line;
-                }
-            }
-            queryFileReader.close();
 
             /* 
              * 7. Execute queries
@@ -163,14 +207,11 @@ public class Pipeline{
             }
 
             /*
-             * 7. Count # of rows for each query 
+             * 8. Count # of rows for each query 
              */
 
 
             connection.close();
-
-            /* 8. Check data constraints on each column */
-
 
         } catch (Exception e) {
             e.printStackTrace();
