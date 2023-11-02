@@ -12,8 +12,10 @@ import java.util.regex.Pattern;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /*
  * Given TPC-H files, 
@@ -25,6 +27,7 @@ import java.io.InputStreamReader;
 
 public class Pipeline{
     static String runTestPath = "/home/zoey/Touchstone_dev/test/";
+    private static final Logger logger = Logger.getLogger(Pipeline.class);
 
     private static String getOrder() throws IOException{
         String out = "";
@@ -49,7 +52,7 @@ public class Pipeline{
         String s = getOrder();
         s = s.substring(1, s.length() - 1);
         String[] partialOrder = s.split(", ");
-        System.out.println("partial order is " + partialOrder);
+        logger.info("partial order is " + partialOrder);
         Statement stmt = conn.createStatement();
         for (int i = 1; i < partialOrder.length; i++) {
             String table = partialOrder[i];
@@ -61,8 +64,8 @@ public class Pipeline{
     // extract query parameter values from log and return a list of parameters
     // key word: Final instantiated parameters:
     // key word: Final global relative error:
-    public static ArrayList<String[]> extractParams() {
-        ArrayList<String[]> paramList = new ArrayList<>();
+    public static ArrayList<String> extractParams() {
+        ArrayList<String> paramList = new ArrayList<>();
         try {
             String controllerLog = runTestPath + "/log/controller.log";
             String grepParamValueCommand = 
@@ -82,40 +85,85 @@ public class Pipeline{
 
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                logger.info("param is" + line);
                 line = line.trim();
                 int startIndex = line.indexOf("values=[");
                 int endIndex = line.indexOf("]", startIndex);
                 String valueSubstring = line.substring(startIndex + "values=[".length(), endIndex);
                 String[] valuesArray = valueSubstring.split(", ");
-                // process date time format
+                
                 for (int i = 0; i < valuesArray.length; i++) {
                     String param = valuesArray[i];
+
+                    // process date time format
                     Matcher dateTimeMatcher = pattern.matcher(param);
                     if (dateTimeMatcher.matches()) {
                         long milliseconds = (long) Double.parseDouble(param);
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         Date date = new Date(milliseconds);
                         String formattedDate = dateFormat.format(date);
-                        valuesArray[i] = formattedDate;
-                        System.out.println(formattedDate);
+                        logger.debug("format date" + formattedDate);
+                        paramList.add(formattedDate);
+                    } else {
+                        paramList.add(param);
                     }
                 }
-                paramList.add(valuesArray);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        logger.debug(paramList);
         return paramList;
     }
 
-    public static ArrayList<String> loadQueries(ArrayList<String[]> paramList) {
-        String queryDirectory = "/home/zoey/Touchstone_dev/experiment_prepare/app_query";
+    public static ArrayList<String> loadQueries(ArrayList<String> paramList) {
+        String queryDirectory = 
+        "/home/zoey/Touchstone_dev/experiment_prepare/app_query/tpch_queries_parameters.sql";
+        ArrayList<String> paramNoValueQueryList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(queryDirectory)))) {
+            String line;
+            String currentQuery = "";
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.startsWith("--") || line.isEmpty() || line.isBlank()) {
+                    if (currentQuery != "") {
+                        paramNoValueQueryList.add(currentQuery.trim());
+                        currentQuery = "";
+                    } else {
+                        continue;
+                    }
+                } else {
+                    currentQuery += " " + line;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return null;
+        ArrayList<String> queryList = new ArrayList<>();
+        String queryParamRegex = "(:[0-9]+)";
+        Pattern queryParamPattern = Pattern.compile(queryParamRegex);
+    
+        // value instantiation: replace param with actual values
+        for (String paramNoValueQuery: paramNoValueQueryList) {
+            logger.info("curr query is: " + paramNoValueQuery);
+            Matcher queryParamMatcher = queryParamPattern.matcher(paramNoValueQuery);
+            StringBuffer result = new StringBuffer();
+            int indexToPop = 0;
+            while (queryParamMatcher.find()) {
+                String queryParamInit = paramList.get(indexToPop);
+                queryParamMatcher.appendReplacement(result, Matcher.quoteReplacement(queryParamInit));
+                indexToPop += 1;
+            }
+            logger.info("curr query with initiated param is: " + result.toString());
+            queryList.add(result.toString());
+        }
+        return queryList;
     }
 
     public static void main(String[] args) {
+        PropertyConfigurator.configure(".//test//lib//log4j.properties");
         // args[0]: the path of the configuration file 
         if (args.length != 1) {
 			System.out.println("Please specify the configuration file for Touchstone!");
@@ -174,12 +222,12 @@ public class Pipeline{
             InputStream inputStream = timerProcess.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String controllerTime = reader.readLine().trim();
-            System.out.println(controllerTime);
+            logger.info("controller time is: " + controllerTime);
 
             /* 
              * 4. Load queries
              */
-            ArrayList<String[]> paramList = extractParams();
+            ArrayList<String> paramList = extractParams();
             ArrayList<String> queries = loadQueries(paramList);
 
             /* 
