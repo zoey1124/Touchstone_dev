@@ -47,36 +47,27 @@ def to_correct_order(table):
     input_file = f"/home/zoey/Touchstone_dev/data/{table}_0.txt"
     output_file = f"/home/zoey/Touchstone_dev/data/{table}_0_out.txt"
 
-    # reorder the column and write output to another file
-    def reorder(input_file, output_file, column_order, column_order_generated):
-        data = []
-        with open(input_file, 'r') as csv_file:  
-            csv_reader = csv.reader(csv_file)
-        
+    def reorder_save_mem(input_file, output_file, column_order, column_order_generated):
+        with open(input_file, 'r') as input_csv_file, open(output_file, 'w') as output_csv_file:
+            csv_reader = csv.reader(input_csv_file)
+            csv_writer = csv.DictWriter(output_csv_file, fieldnames=column_order)
+
             for row in csv_reader:
-                data.append(row)
+                assert(len(row) == len(column_order_generated))
+                modified_row = [0 if elm == "null" else elm for elm in row]
+                row_dict = {column_order_generated[i]: modified_row[i] for i in range(len(modified_row))}
+                reordered_row = {column: row_dict[column] for column in column_order}
+                csv_writer.writerow(reordered_row)
 
-        # Reorder the columns based on the specified order
-        reordered_data = []
-        for row in data:
-            assert(len(row) == len(column_order_generated))
-            row_dict = {column_order_generated[i]: row[i] for i in range(len(row))}
-            reordered_row = {column: row_dict[column] for column in column_order}
-            reordered_data.append(reordered_row)
-
-        # Write the reordered data to a new CSV file
-        with open(output_file, 'w', newline='') as csv_file:
-            fieldnames = column_order
-            csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-            
-            for row in reordered_data:
-                csv_writer.writerow(row)
-
-    reorder(input_file, output_file, table_to_col_order[table], table_to_col_order_generated[table])
+    reorder_save_mem(input_file, output_file, table_to_col_order[table], table_to_col_order_generated[table])
 
 def reorder_all_tables(tables = tables):
     for curr_table in tables:
         to_correct_order(curr_table)
 
-table = "lineitem"
-to_correct_order(table)
+
+to_correct_order("lineitem")
+# reorder_all_tables()
+
+drop_cnt_cmd = "alter table partsupp drop constraint partsupp_pkey cascade;"
+dump_to_db_cmd = "COPY lineitem FROM '/home/zoey/Touchstone_dev/data/lineitem_0_out.txt' delimiter ',' CSV;"
