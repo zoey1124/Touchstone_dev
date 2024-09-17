@@ -177,7 +177,7 @@ Touchstone有两个输入数据文件，分别包含了数据库Schema信息（�
    # 示例：  
    D[T1.c2; 0; 0.1; 1000.5]
    
-   # Varchar  
+   # Varchar:
    D[table_name.column_name; null_ratio; avg_length; max_length]  
    # 示例  
    D[T1.c3; 0; 123.5; 199]
